@@ -1,4 +1,5 @@
-# ToGmo Editor
+# ![](OgmoEditor/assets/icon32.ico "Logo Title Text 1") ToGmo Editor 
+
 
 This version of Ogmo Editor has __mutated__ to produce hellacious doom-murderscapes with furious performance.
 
