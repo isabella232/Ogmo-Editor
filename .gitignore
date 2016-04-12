@@ -1,0 +1,9 @@
+*.exe
+OgmoEditor/bin/
+OgmoEditor/obj/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
