@@ -1,0 +1,17 @@
+﻿<Properties StartupConfiguration="{D8FEEAD0-66CC-4C1A-9D65-CCA5D30D9355}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="OgmoEditor/MainWindow.cs">
+    <Files>
+      <File FileName="OgmoEditor/Windows/AboutWindow.cs" Line="18" Column="51" />
+      <File FileName="OgmoEditor/MainWindow.cs" Line="38" Column="85" />
+      <File FileName="OgmoEditor/Project.cs" Line="280" Column="13" />
+      <File FileName="../../../../Library/Frameworks/Mono.framework/Versions/5.16.0/lib/mono/msbuild/15.0/bin/Microsoft.Common.CurrentVersion.targets" Line="2130" Column="5" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.OgmoEditor PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

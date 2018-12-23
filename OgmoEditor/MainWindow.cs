@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Deployment.Application;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -35,8 +34,8 @@ namespace OgmoEditor
             LevelEditors = new List<LevelEditor>();
 
             imageList = new ImageList();
-            imageList.Images.Add(Image.FromFile(Path.Combine(Ogmo.ProgramDirectory, @"Content\icons", "icon32.png")));
-            imageList.Images.Add(Image.FromFile(Path.Combine(Ogmo.ProgramDirectory, @"Content\icons", "lvl32.png")));
+            imageList.Images.Add(Image.FromFile(Path.Combine(Ogmo.ProgramDirectory, "Content/icons", "icon32.png")));
+            imageList.Images.Add(Image.FromFile(Path.Combine(Ogmo.ProgramDirectory, "Content/icons", "lvl32.png")));
             MasterTabControl.ImageList = imageList;
 
             AddStartPage();
@@ -247,10 +246,7 @@ namespace OgmoEditor
 
         private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (ApplicationDeployment.IsNetworkDeployed)
-                ApplicationDeployment.CurrentDeployment.CheckForUpdate();
-            else
-                MessageBox.Show(this, "You cannot check for updates while debugging Ogmo Editor!", "Nope!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            MessageBox.Show(this, "You cannot check for updates!", "Nope!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)

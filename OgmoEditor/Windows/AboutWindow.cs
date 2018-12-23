@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Deployment.Application;
 
 namespace OgmoEditor.Windows
 {
@@ -16,10 +15,7 @@ namespace OgmoEditor.Windows
         {
             InitializeComponent();
 
-            if (ApplicationDeployment.IsNetworkDeployed)
-                versionLabel.Text = "Version " + ApplicationDeployment.CurrentDeployment.CurrentVersion;
-            else
-                versionLabel.Text = "Debug Mode";
+            versionLabel.Text = "Mutated XPlatform";
         }
 
         private void button1_Click(object sender, EventArgs e)

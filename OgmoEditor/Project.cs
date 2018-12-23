@@ -17,7 +17,6 @@ using OgmoEditor.Definitions.ValueDefinitions;
 using OgmoEditor.Definitions;
 using OgmoEditor.ProjectEditors;
 using OgmoEditor.LevelEditors;
-using System.Deployment.Application;
 
 namespace OgmoEditor
 {
@@ -278,10 +277,7 @@ namespace OgmoEditor
         private void writeTo(string filename)
         {
             //Set the current Ogmo Editor version in the project file
-            if (ApplicationDeployment.IsNetworkDeployed)
-                OgmoVersion = ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
-            else
-                OgmoVersion = new Version(1, 0).ToString();
+            OgmoVersion = new Version(1, 0).ToString();
 
             XmlSerializer xs = new XmlSerializer(typeof(Project));
             Stream stream = new FileStream(filename, FileMode.Create);
