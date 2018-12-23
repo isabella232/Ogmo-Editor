@@ -8,3 +8,4 @@ OgmoEditor/obj/
 *.userosscache
 *.sln.docstates
 .DS_Store
+.vs/
