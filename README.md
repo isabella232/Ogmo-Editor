@@ -17,6 +17,22 @@ This functionality is now relocated a button instead of automatic when switching
 - Improved rendering clarity
 - Improvements to entity scaling
 
+### mac and linux support (via wine)
+
+You can build and run this version of Ogmo Editor on macOS and Linux.
+
+__macOS Setup:__
+1. Install [Homebrew](https://brew.sh)
+2. Run `brew install wine; brew install winetricks`.
+3. Run `winetricks dotnet40`. Go through the installation process.
+
+__Linux Setup:__
+1. Install wine and winetricks.
+2. Run `winetricks dotnet40`. Go through the installation process.
+
+Now you can run OgmoEditor.exe with `WINEDEBUG=-all FREETYPE_PROPERTIES="truetype:interpreter-version=35" wine OgmoEditor.exe`.
+Note that you can only load assets from within Wine's virtual filesystem (i.e. `drive_c` and its subdirectories).
+
 ### more stuff that I can't remember
 
 Features lost in time, like tears in the rain.
