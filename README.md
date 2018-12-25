@@ -9,7 +9,7 @@ Rampant genetic shifts have produced viral abnormalities:
 
 ### Apply Tileset to Layer button
 
-This functionality is now relocated a button instead of automatic when switching tilesets in viewer. Chance of destroying tile layers decreased.
+This functionality is now relocated to a button instead of automatic when switching tilesets in viewer. Chance of destroying tile layers decreased.
 
 ### Mac and Linux Support (via wine)
 
