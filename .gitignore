@@ -7,3 +7,5 @@ OgmoEditor/obj/
 *.user
 *.userosscache
 *.sln.docstates
+.DS_Store
+.vs/
