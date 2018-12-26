@@ -27,6 +27,8 @@ namespace OgmoEditor.LevelEditors.ValueEditors
             nameLabel.Text = Definition.Name;
             valueTextBox.Text = Value.Content;
 
+            valueTextBox.LostFocus += valueTextBox_Leave;
+
             //Deal with the slider
             if (Definition.ShowSlider)
             {
