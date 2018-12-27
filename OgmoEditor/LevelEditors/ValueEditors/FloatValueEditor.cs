@@ -25,6 +25,8 @@ namespace OgmoEditor.LevelEditors.ValueEditors
 
             nameLabel.Text = Definition.Name;
             valueTextBox.Text = Value.Content;
+
+            valueTextBox.LostFocus += valueTextBox_Leave;
         }
 
         private void handleTextBox()
