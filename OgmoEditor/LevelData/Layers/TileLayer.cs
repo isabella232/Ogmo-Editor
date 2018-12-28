@@ -415,7 +415,7 @@ namespace OgmoEditor.LevelData.Layers
             {
                 bitmap = new Bitmap(CHUNK_SIZE, CHUNK_SIZE, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
             }
-            catch (Exception e)
+            catch
             {
                 ClearAllBitmaps();
                 return null;
@@ -432,7 +432,7 @@ namespace OgmoEditor.LevelData.Layers
             {
                 bitmap = new Bitmap(CHUNK_SIZE, CHUNK_SIZE, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
             }
-            catch (Exception e)
+            catch
             {
                 ClearAllBitmaps();
                 return null;
