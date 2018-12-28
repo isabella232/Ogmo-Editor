@@ -1,17 +1,19 @@
-# ![](OgmoEditor/assets/icon32.ico "Logo Title Text 1") ToGmo Editor 
+# ![](https://github.com/TheSpydog/Ogmo-Editor/blob/master/OgmoEditor/Content/icons/icon32.png) Ogmo Editor: Community Version
 
+[Ogmo Editor](http://www.ogmoeditor.com/) is a fantastic level editor for 2D games, originally written by Matt Thorson. This fork of the project aims to improve the level editing experience by fixing longstanding bugs, adding awesome new features, and bringing the editor to new platforms like Mac and Linux!
 
-This version of Ogmo Editor has __mutated__ to produce hellacious doom-murderscapes with furious performance.
+## New Features
 
+### Tilemap Zooming
+You can now zoom in on your tile palette windows! Use the mouse wheel to zoom and right/middle mouse button to pan.
 
-## Changes
-Rampant genetic shifts have produced viral abnormalities:
+### Performance and Rendering Enhancements
+Thanks to [talesofgames' ToGmo project](https://github.com/talesofgames/Ogmo-Editor), the editor is faster and smoother than ever, especially when dealing with large maps!
 
-### Apply Tileset to Layer button
+### Bug Fixes!
+Many longstanding Ogmo bugs are fixed in this fork. No more annoying exceptions or inconsistent hotkeys!
 
-This functionality is now relocated to a button instead of automatic when switching tilesets in viewer. Chance of destroying tile layers decreased.
-
-### Mac and Linux Support (via wine)
+### Mac and Linux Support (via Wine)
 
 You can build and run this version of Ogmo Editor on macOS and Linux.
 
@@ -30,16 +32,9 @@ To run Ogmo Editor:
 
 Note that you can only load assets from within Wine's virtual filesystem (i.e. `drive_c` and its subdirectories).
 
-### Performance improvements
+### Other Stuff!?
+See the [changelog.html](https://github.com/TheSpydog/Ogmo-Editor/blob/master/OgmoEditor/Content/changelog.html#L50) for more details!
 
-- Much improved rendering times for large maps
-- Improved rendering clarity
-- Improvements to entity scaling
+## Credits
 
-### More stuff that I can't remember
-
-Features lost in time, like tears in the rain.
-
-# Credit where it's due:
-
-For more info, submit your biological self to http://www.ogmoeditor.com/
+Thanks to [Matt Thorson](http://www.mattmakesgames.com/) for making Ogmo Editor originally! Thanks to talesofgames for their [ToGmo fork](https://github.com/talesofgames/Ogmo-Editor), which added some great new features and improvements!
