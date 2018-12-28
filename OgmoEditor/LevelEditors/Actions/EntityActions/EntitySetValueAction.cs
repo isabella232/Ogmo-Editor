@@ -25,7 +25,6 @@ namespace OgmoEditor.LevelEditors.Actions.EntityActions
 
             was = value.Content;
             value.Content = setTo;
-            Ogmo.EntitySelectionWindow.RefreshContents();
         }
 
         public override void Undo()
