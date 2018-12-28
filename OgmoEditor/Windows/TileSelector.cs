@@ -133,13 +133,15 @@ namespace OgmoEditor.Windows
                 Graphics g = e.Graphics;
 
                 float scale = Math.Min((pictureBox.ClientSize.Width - BUFFER) / (float)Tileset.Bitmap.Width, (pictureBox.ClientSize.Height - BUFFER) / (float)Tileset.Bitmap.Height);
+                if (scale <= 0.01f)
+                    return;
 
                 g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
 
                 g.ResetTransform();
                 g.TranslateTransform(pictureBox.ClientSize.Width / 2f, pictureBox.ClientSize.Height / 2f);
-                g.ScaleTransform(Math.Max(0.1f, scale), Math.Max(0.1f, scale));
+                g.ScaleTransform(scale, scale);
                 g.TranslateTransform(-Tileset.Bitmap.Width / 2f, -Tileset.Bitmap.Height / 2f);
                 
                 g.DrawImage(Tileset.Bitmap, 0, 0, Tileset.Bitmap.Width, Tileset.Bitmap.Height);
