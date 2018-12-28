@@ -20,6 +20,7 @@ namespace OgmoEditor
 
         private ImageList imageList;
         private int rightClicked = -1;      //After a right-click context menu on a tab is closed, switch to this level
+        private Timer timer;
 
         public MainWindow()
         {
@@ -37,6 +38,11 @@ namespace OgmoEditor
             imageList.Images.Add(Image.FromFile(Path.Combine(Ogmo.ProgramDirectory, "Content/icons", "icon32.png")));
             imageList.Images.Add(Image.FromFile(Path.Combine(Ogmo.ProgramDirectory, "Content/icons", "lvl32.png")));
             MasterTabControl.ImageList = imageList;
+
+            timer = new Timer();
+            timer.Interval = 500;
+            timer.Tick += onTick;
+            timer.Start();
 
             AddStartPage();
 
@@ -88,6 +94,20 @@ namespace OgmoEditor
             Enabled = false;
             foreach (var f in OwnedForms)
                 f.Enabled = false;
+        }
+
+        private void UpdateEditToolStrip()
+        {
+            undoToolStripMenuItem.Enabled = LevelEditors[Ogmo.CurrentLevelIndex].CanUndo;
+            redoToolStripMenuItem.Enabled = LevelEditors[Ogmo.CurrentLevelIndex].CanRedo;
+
+            cutToolStripMenuItem.Enabled = copyToolStripMenuItem.Enabled = LevelEditors[Ogmo.CurrentLevelIndex].LayerEditors[Ogmo.LayersWindow.CurrentLayerIndex].CanCopyOrCut;
+            if (Ogmo.Clipboard == null)
+                pasteToolStripMenuItem.Enabled = false;
+            else
+                pasteToolStripMenuItem.Enabled = Ogmo.Clipboard.CanPaste(Ogmo.LayersWindow.CurrentLayer);
+            selectAllToolStripMenuItem.Enabled = LevelEditors[Ogmo.CurrentLevelIndex].LayerEditors[Ogmo.LayersWindow.CurrentLayerIndex].CanSelectAll;
+            deselectToolStripMenuItem.Enabled = LevelEditors[Ogmo.CurrentLevelIndex].LayerEditors[Ogmo.LayersWindow.CurrentLayerIndex].CanDeselect;
         }
 
         private int SelectedLevelIndex
@@ -200,6 +220,12 @@ namespace OgmoEditor
                 saveAsImageToolStripMenuItem.Enabled = index != -1;
 
             saveCameraAsImageToolStripMenuItem.Enabled = index != -1 && Ogmo.Project.CameraEnabled;
+        }
+
+        private void onTick(object sender, EventArgs e)
+        {
+            if (Ogmo.CurrentLevelIndex != -1)
+                UpdateEditToolStrip();
         }
 
         #endregion
@@ -375,16 +401,7 @@ namespace OgmoEditor
 
         private void editToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
-            undoToolStripMenuItem.Enabled = LevelEditors[Ogmo.CurrentLevelIndex].CanUndo;
-            redoToolStripMenuItem.Enabled = LevelEditors[Ogmo.CurrentLevelIndex].CanRedo;
-
-            cutToolStripMenuItem.Enabled = copyToolStripMenuItem.Enabled = LevelEditors[Ogmo.CurrentLevelIndex].LayerEditors[Ogmo.LayersWindow.CurrentLayerIndex].CanCopyOrCut;
-            if (Ogmo.Clipboard == null)
-                pasteToolStripMenuItem.Enabled = false;
-            else
-                pasteToolStripMenuItem.Enabled = Ogmo.Clipboard.CanPaste(Ogmo.LayersWindow.CurrentLayer);
-            selectAllToolStripMenuItem.Enabled = LevelEditors[Ogmo.CurrentLevelIndex].LayerEditors[Ogmo.LayersWindow.CurrentLayerIndex].CanSelectAll;
-            deselectToolStripMenuItem.Enabled = LevelEditors[Ogmo.CurrentLevelIndex].LayerEditors[Ogmo.LayersWindow.CurrentLayerIndex].CanDeselect;
+            UpdateEditToolStrip();
         }
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
