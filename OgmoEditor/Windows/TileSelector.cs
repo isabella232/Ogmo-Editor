@@ -139,7 +139,7 @@ namespace OgmoEditor.Windows
 
                 g.ResetTransform();
                 g.TranslateTransform(pictureBox.ClientSize.Width / 2f, pictureBox.ClientSize.Height / 2f);
-                g.ScaleTransform(scale, scale);
+                g.ScaleTransform(Math.Max(0.1f, scale), Math.Max(0.1f, scale));
                 g.TranslateTransform(-Tileset.Bitmap.Width / 2f, -Tileset.Bitmap.Height / 2f);
                 
                 g.DrawImage(Tileset.Bitmap, 0, 0, Tileset.Bitmap.Width, Tileset.Bitmap.Height);
