@@ -21,6 +21,12 @@ namespace OgmoEditor.Windows
         private bool selecting;
         private Point selectingStart;
 
+        private float zoom = 1.0f;
+
+        private bool panning = false;
+        private Point prevPanLocation;
+        private Point offset;
+
         public TileSelector()
         {
             InitializeComponent();
@@ -29,6 +35,16 @@ namespace OgmoEditor.Windows
 
             tileSelectPenB = new Pen(Color.Black, 2);
             tileSelectPenB.DashPattern = new float[] { 4, 2 };
+
+            MouseWheel += TileSelector_MouseWheel;
+        }
+
+        private void TileSelector_MouseWheel(object sender, MouseEventArgs e)
+        {
+            zoom = Math.Max(1, zoom + (0.005f * e.Delta));
+            if (zoom <= 1.0f)
+                offset = Point.Empty;
+            pictureBox.Refresh();
         }
 
         public Rectangle? Selection
@@ -133,6 +149,7 @@ namespace OgmoEditor.Windows
                 Graphics g = e.Graphics;
 
                 float scale = Math.Min((pictureBox.ClientSize.Width - BUFFER) / (float)Tileset.Bitmap.Width, (pictureBox.ClientSize.Height - BUFFER) / (float)Tileset.Bitmap.Height);
+                scale *= zoom;
                 if (scale <= 0.01f)
                     return;
 
@@ -143,6 +160,7 @@ namespace OgmoEditor.Windows
                 g.TranslateTransform(pictureBox.ClientSize.Width / 2f, pictureBox.ClientSize.Height / 2f);
                 g.ScaleTransform(scale, scale);
                 g.TranslateTransform(-Tileset.Bitmap.Width / 2f, -Tileset.Bitmap.Height / 2f);
+                g.TranslateTransform(offset.X, offset.Y);
                 
                 g.DrawImage(Tileset.Bitmap, 0, 0, Tileset.Bitmap.Width, Tileset.Bitmap.Height);
 
@@ -172,20 +190,46 @@ namespace OgmoEditor.Windows
             if (tileset == null)
                 return;
 
-            Point at = ResolveTilePoint(e.Location);
-            if (tileset.ContainsTile(at))
+            if (e.Button == MouseButtons.Right || e.Button == MouseButtons.Middle)
             {
-                selecting = true;
-                selectingStart = at;
-                selection = new Rectangle(at.X, at.Y, 1, 1);
-                pictureBox.Refresh();
+                panning = true;
+                prevPanLocation = e.Location;
+            }
+            else
+            {
+                Point at = ResolveTilePoint(e.Location);
+                if (tileset.ContainsTile(at))
+                {
+                    selecting = true;
+                    selectingStart = at;
+                    selection = new Rectangle(at.X, at.Y, 1, 1);
+                    pictureBox.Refresh();
+                }
             }
         }
 
         private void pictureBox_MouseMove(object sender, MouseEventArgs e)
         {
-            if (!selecting)
+            if (!selecting && !panning)
                 return;
+
+            if (panning)
+            {
+                if (zoom <= 1.0f)
+                {
+                    offset = Point.Empty;
+                    panning = false;
+                    return;
+                }
+
+                offset.X += e.Location.X - prevPanLocation.X;
+                offset.Y += e.Location.Y - prevPanLocation.Y;
+                pictureBox.Refresh();
+
+                prevPanLocation = e.Location;
+
+                return;
+            }
 
             Point at = ResolveTilePoint(e.Location);
             if (tileset.ContainsTile(at))
@@ -201,6 +245,7 @@ namespace OgmoEditor.Windows
         private void pictureBox_MouseUp(object sender, MouseEventArgs e)
         {
             selecting = false;
+            panning = false;
             Ogmo.MainWindow.FocusEditor();
         }
 
