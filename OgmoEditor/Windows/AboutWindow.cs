@@ -15,7 +15,7 @@ namespace OgmoEditor.Windows
         {
             InitializeComponent();
 
-            versionLabel.Text = "Mutated XPlatform";
+            versionLabel.Text = "Community Version";
         }
 
         private void button1_Click(object sender, EventArgs e)
