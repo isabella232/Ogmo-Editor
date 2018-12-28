@@ -5,12 +5,12 @@
 ## New Features
 
 ### Tilemap Zooming
-You can now zoom in on your tile palette windows! Use the mouse wheel to zoom and right/middle mouse button to pan.
+You can now zoom in on your tile palette windows. This helps you get a better view of your assets and save precious screen real estate. Use the mouse wheel to zoom and right/middle mouse button to pan.
 
 ### Performance and Rendering Enhancements
 Thanks to [talesofgames' ToGmo project](https://github.com/talesofgames/Ogmo-Editor), the editor is faster and smoother than ever, especially when dealing with large maps!
 
-### Bug Fixes!
+### Bug Fixes
 Many longstanding Ogmo bugs are fixed in this fork. No more annoying exceptions or inconsistent hotkeys!
 
 ### Mac and Linux Support (via Wine)
@@ -32,8 +32,8 @@ To run Ogmo Editor:
 
 Note that you can only load assets from within Wine's virtual filesystem (i.e. `drive_c` and its subdirectories).
 
-### Other Stuff!?
-See the [changelog.html](https://github.com/TheSpydog/Ogmo-Editor/blob/master/OgmoEditor/Content/changelog.html#L50) for more details!
+### Other Stuff!
+See the [changelog.html](https://github.com/TheSpydog/Ogmo-Editor/blob/master/OgmoEditor/Content/changelog.html#L50) for a list of all the fixes and additions.
 
 ## Credits
 
