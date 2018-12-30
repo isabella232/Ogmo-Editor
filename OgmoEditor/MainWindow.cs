@@ -291,9 +291,14 @@ namespace OgmoEditor
 
         #region Project Menu Events
 
-        private void newProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        private void XMLProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Ogmo.NewProject();
+            Ogmo.NewProject(Ogmo.ProjectType.XML);
+        }
+
+        private void JSONProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Ogmo.NewProject(Ogmo.ProjectType.JSON);
         }
 
         private void closeProjectToolStripMenuItem_Click(object sender, EventArgs e)

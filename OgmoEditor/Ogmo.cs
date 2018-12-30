@@ -17,6 +17,7 @@ namespace OgmoEditor
 {
     static public class Ogmo
     {
+        //TODO: Add extensions for json
         public const string PROJECT_EXT = ".oep";
         public const string LEVEL_EXT = ".oel";
         public const string PROJECT_FILTER = "Ogmo Editor Project File|*" + PROJECT_EXT;
@@ -28,6 +29,7 @@ namespace OgmoEditor
 
         public enum FinishProjectEditAction { None, CloseProject, SaveProject, LoadAndSaveProject };
         public enum ProjectEditMode { NormalEdit, NewProject, ErrorOnLoad };
+        public enum ProjectType { XML, JSON };
 
         public delegate void ProjectCallback(Project project);
         public delegate void LevelCallback(int index);
@@ -132,7 +134,7 @@ namespace OgmoEditor
 
         #region Project Handlers
 
-        static public void NewProject()
+        static public void NewProject(ProjectType projectType)
         {
             Project = new Project();
             Project.InitDefault();

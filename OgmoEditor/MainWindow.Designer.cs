@@ -44,6 +44,8 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.XMLProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.JSONProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -84,6 +86,8 @@
             this.entitySelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.utilitiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resaveLevelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.shiftRenamerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.swapRenamerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MasterTabControl = new System.Windows.Forms.TabControl();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tabPageContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -92,8 +96,6 @@
             this.closeOthersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.duplicateLevelToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.shiftRenamerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.swapRenamerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusStrip.SuspendLayout();
             this.MenuStrip.SuspendLayout();
             this.tabPageContextMenuStrip.SuspendLayout();
@@ -213,15 +215,31 @@
             // 
             // newProjectToolStripMenuItem
             // 
+            this.newProjectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.XMLProjectToolStripMenuItem,
+            this.JSONProjectToolStripMenuItem});
             this.newProjectToolStripMenuItem.Name = "newProjectToolStripMenuItem";
-            this.newProjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newProjectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newProjectToolStripMenuItem.Text = "New Project";
-            this.newProjectToolStripMenuItem.Click += new System.EventHandler(this.newProjectToolStripMenuItem_Click);
+            // 
+            // XMLProjectToolStripMenuItem
+            // 
+            this.XMLProjectToolStripMenuItem.Name = "XMLProjectToolStripMenuItem";
+            this.XMLProjectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.XMLProjectToolStripMenuItem.Text = "XML Project";
+            this.XMLProjectToolStripMenuItem.Click += new System.EventHandler(this.XMLProjectToolStripMenuItem_Click);
+            // 
+            // JSONProjectToolStripMenuItem
+            // 
+            this.JSONProjectToolStripMenuItem.Name = "JSONProjectToolStripMenuItem";
+            this.JSONProjectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.JSONProjectToolStripMenuItem.Text = "JSON Project";
+            this.JSONProjectToolStripMenuItem.Click += new System.EventHandler(this.JSONProjectToolStripMenuItem_Click);
             // 
             // openProjectToolStripMenuItem
             // 
             this.openProjectToolStripMenuItem.Name = "openProjectToolStripMenuItem";
-            this.openProjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openProjectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openProjectToolStripMenuItem.Text = "Open Project...";
             this.openProjectToolStripMenuItem.Click += new System.EventHandler(this.openProjectToolStripMenuItem_Click);
             // 
@@ -229,7 +247,7 @@
             // 
             this.editProjectToolStripMenuItem.Enabled = false;
             this.editProjectToolStripMenuItem.Name = "editProjectToolStripMenuItem";
-            this.editProjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.editProjectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.editProjectToolStripMenuItem.Text = "Edit Project";
             this.editProjectToolStripMenuItem.Click += new System.EventHandler(this.editProjectToolStripMenuItem_Click);
             // 
@@ -237,7 +255,7 @@
             // 
             this.closeProjectToolStripMenuItem.Enabled = false;
             this.closeProjectToolStripMenuItem.Name = "closeProjectToolStripMenuItem";
-            this.closeProjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.closeProjectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.closeProjectToolStripMenuItem.Text = "Close Project";
             this.closeProjectToolStripMenuItem.Click += new System.EventHandler(this.closeProjectToolStripMenuItem_Click);
             // 
@@ -464,15 +482,15 @@
             // 
             this.editingGridToolStripMenuItem.Name = "editingGridToolStripMenuItem";
             this.editingGridToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
-            this.editingGridToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.editingGridToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.editingGridToolStripMenuItem.Text = "Editing Grid";
             this.editingGridToolStripMenuItem.Click += new System.EventHandler(this.editingGridToolStripMenuItem_Click);
             // 
             // transparentLayersToolStripMenuItem
             // 
-            this.transparentLayersToolStripMenuItem.Name = "editingGridToolStripMenuItem";
+            this.transparentLayersToolStripMenuItem.Name = "transparentLayersToolStripMenuItem";
             this.transparentLayersToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.transparentLayersToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.transparentLayersToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.transparentLayersToolStripMenuItem.Text = "Transparent Layers";
             this.transparentLayersToolStripMenuItem.Click += new System.EventHandler(this.transparentLayersToolStripMenuItem_Click);
             // 
@@ -480,7 +498,7 @@
             // 
             this.centerViewToolStripMenuItem.Name = "centerViewToolStripMenuItem";
             this.centerViewToolStripMenuItem.ShortcutKeyDisplayString = "Home";
-            this.centerViewToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.centerViewToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.centerViewToolStripMenuItem.Text = "Center View";
             this.centerViewToolStripMenuItem.Click += new System.EventHandler(this.centerViewToolStripMenuItem_Click);
             // 
@@ -488,7 +506,7 @@
             // 
             this.zoomOutToolStripMenuItem.Name = "zoomOutToolStripMenuItem";
             this.zoomOutToolStripMenuItem.ShortcutKeyDisplayString = "-";
-            this.zoomOutToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.zoomOutToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.zoomOutToolStripMenuItem.Text = "Zoom Out";
             this.zoomOutToolStripMenuItem.Click += new System.EventHandler(this.zoomOutToolStripMenuItem_Click);
             // 
@@ -496,20 +514,20 @@
             // 
             this.zoomInToolStripMenuItem.Name = "zoomInToolStripMenuItem";
             this.zoomInToolStripMenuItem.ShortcutKeyDisplayString = "+";
-            this.zoomInToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.zoomInToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.zoomInToolStripMenuItem.Text = "Zoom In";
             this.zoomInToolStripMenuItem.Click += new System.EventHandler(this.zoomInToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(175, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(210, 6);
             // 
             // layersToolStripMenuItem
             // 
             this.layersToolStripMenuItem.Name = "layersToolStripMenuItem";
             this.layersToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.layersToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.layersToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.layersToolStripMenuItem.Text = "Layers";
             this.layersToolStripMenuItem.Click += new System.EventHandler(this.layersToolStripMenuItem_Click);
             // 
@@ -517,7 +535,7 @@
             // 
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.toolsToolStripMenuItem.Text = "Tools";
             this.toolsToolStripMenuItem.Click += new System.EventHandler(this.toolsToolStripMenuItem_Click);
             // 
@@ -525,7 +543,7 @@
             // 
             this.tilePaletteToolStripMenuItem.Name = "tilePaletteToolStripMenuItem";
             this.tilePaletteToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.tilePaletteToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.tilePaletteToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.tilePaletteToolStripMenuItem.Text = "Tile Palette";
             this.tilePaletteToolStripMenuItem.Click += new System.EventHandler(this.tilePaletteToolStripMenuItem_Click);
             // 
@@ -533,7 +551,7 @@
             // 
             this.entitiesToolStripMenuItem.Name = "entitiesToolStripMenuItem";
             this.entitiesToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
-            this.entitiesToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.entitiesToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.entitiesToolStripMenuItem.Text = "Entities";
             this.entitiesToolStripMenuItem.Click += new System.EventHandler(this.entitiesToolStripMenuItem_Click);
             // 
@@ -541,7 +559,7 @@
             // 
             this.entitySelectionToolStripMenuItem.Name = "entitySelectionToolStripMenuItem";
             this.entitySelectionToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.entitySelectionToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.entitySelectionToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.entitySelectionToolStripMenuItem.Text = "Entity Selection";
             this.entitySelectionToolStripMenuItem.Click += new System.EventHandler(this.entitySelectionToolStripMenuItem_Click);
             // 
@@ -562,6 +580,20 @@
             this.resaveLevelsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.resaveLevelsToolStripMenuItem.Text = "Batch Resaver";
             this.resaveLevelsToolStripMenuItem.Click += new System.EventHandler(this.resaveLevelsToolStripMenuItem_Click);
+            // 
+            // shiftRenamerToolStripMenuItem
+            // 
+            this.shiftRenamerToolStripMenuItem.Name = "shiftRenamerToolStripMenuItem";
+            this.shiftRenamerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.shiftRenamerToolStripMenuItem.Text = "Shift Renamer";
+            this.shiftRenamerToolStripMenuItem.Click += new System.EventHandler(this.shiftRenamerToolStripMenuItem_Click);
+            // 
+            // swapRenamerToolStripMenuItem
+            // 
+            this.swapRenamerToolStripMenuItem.Name = "swapRenamerToolStripMenuItem";
+            this.swapRenamerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.swapRenamerToolStripMenuItem.Text = "Swap Renamer";
+            this.swapRenamerToolStripMenuItem.Click += new System.EventHandler(this.swapRenamerToolStripMenuItem_Click);
             // 
             // MasterTabControl
             // 
@@ -622,20 +654,6 @@
             this.duplicateLevelToolStripMenuItem1.Size = new System.Drawing.Size(154, 22);
             this.duplicateLevelToolStripMenuItem1.Text = "Duplicate Level";
             this.duplicateLevelToolStripMenuItem1.Click += new System.EventHandler(this.duplicateLevelToolStripMenuItem_Click);
-            // 
-            // shiftRenamerToolStripMenuItem
-            // 
-            this.shiftRenamerToolStripMenuItem.Name = "shiftRenamerToolStripMenuItem";
-            this.shiftRenamerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.shiftRenamerToolStripMenuItem.Text = "Shift Renamer";
-            this.shiftRenamerToolStripMenuItem.Click += new System.EventHandler(this.shiftRenamerToolStripMenuItem_Click);
-            // 
-            // swapRenamerToolStripMenuItem
-            // 
-            this.swapRenamerToolStripMenuItem.Name = "swapRenamerToolStripMenuItem";
-            this.swapRenamerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.swapRenamerToolStripMenuItem.Text = "Swap Renamer";
-            this.swapRenamerToolStripMenuItem.Click += new System.EventHandler(this.swapRenamerToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -730,5 +748,7 @@
         private System.Windows.Forms.ToolStripMenuItem resaveLevelsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem shiftRenamerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem swapRenamerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem XMLProjectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem JSONProjectToolStripMenuItem;
     }
 }
