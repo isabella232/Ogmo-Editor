@@ -35,6 +35,7 @@ namespace OgmoEditor
         public Size LevelMaximumSize;
         public string Filename;
         public AngleExportMode AngleMode;
+        public Ogmo.ProjectType ProjectType;
         public bool CameraEnabled;
         public Size CameraSize;
         public bool ExportCameraPosition;
@@ -259,9 +260,8 @@ namespace OgmoEditor
                 dialog.InitialDirectory = SavedDirectory;
             dialog.RestoreDirectory = true;
             dialog.FileName = Name;
-            dialog.DefaultExt = Ogmo.PROJECT_EXT;
             dialog.OverwritePrompt = true;
-            dialog.Filter = Ogmo.PROJECT_FILTER;
+            dialog.Filter = Ogmo.GetProjectFilter();
 
             //Show dialog, handle cancel
             if (dialog.ShowDialog() == DialogResult.Cancel)

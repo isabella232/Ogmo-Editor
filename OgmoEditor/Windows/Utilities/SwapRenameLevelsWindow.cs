@@ -22,7 +22,7 @@ namespace OgmoEditor.Windows.Utilities
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Title = "Swap Level A";
-            dialog.Filter = Ogmo.LEVEL_FILTER;
+            dialog.Filter = Ogmo.GetLevelFilter();
             dialog.CheckFileExists = true;
 
             if (levelATextbox.Text != "")
@@ -42,7 +42,7 @@ namespace OgmoEditor.Windows.Utilities
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Title = "Swap Level B";
-            dialog.Filter = Ogmo.LEVEL_FILTER;
+            dialog.Filter = Ogmo.GetLevelFilter();
             dialog.CheckFileExists = true;
 
             if (levelBTextbox.Text != "")

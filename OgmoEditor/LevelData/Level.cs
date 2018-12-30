@@ -303,9 +303,9 @@ namespace OgmoEditor.LevelData
             dialog.InitialDirectory = Project.SavedDirectory;
             dialog.RestoreDirectory = true;
             dialog.FileName = SaveName;
-            dialog.DefaultExt = Ogmo.LEVEL_EXT;
+            dialog.DefaultExt = Ogmo.GetLevelExtension();
             dialog.OverwritePrompt = true;
-            dialog.Filter = Ogmo.LEVEL_FILTER;
+            dialog.Filter = Ogmo.GetLevelFilter();
 
             //Handle cancel
             if (dialog.ShowDialog() == DialogResult.Cancel)

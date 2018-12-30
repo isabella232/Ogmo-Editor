@@ -17,11 +17,12 @@ namespace OgmoEditor
 {
     static public class Ogmo
     {
-        //TODO: Add extensions for json
-        public const string PROJECT_EXT = ".oep";
-        public const string LEVEL_EXT = ".oel";
-        public const string PROJECT_FILTER = "Ogmo Editor Project File|*" + PROJECT_EXT;
-        public const string LEVEL_FILTER = "Ogmo Editor Level File|*" + LEVEL_EXT;
+        public const string PROJECT_EXT_XML = ".oep";
+        public const string LEVEL_EXT_XML = ".oel";
+        public const string PROJECT_EXT_JSON = ".jsog";
+        public const string LEVEL_EXT_JSON = ".json";
+        public const string PROJECT_FILTER = "Ogmo Editor Project File|*";
+        public const string LEVEL_FILTER = "Ogmo Editor Level File|*";
         public const string NEW_PROJECT_NAME = "New Project";
         public const string NEW_LEVEL_NAME = "Unsaved Level";
         public const string IMAGE_FILE_FILTER = "PNG image file|*.png|BMP image file|*.bmp";
@@ -132,11 +133,50 @@ namespace OgmoEditor
             file.Close();
         }
 
+        static public string GetProjectExtension()
+        {
+            string fileExtension = "";
+            if (Project.ProjectType == ProjectType.XML)
+            {
+                fileExtension = PROJECT_EXT_XML;
+            }
+            else if (Project.ProjectType == ProjectType.JSON)
+            {
+                fileExtension = PROJECT_EXT_JSON;
+            }
+            return fileExtension;
+        }
+
+        static public string GetLevelExtension()
+        {
+            string fileExtension = "";
+            if (Project.ProjectType == ProjectType.XML)
+            {
+                fileExtension = LEVEL_EXT_XML;
+            }
+            else if (Project.ProjectType == ProjectType.JSON)
+            {
+                fileExtension = LEVEL_EXT_JSON;
+            }
+            return fileExtension;
+        }
+
+        static public string GetProjectFilter()
+        {
+            return PROJECT_FILTER + GetProjectExtension();
+        }
+
+        static public string GetLevelFilter()
+        {
+            return LEVEL_FILTER + GetLevelExtension();
+        }
+
         #region Project Handlers
 
         static public void NewProject(ProjectType projectType)
         {
             Project = new Project();
+            Project.ProjectType = projectType;
             Project.InitDefault();
             if (Project.SaveAs())
             {
@@ -149,7 +189,7 @@ namespace OgmoEditor
         {
             //Get the file to load from the user
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = PROJECT_FILTER;
+            dialog.Filter = PROJECT_FILTER + PROJECT_EXT_XML + ";*" + PROJECT_EXT_JSON;
             if (dialog.ShowDialog() == DialogResult.Cancel)
                 return;
 
@@ -333,7 +373,7 @@ namespace OgmoEditor
             //Get the file to load from the user
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Multiselect = true;
-            dialog.Filter = Ogmo.LEVEL_FILTER;
+            dialog.Filter = GetLevelFilter();
             dialog.InitialDirectory = Ogmo.Project.SavedDirectory;
             if (dialog.ShowDialog() == DialogResult.Cancel)
                 return;

@@ -54,7 +54,7 @@ namespace OgmoEditor.Windows.Utilities
                 dialog.InitialDirectory = Ogmo.Project.SavedDirectory;
                 dialog.Title = "Batch Resaver";
                 dialog.Multiselect = true;
-                dialog.Filter = Ogmo.LEVEL_FILTER;
+                dialog.Filter = Ogmo.GetLevelFilter();
                 dialog.CheckFileExists = true;
                 DialogResult result = dialog.ShowDialog(this);
 
