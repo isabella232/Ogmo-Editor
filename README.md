@@ -4,15 +4,6 @@
 
 ## New Features
 
-### Tilemap Zooming
-You can now zoom in on your tile palette windows. This helps you get a better view of your assets and save precious screen real estate. Use the mouse wheel to zoom and right/middle mouse button to pan.
-
-### Performance and Rendering Enhancements
-Thanks to [talesofgames' ToGmo project](https://github.com/talesofgames/Ogmo-Editor), the editor is faster and smoother than ever, especially when dealing with large maps!
-
-### Bug Fixes
-Many longstanding Ogmo bugs are fixed in this fork. No more annoying exceptions or inconsistent hotkeys!
-
 ### Mac and Linux Support (via Wine)
 
 You can build and run this version of Ogmo Editor on macOS and Linux.
@@ -31,6 +22,21 @@ To run Ogmo Editor:
 `WINEDEBUG=-all FREETYPE_PROPERTIES="truetype:interpreter-version=35" wine OgmoEditor.exe`
 
 Note that you can only load assets from within Wine's virtual filesystem (i.e. `drive_c` and its subdirectories).
+
+### JSON Export
+
+When creating projects, you can now choose between XML (.oel, .oep) and JSON (.json, .jogmo) file exports for your project and levels. Choose whichever best fits your needs!  
+
+NOTE: You cannot change the project export type after creation. This is subject to change in the future.
+
+### Tilemap Zooming
+You can now zoom in on your tile palette windows. This helps you get a better view of your assets and save precious screen real estate. Use the mouse wheel to zoom and right/middle mouse button to pan.
+
+### Performance and Rendering Enhancements
+Thanks to [talesofgames' ToGmo project](https://github.com/talesofgames/Ogmo-Editor), the editor is faster and smoother than ever, especially when dealing with large maps!
+
+### Bug Fixes
+Many longstanding Ogmo bugs are fixed in this fork. No more annoying exceptions or inconsistent hotkeys!
 
 ### Other Stuff!
 See the [changelog.html](https://github.com/TheSpydog/Ogmo-Editor/blob/master/OgmoEditor/Content/changelog.html#L50) for a list of all the fixes and additions.
