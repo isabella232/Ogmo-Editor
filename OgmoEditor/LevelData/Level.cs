@@ -10,6 +10,7 @@ using System.IO;
 using System.Drawing;
 using OgmoEditor.LevelData.Layers;
 using OgmoEditor.LevelEditors;
+using OgmoEditor.Definitions.ValueDefinitions;
 
 namespace OgmoEditor.LevelData
 {
@@ -226,22 +227,44 @@ namespace OgmoEditor.LevelData
             JObject json = new JObject();
 
             // Export the size
-            json.Add("width", Size.Width.ToString());
-            json.Add("height", Size.Height.ToString());
+            json.Add("width", Size.Width);
+            json.Add("height", Size.Height);
 
             // Export camera position
             if (Ogmo.Project.ExportCameraPosition)
             {
                 JObject cam = new JObject();
-                cam.Add("x", CameraPosition.X.ToString());
-                cam.Add("y", CameraPosition.Y.ToString());
+                cam.Add("x", CameraPosition.X);
+                cam.Add("y", CameraPosition.Y);
                 json.Add("camera", cam);
             }
 
             // Export the level values
             if (Values != null)
+            {
                 foreach (var v in Values)
-                    json.Add(v.Definition.Name, v.Content);
+                {
+                    // Save the value with the correct type
+                    Type defType = v.Definition.GetType();
+                    if (defType == typeof(IntValueDefinition))
+                    {
+                        json.Add(v.Definition.Name, Convert.ToInt32(v.Content));
+                    }
+                    else if (defType == typeof(BoolValueDefinition))
+                    {
+                        json.Add(v.Definition.Name, Convert.ToBoolean(v.Content));
+                    }
+                    else if (defType == typeof(FloatValueDefinition))
+                    {
+                        json.Add(v.Definition.Name, Convert.ToSingle(v.Content));
+                    }
+                    else
+                    {
+                        // Treat it as a string
+                        json.Add(v.Definition.Name, v.Content);
+                    }
+                }
+            }
 
             // Export the layers
             JArray layers = new JArray();
