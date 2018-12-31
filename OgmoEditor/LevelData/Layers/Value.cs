@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using OgmoEditor.Definitions.ValueDefinitions;
 using System.Xml;
+using Newtonsoft.Json.Linq;
 
 namespace OgmoEditor.LevelData.Layers
 {
@@ -29,11 +30,6 @@ namespace OgmoEditor.LevelData.Layers
             XmlAttribute xml = doc.CreateAttribute(Definition.Name);
             xml.InnerText = Content;
             return xml;
-        }
-
-        public void SetXML(XmlAttribute xml)
-        {
-            Content = xml.InnerText;
         }
     }
 }

@@ -11,6 +11,7 @@ namespace OgmoEditor.Definitions.LayerDefinitions
 {
     public class TileLayerDefinition : LayerDefinition
     {
+        //TODO: Is this gonna work for json?
         public enum TileExportMode { CSV, TrimmedCSV, XML, XMLCoords };
         public TileExportMode ExportMode;
 

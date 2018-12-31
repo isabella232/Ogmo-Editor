@@ -10,6 +10,7 @@ using System.Drawing;
 using OgmoEditor.Definitions;
 using System.Diagnostics;
 using System.Drawing.Drawing2D;
+using Newtonsoft.Json.Linq;
 
 namespace OgmoEditor.LevelData.Layers
 {
@@ -215,6 +216,16 @@ namespace OgmoEditor.LevelData.Layers
 
             ResetBitmaps();
             return cleanXML;
+        }
+
+        public override JObject GetJSON()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool SetJSON(JObject json)
+        {
+            throw new NotImplementedException();
         }
 
         public int this[int tx, int ty]

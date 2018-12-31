@@ -6,6 +6,7 @@ using OgmoEditor.Definitions.LayerDefinitions;
 using System.Xml;
 using OgmoEditor.LevelEditors.LayerEditors;
 using OgmoEditor.LevelEditors.Resizers;
+using Newtonsoft.Json.Linq;
 
 namespace OgmoEditor.LevelData.Layers
 {
@@ -37,6 +38,29 @@ namespace OgmoEditor.LevelData.Layers
             foreach (XmlElement e in xml.ChildNodes)
             {
                 if (Ogmo.Project.EntityDefinitions.Find(d => d.Name == e.Name) != null)
+                    Entities.Add(new Entity(this, e));
+            }
+            return true;
+        }
+
+        public override JObject GetJSON()
+        {
+            JArray entityArray = new JArray();
+
+            foreach (Entity e in Entities)
+                entityArray.Add(e.GetJSON());
+
+            JObject json = new JObject();
+            json.Add(Definition.Name, entityArray);
+            return json;
+        }
+
+        public override bool SetJSON(JObject json)
+        {
+            foreach (JObject e in json.Children())
+            {
+                string eName = (string)e.GetValue("name");
+                if (Ogmo.Project.EntityDefinitions.Find(d => d.Name == eName) != null)
                     Entities.Add(new Entity(this, e));
             }
             return true;

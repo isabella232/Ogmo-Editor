@@ -10,6 +10,7 @@ using OgmoEditor.Definitions;
 using System.IO;
 using OgmoEditor.LevelData.Layers;
 using System.Xml;
+using Newtonsoft.Json.Linq;
 
 namespace OgmoEditor
 {
@@ -194,7 +195,7 @@ namespace OgmoEditor
         }
 
         /*
-         *  XML reading/writing
+         *  XML and JSON reading/writing
          */
         static public void ImportValues(List<Value> values, XmlElement xml)
         {
@@ -203,6 +204,16 @@ namespace OgmoEditor
                 Value v = values.Find(val => val.Definition.Name == a.Name);
                 if (v != null)
                     v.Content = a.InnerText;
+            }
+        }
+
+        static public void ImportValues(List<Value> values, JObject json)
+        {
+            foreach (JProperty p in json.Properties())
+            {
+                Value v = values.Find(val => val.Definition.Name == p.Name);
+                if (v != null)
+                    v.Content = (string)p.Value;
             }
         }
 

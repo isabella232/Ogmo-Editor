@@ -8,6 +8,7 @@ using OgmoEditor.LevelEditors.LayerEditors;
 using System.Drawing;
 using System.Diagnostics;
 using OgmoEditor.LevelEditors.Resizers;
+using Newtonsoft.Json.Linq;
 
 namespace OgmoEditor.LevelData.Layers
 {
@@ -224,6 +225,16 @@ namespace OgmoEditor.LevelData.Layers
             }
 
             return cleanXML;
+        }
+
+        public override JObject GetJSON()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool SetJSON(JObject json)
+        {
+            throw new NotImplementedException();
         }
 
         /*

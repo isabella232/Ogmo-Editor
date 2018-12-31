@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System.IO;
 using System.Drawing;
 using OgmoEditor.LevelData.Layers;
@@ -153,7 +155,7 @@ namespace OgmoEditor.LevelData
         }
 
         /*
-         *  XML
+         *  XML/JSON
          */
         public XmlDocument GenerateXML()
         {
@@ -200,6 +202,37 @@ namespace OgmoEditor.LevelData
                 level.AppendChild(Layers[i].GetXML(doc));
 
             return doc;
+        }
+
+        public JObject GenerateJSON()
+        {
+            JObject json = new JObject();
+
+            // Export the size
+            json.Add("width", Size.Width.ToString());
+            json.Add("height", Size.Height.ToString());
+
+            // Export camera position
+            if (Ogmo.Project.ExportCameraPosition)
+            {
+                JObject cam = new JObject();
+                cam.Add("x", CameraPosition.X.ToString());
+                cam.Add("y", CameraPosition.Y.ToString());
+                json.Add("camera", cam);
+            }
+
+            // Export the level values
+            if (Values != null)
+                foreach (var v in Values)
+                    json.Add(v.Definition.Name, v.Content);
+
+            // Export the layers
+            JArray layers = new JArray();
+            for (int i = 0; i < Layers.Count; i++)
+                layers.Add(Layers[i].GetJSON());
+            json.Add("layers", layers);
+
+            return json;
         }
 
         private void LoadFromXML(XmlDocument xml)
@@ -319,9 +352,23 @@ namespace OgmoEditor.LevelData
 
         public void WriteTo(string filename)
         {
-            //Generate the XML and write it!            
-            XmlDocument doc = GenerateXML();
-            doc.Save(filename);
+            if (Project.ProjectType == Ogmo.ProjectType.XML)
+            {
+                //Generate the XML and write it!
+                XmlDocument doc = GenerateXML();
+                doc.Save(filename);
+            }
+            else if (Project.ProjectType == Ogmo.ProjectType.JSON)
+            {
+                JObject json = GenerateJSON();
+
+                using (StreamWriter stream = new StreamWriter(filename))
+                using (JsonWriter jw = new JsonTextWriter(stream))
+                {
+                    jw.Formatting = Newtonsoft.Json.Formatting.Indented;
+                    stream.Write(json);
+                }
+            }
 
             Changed = false;
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Xml;
+using Newtonsoft.Json.Linq;
 using OgmoEditor.Definitions;
 
 namespace OgmoEditor.LevelData.Layers
@@ -114,6 +115,52 @@ namespace OgmoEditor.LevelData.Layers
             }
         }
 
+        public Entity(EntityLayer layer, JObject json)
+        {
+            Layer = layer;
+            Definition = Ogmo.Project.EntityDefinitions.Find(d => d.Name == (string)json.GetValue("name"));
+
+            //ID
+            if (json.Property("id") != null)
+                ID = Convert.ToUInt32(json.GetValue("id"));
+            else
+                ID = layer.GetNewEntityID();
+
+            //Position
+            Position = new Point(Convert.ToInt32(json.GetValue("x")), Convert.ToInt32(json.GetValue("y")));
+
+            //Size
+            if (Definition.ResizableX && json.Property("width") != null)
+                Size.Width = Convert.ToInt32(json.GetValue("width"));
+            else
+                Size.Width = Definition.Size.Width;
+            if (Definition.ResizableY && json.Property("height") != null)
+                Size.Height = Convert.ToInt32(json.GetValue("height"));
+            else
+                Size.Height = Definition.Size.Height;
+
+            //Rotation
+            if (Definition.Rotatable && json.Property("angle") != null)
+                Angle = Ogmo.Project.ImportAngle((string)json.GetValue("angle"));
+
+            //Nodes
+            if (Definition.NodesDefinition.Enabled)
+            {
+                Nodes = new List<Point>();
+                foreach (JObject node in json.GetValue("nodes"))
+                    Nodes.Add(new Point(Convert.ToInt32(node.GetValue("x")), Convert.ToInt32(node.GetValue("y"))));
+            }
+
+            //Values
+            if (Definition.ValueDefinitions.Count > 0)
+            {
+                Values = new List<Value>(Definition.ValueDefinitions.Count);
+                foreach (var d in Definition.ValueDefinitions)
+                    Values.Add(new Value(d));
+                OgmoParse.ImportValues(Values, json);
+            }
+        }
+
         public XmlElement GetXML(XmlDocument doc)
         {
             XmlElement xml = doc.CreateElement(Definition.Name);
@@ -176,6 +223,53 @@ namespace OgmoEditor.LevelData.Layers
                     xml.Attributes.Append(v.GetXML(doc));
 
             return xml;
+        }
+
+        public JObject GetJSON()
+        {
+            JObject json = new JObject();
+
+            json.Add("name", Definition.Name);
+            json.Add("id", ID.ToString());
+            json.Add("x", Position.X.ToString());
+            json.Add("y", Position.Y.ToString());
+
+            if (Definition.ResizableX)
+            {
+                json.Add("width", Size.Width.ToString());
+            }
+            if (Definition.ResizableY)
+            {
+                json.Add("height", Size.Height.ToString());
+            }
+
+            if (Definition.Rotatable)
+            {
+                json.Add("angle", Ogmo.Project.ExportAngle(Angle));
+            }
+
+            if (Nodes != null)
+            {
+                JArray nodeArray = new JArray();
+                foreach (var p in Nodes)
+                {
+                    JObject node = new JObject();
+                    node.Add("x", p.X);
+                    node.Add("y", p.Y);
+                    nodeArray.Add(node);
+                }
+                json.Add("nodes", nodeArray);
+            }
+
+            if (Values != null)
+            {
+                foreach (var v in Values)
+                {
+                    json.Add(v.Definition.Name, v.Content);
+                }
+            }
+
+            return json;
         }
 
         public void Draw(Graphics graphics, bool current, bool fullAlpha)
