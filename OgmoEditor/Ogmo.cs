@@ -269,9 +269,10 @@ namespace OgmoEditor
             //Remove it!
             Project = null;
 
-            //Tool and layer selection can be cleared now
+            //Tool, layer, and entity selection can be cleared now
             LayersWindow.SetLayer(-1);
             ToolsWindow.ClearTool();
+            EntitySelectionWindow.ClearSelection();
 
             //Force a garbage collection
             Ogmo.MainWindow.AddStartPage();
