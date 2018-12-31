@@ -11,6 +11,7 @@ using OgmoEditor.Definitions.LayerDefinitions;
 using System.Runtime.Serialization;
 using System.Drawing;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Collections;
 using OgmoEditor.Definitions.ValueDefinitions;
@@ -277,12 +278,26 @@ namespace OgmoEditor
         private void writeTo(string filename)
         {
             //Set the current Ogmo Editor version in the project file
-            OgmoVersion = new Version(1, 0).ToString();
+            OgmoVersion = new Version(2, 3).ToString();
 
-            XmlSerializer xs = new XmlSerializer(typeof(Project));
-            Stream stream = new FileStream(filename, FileMode.Create);
-            xs.Serialize(stream, this);
-            stream.Close();
+            if (ProjectType == Ogmo.ProjectType.XML)
+            {
+                XmlSerializer xs = new XmlSerializer(typeof(Project));
+                Stream stream = new FileStream(filename, FileMode.Create);
+                xs.Serialize(stream, this);
+                stream.Close();
+            }
+            else if (ProjectType == Ogmo.ProjectType.JSON)
+            {
+                JsonSerializer js = new JsonSerializer();
+                using (StreamWriter stream = new StreamWriter(filename))
+                using (JsonTextWriter jwriter = new JsonTextWriter(stream))
+                {
+                    js.Formatting = Newtonsoft.Json.Formatting.Indented;
+                    js.TypeNameHandling = TypeNameHandling.Auto;
+                    js.Serialize(jwriter, this);
+                }
+            }
         }
     }
 }

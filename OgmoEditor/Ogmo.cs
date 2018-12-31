@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 using OgmoEditor.Clipboard;
 using OgmoEditor.Definitions;
 using OgmoEditor.Definitions.LayerDefinitions;
@@ -11,7 +12,6 @@ using OgmoEditor.LevelData;
 using OgmoEditor.LevelEditors.Tools;
 using OgmoEditor.ProjectEditors;
 using OgmoEditor.Windows;
-using System.Diagnostics;
 
 namespace OgmoEditor
 {
@@ -209,10 +209,24 @@ namespace OgmoEditor
                 CloseProject();
 
             //Load it
-            XmlSerializer xs = new XmlSerializer(typeof(Project));
-            Stream s = new FileStream(filename, FileMode.Open);
-            Project = (Project)xs.Deserialize(s);
-            s.Close();
+            if (Path.GetExtension(filename) == PROJECT_EXT_XML)
+            {
+                XmlSerializer xs = new XmlSerializer(typeof(Project));
+                Stream s = new FileStream(filename, FileMode.Open);
+                Project = (Project)xs.Deserialize(s);
+                s.Close();
+            }
+            else if (Path.GetExtension(filename) == PROJECT_EXT_JSON)
+            {
+                JsonSerializer js = new JsonSerializer();
+                using (StreamReader stream = new StreamReader(filename))
+                using (JsonTextReader jreader = new JsonTextReader(stream))
+                {
+                    js.TypeNameHandling = TypeNameHandling.Auto;
+                    Project = js.Deserialize<Project>(jreader);
+                }
+            }
+
             Project.Filename = filename;
 
             //Error check
