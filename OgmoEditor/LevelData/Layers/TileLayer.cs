@@ -220,12 +220,153 @@ namespace OgmoEditor.LevelData.Layers
 
         public override JObject GetJSON()
         {
-            throw new NotImplementedException();
+            JObject json = new JObject();
+            json.Add("name", Definition.Name);
+            json.Add("tileset", Tileset.Name);
+            json.Add("exportMode", Definition.ExportMode.ToString());
+
+            if (Definition.ExportMode == TileLayerDefinition.TileExportMode.CSV || Definition.ExportMode == TileLayerDefinition.TileExportMode.TrimmedCSV)
+            {
+                //Convert all tile values to CSV
+                string[] rows = new string[TileCellsY];
+                for (int i = 0; i < TileCellsY; i++)
+                {
+                    string[] tileStrs = new string[TileCellsX];
+                    for (int j = 0; j < tileStrs.GetLength(0); j++)
+                    {
+                        tileStrs[j] = tiles[j, i].ToString();
+                    }
+                    rows[i] = string.Join(",", tileStrs);
+                }
+
+                //Trim off trailing empties
+                if (Definition.ExportMode == TileLayerDefinition.TileExportMode.TrimmedCSV)
+                {
+                    for (int i = 0; i < rows.Length; i++)
+                    {
+                        int index = rows[i].LastIndexOf(",-1");
+                        while (index != -1 && index == rows[i].Length - 3)
+                        {
+                            rows[i] = rows[i].Substring(0, rows[i].Length - 3);
+                            index = rows[i].LastIndexOf(",-1");
+                        }
+                        if (rows[i] == "-1")
+                            rows[i] = "";
+                    }
+                }
+
+                json.Add("data", string.Join("\n", rows));
+            }
+            else if (Definition.ExportMode == TileLayerDefinition.TileExportMode.JSON || Definition.ExportMode == TileLayerDefinition.TileExportMode.JSONCoords)
+            {
+                //JSON Export
+                JArray jTiles = new JArray();
+
+                for (int i = 0; i < tiles.GetLength(0); i++)
+                {
+                    for (int j = 0; j < tiles.GetLength(1); j++)
+                    {
+                        if (tiles[i, j] != -1)
+                        {
+                            JObject tile = new JObject();
+                            tile.Add("x", i.ToString());
+                            tile.Add("y", j.ToString());
+
+                            if (Definition.ExportMode == TileLayerDefinition.TileExportMode.JSON)
+                            {
+                                tile.Add("id", tiles[i, j].ToString());
+                            }
+                            else
+                            {
+                                Point p = Tileset.GetCellFromID(tiles[i, j]);
+                                tile.Add("tx", p.X.ToString());
+                                tile.Add("ty", p.Y.ToString());
+                            }
+
+                            jTiles.Add(tile);
+                        }
+                    }
+                }
+
+                json.Add("tiles", jTiles);
+            }
+
+            return json;
         }
 
         public override bool SetJSON(JToken json)
         {
-            throw new NotImplementedException();
+            Clear();
+
+            bool cleanJSON = true;
+            JObject jsonobj = (JObject)json;
+
+            //Load the tileset
+            string tilesetName = jsonobj.Value<string>("tileset");
+            Tileset = Ogmo.Project.Tilesets.Find(t => t.Name == tilesetName);
+
+            //Get the export mode
+            TileLayerDefinition.TileExportMode exportMode;
+            if (jsonobj.Property("exportMode") != null)
+                exportMode = (TileLayerDefinition.TileExportMode)Enum.Parse(typeof(TileLayerDefinition.TileExportMode), jsonobj.Value<string>("exportMode"));
+            else
+                exportMode = Definition.ExportMode;
+
+            if (exportMode == TileLayerDefinition.TileExportMode.CSV || exportMode == TileLayerDefinition.TileExportMode.TrimmedCSV)
+            {
+                //CSV Import
+                string s = jsonobj.Value<string>("data");
+
+                string[] rows = s.Split('\n');
+                if (rows.Length > tiles.GetLength(1))
+                {
+                    Array.Resize(ref rows, tiles.GetLength(1));
+                    cleanJSON = false;
+                }
+                for (int i = 0; i < rows.Length; i++)
+                {
+                    string[] tileStrs = rows[i].Split(',');
+                    if (tileStrs.Length > TileCellsX)
+                    {
+                        Array.Resize(ref tileStrs, TileCellsX);
+                        cleanJSON = false;
+                    }
+                    if (tileStrs[0] != "")
+                        for (int j = 0; j < tileStrs.Length; j++)
+                            tiles[j, i] = Convert.ToInt32(tileStrs[j]);
+                }
+            }
+            else if (exportMode == TileLayerDefinition.TileExportMode.JSON || exportMode == TileLayerDefinition.TileExportMode.JSONCoords)
+            {
+                //JSON Import
+                JArray jTiles = jsonobj.Value<JArray>("tiles");
+                foreach (JObject tile in jTiles)
+                {
+                    int x = Convert.ToInt32(tile.Value<string>("x"));
+                    int y = Convert.ToInt32(tile.Value<string>("y"));
+
+                    if (x >= Tiles.GetLength(0) || y >= Tiles.GetLength(1))
+                    {
+                        cleanJSON = false;
+                        continue;
+                    }
+
+                    if (tile.Property("id") != null)
+                    {
+                        int id = Convert.ToInt32(tile.Value<string>("id"));
+                        tiles[x, y] = id;
+                    }
+                    else if (tile.Property("tx") != null && tile.Property("ty") != null)
+                    {
+                        int tx = Convert.ToInt32(tile.Value<string>("tx"));
+                        int ty = Convert.ToInt32(tile.Value<string>("ty"));
+                        tiles[x, y] = Tileset.GetIDFromCell(new Point(tx, ty));
+                    }
+                }
+            }
+
+            ResetBitmaps();
+            return cleanJSON;
         }
 
         public int this[int tx, int ty]

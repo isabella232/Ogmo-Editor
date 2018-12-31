@@ -36,11 +36,6 @@
             // 
             this.exportModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.exportModeComboBox.FormattingEnabled = true;
-            this.exportModeComboBox.Items.AddRange(new object[] {
-            "CSV",
-            "Trimmed CSV",
-            "XML (IDs)",
-            "XML (Co-ords)"});
             this.exportModeComboBox.Location = new System.Drawing.Point(89, 12);
             this.exportModeComboBox.Name = "exportModeComboBox";
             this.exportModeComboBox.Size = new System.Drawing.Size(139, 21);
