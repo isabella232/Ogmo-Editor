@@ -19,7 +19,7 @@ namespace OgmoEditor
     {
         public const string PROJECT_EXT_XML = ".oep";
         public const string LEVEL_EXT_XML = ".oel";
-        public const string PROJECT_EXT_JSON = ".jsog";
+        public const string PROJECT_EXT_JSON = ".jogmo";
         public const string LEVEL_EXT_JSON = ".json";
         public const string PROJECT_FILTER = "Ogmo Editor Project File|*";
         public const string LEVEL_FILTER = "Ogmo Editor Level File|*";
