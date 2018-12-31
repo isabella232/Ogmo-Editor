@@ -51,11 +51,12 @@ namespace OgmoEditor.LevelData.Layers
                 entityArray.Add(e.GetJSON());
 
             JObject json = new JObject();
-            json.Add(Definition.Name, entityArray);
+            json.Add("name", Definition.Name);
+            json.Add("data", entityArray);
             return json;
         }
 
-        public override bool SetJSON(JObject json)
+        public override bool SetJSON(JArray json)
         {
             foreach (JObject e in json.Children())
             {

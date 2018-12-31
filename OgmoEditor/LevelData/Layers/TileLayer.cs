@@ -223,7 +223,7 @@ namespace OgmoEditor.LevelData.Layers
             throw new NotImplementedException();
         }
 
-        public override bool SetJSON(JObject json)
+        public override bool SetJSON(JArray json)
         {
             throw new NotImplementedException();
         }

@@ -33,13 +33,30 @@ namespace OgmoEditor.LevelData
 
             if (File.Exists(filename))
             {
-                //Load the level from XML
-                XmlDocument doc = new XmlDocument();
-                FileStream stream = new FileStream(filename, FileMode.Open);
-                doc.Load(stream);
-                stream.Close();
+                if (Project.ProjectType == Ogmo.ProjectType.XML)
+                {
+                    //Load the level from XML
+                    XmlDocument doc = new XmlDocument();
+                    FileStream stream = new FileStream(filename, FileMode.Open);
+                    doc.Load(stream);
+                    stream.Close();
 
-                LoadFromXML(doc);
+                    LoadFromXML(doc);
+                }
+                else if (Project.ProjectType == Ogmo.ProjectType.JSON)
+                {
+                    // Load the level from JSON
+                    JObject json = new JObject();
+
+                    using (StreamReader stream = new StreamReader(filename))
+                    using (JsonTextReader reader = new JsonTextReader(stream))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        JObject levelData = serializer.Deserialize<JObject>(reader);
+                        LoadFromJSON(levelData);
+                    }
+                }
+
                 SavePath = filename;
             }
             else
@@ -311,6 +328,74 @@ namespace OgmoEditor.LevelData
             Salvaged = !cleanXML;
         }
 
+        private void LoadFromJSON(JObject json)
+        {
+            bool cleanJSON = true;
+
+            Size size = new Size();
+
+            //Import the size
+            if (json.Property("width") != null)
+                size.Width = Convert.ToInt32(json.GetValue("width"));
+            else
+                size.Width = Ogmo.Project.LevelDefaultSize.Width;
+
+            if (json.Property("height") != null)
+                size.Height = Convert.ToInt32(json.GetValue("height"));
+            else
+                size.Height = Ogmo.Project.LevelDefaultSize.Height;
+
+            //Error check the width
+            if (size.Width < Ogmo.Project.LevelMinimumSize.Width)
+            {
+                size.Width = Ogmo.Project.LevelMinimumSize.Width;
+                cleanJSON = false;
+            }
+            else if (size.Width > Ogmo.Project.LevelMaximumSize.Width)
+            {
+                size.Width = Ogmo.Project.LevelMaximumSize.Width;
+                cleanJSON = false;
+            }
+
+            Size = size;
+
+            //Import the camera position
+            if (json.Property("camera") != null)
+            {
+                JObject cam = (JObject)json.GetValue("camera");
+                CameraPosition.X = Convert.ToInt32(cam.GetValue("x"));
+                CameraPosition.Y = Convert.ToInt32(cam.GetValue("y"));
+            }
+
+            //Import the level values
+            //Initialize values
+            if (Project.LevelValueDefinitions.Count > 0)
+            {
+                Values = new List<Value>();
+                foreach (var def in Project.LevelValueDefinitions)
+                    Values.Add(new Value(def));
+                OgmoParse.ImportValues(Values, json);
+            }
+
+            //Import layers
+            Layers = new List<Layer>();
+            List<JToken> jsonLayers = ((JArray)json.GetValue("layers")).ToList();
+
+            for (int i = 0; i < Project.LayerDefinitions.Count; i++)
+            {
+                Layer layer = Project.LayerDefinitions[i].GetInstance(this);
+                Layers.Add(layer);
+
+                // Find the json object with the name of this layer
+                JObject jLayer = (JObject)jsonLayers.Find(o => o.Value<string>("name") == Project.LayerDefinitions[i].Name);
+
+                if (jLayer != null)
+                    cleanJSON = (layer.SetJSON((JArray)jLayer.GetValue("data")) && cleanJSON);
+            }
+
+            Salvaged = !cleanJSON;
+        }
+
         public void EditProperties()
         {
             Ogmo.MainWindow.DisableEditing();
@@ -354,7 +439,6 @@ namespace OgmoEditor.LevelData
         {
             if (Project.ProjectType == Ogmo.ProjectType.XML)
             {
-                //Generate the XML and write it!
                 XmlDocument doc = GenerateXML();
                 doc.Save(filename);
             }

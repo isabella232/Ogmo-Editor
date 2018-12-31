@@ -26,7 +26,7 @@ namespace OgmoEditor.LevelData.Layers
         public abstract XmlElement GetXML(XmlDocument doc);
         public abstract bool SetXML(XmlElement xml);
         public abstract JObject GetJSON();
-        public abstract bool SetJSON(JObject json);
+        public abstract bool SetJSON(JArray json);
         public abstract LayerEditor GetEditor(LevelEditor editor);
     }
 }

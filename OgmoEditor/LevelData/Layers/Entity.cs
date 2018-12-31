@@ -134,6 +134,7 @@ namespace OgmoEditor.LevelData.Layers
                 Size.Width = Convert.ToInt32(json.GetValue("width"));
             else
                 Size.Width = Definition.Size.Width;
+
             if (Definition.ResizableY && json.Property("height") != null)
                 Size.Height = Convert.ToInt32(json.GetValue("height"));
             else
@@ -147,8 +148,13 @@ namespace OgmoEditor.LevelData.Layers
             if (Definition.NodesDefinition.Enabled)
             {
                 Nodes = new List<Point>();
-                foreach (JObject node in json.GetValue("nodes"))
-                    Nodes.Add(new Point(Convert.ToInt32(node.GetValue("x")), Convert.ToInt32(node.GetValue("y"))));
+                if (json.Property("nodes") != null)
+                {
+                    foreach (JObject node in json.GetValue("nodes"))
+                    {
+                        Nodes.Add(new Point(Convert.ToInt32(node.GetValue("x")), Convert.ToInt32(node.GetValue("y"))));
+                    }
+                }
             }
 
             //Values
