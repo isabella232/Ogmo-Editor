@@ -221,12 +221,12 @@ namespace OgmoEditor
             return SavedDirectory + Path.DirectorySeparatorChar + path;
         }
 
-        public string ExportAngle(float angle)
+        public float ExportAngle(float angle)
         {
             if (AngleMode == AngleExportMode.Radians)
-                return (angle * Util.DEGTORAD).ToString();
+                return angle * Util.DEGTORAD;
             else
-                return angle.ToString();
+                return angle;
         }
 
         public float ImportAngle(string angle)

@@ -5,6 +5,7 @@ using System.Drawing.Imaging;
 using System.Xml;
 using Newtonsoft.Json.Linq;
 using OgmoEditor.Definitions;
+using OgmoEditor.Definitions.ValueDefinitions;
 
 namespace OgmoEditor.LevelData.Layers
 {
@@ -203,7 +204,7 @@ namespace OgmoEditor.LevelData.Layers
             if (Definition.Rotatable)
             {
                 a = doc.CreateAttribute("angle");
-                a.InnerText = Ogmo.Project.ExportAngle(Angle);
+                a.InnerText = Ogmo.Project.ExportAngle(Angle).ToString();
                 xml.Attributes.Append(a);
             }
 
@@ -236,17 +237,17 @@ namespace OgmoEditor.LevelData.Layers
             JObject json = new JObject();
 
             json.Add("name", Definition.Name);
-            json.Add("id", ID.ToString());
-            json.Add("x", Position.X.ToString());
-            json.Add("y", Position.Y.ToString());
+            json.Add("id", ID);
+            json.Add("x", Position.X);
+            json.Add("y", Position.Y);
 
             if (Definition.ResizableX)
             {
-                json.Add("width", Size.Width.ToString());
+                json.Add("width", Size.Width);
             }
             if (Definition.ResizableY)
             {
-                json.Add("height", Size.Height.ToString());
+                json.Add("height", Size.Height);
             }
 
             if (Definition.Rotatable)
@@ -271,7 +272,25 @@ namespace OgmoEditor.LevelData.Layers
             {
                 foreach (var v in Values)
                 {
-                    json.Add(v.Definition.Name, v.Content);
+                    // Save the value with the correct type
+                    Type defType = v.Definition.GetType();
+                    if (defType == typeof(IntValueDefinition))
+                    {
+                        json.Add(v.Definition.Name, Convert.ToInt32(v.Content));
+                    }
+                    else if (defType == typeof(BoolValueDefinition))
+                    {
+                        json.Add(v.Definition.Name, Convert.ToBoolean(v.Content));
+                    }
+                    else if (defType == typeof(FloatValueDefinition))
+                    {
+                        json.Add(v.Definition.Name, Convert.ToSingle(v.Content));
+                    }
+                    else
+                    {
+                        // Treat it as a string
+                        json.Add(v.Definition.Name, v.Content);
+                    }
                 }
             }
 
