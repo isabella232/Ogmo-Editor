@@ -390,7 +390,7 @@ namespace OgmoEditor.LevelData
                 JObject jLayer = (JObject)jsonLayers.Find(o => o.Value<string>("name") == Project.LayerDefinitions[i].Name);
 
                 if (jLayer != null)
-                    cleanJSON = (layer.SetJSON((JArray)jLayer.GetValue("data")) && cleanJSON);
+                    cleanJSON = (layer.SetJSON(jLayer) && cleanJSON);
             }
 
             Salvaged = !cleanJSON;

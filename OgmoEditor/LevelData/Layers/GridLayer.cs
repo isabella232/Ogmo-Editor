@@ -229,12 +229,203 @@ namespace OgmoEditor.LevelData.Layers
 
         public override JObject GetJSON()
         {
-            throw new NotImplementedException();
+            JObject json = new JObject();
+            string data = "";
+
+            json.Add("name", Definition.Name);
+
+            //Write the export mode
+            json.Add("exportMode", Definition.ExportMode.ToString());
+
+            switch (Definition.ExportMode)
+            {
+                case GridLayerDefinition.ExportModes.Bitstring:
+                case GridLayerDefinition.ExportModes.TrimmedBitstring:
+                    //Bitstring export
+                    string[] rows = new string[Grid.GetLength(1)];
+                    for (int i = 0; i < Grid.GetLength(1); i++)
+                    {
+                        rows[i] = "";
+                        for (int j = 0; j < Grid.GetLength(0); j++)
+                            rows[i] += Grid[j, i] ? "1" : "0";
+                    }
+
+                    if (Definition.ExportMode == GridLayerDefinition.ExportModes.TrimmedBitstring)
+                    {
+                        //Trim off trailing zeroes on rows and then trim trailing empty rows
+                        for (int i = 0; i < rows.Length; i++)
+                            rows[i] = rows[i].TrimEnd('0');
+
+                        string s = string.Join("\n", rows, 0, rows.Length);
+                        s = s.TrimEnd('\n');
+                        data = s;
+                    }
+                    else
+                        data = string.Join("\n", rows, 0, rows.Length);
+
+                    json.Add("data", data);
+
+                    break;
+
+                case GridLayerDefinition.ExportModes.Rectangles:
+                case GridLayerDefinition.ExportModes.GridRectangles:
+                    //Rectangles export
+                    bool[,] copy = (bool[,])Grid.Clone();
+                    List<Rectangle> rects = new List<Rectangle>();
+
+                    //Create the rectangles
+                    Point p = getFirstCell(copy);
+                    while (p.X != -1)
+                    {
+                        copy[p.X, p.Y] = false;
+                        int w = 1;
+                        int h = 1;
+
+                        //Extend it to the right
+                        while (p.X + w < copy.GetLength(0) && copy[p.X + w, p.Y])
+                        {
+                            copy[p.X + w, p.Y] = false;
+                            w++;
+                        }
+
+                        //Extend it downward
+                        while (p.Y + h < copy.GetLength(1))
+                        {
+                            bool done = false;
+                            for (int i = p.X; i < p.X + w; i++)
+                            {
+                                if (!copy[i, p.Y + h])
+                                {
+                                    done = true;
+                                    break;
+                                }
+                            }
+                            if (done)
+                                break;
+
+                            for (int i = p.X; i < p.X + w; i++)
+                                copy[i, p.Y + h] = false;
+                            h++;
+                        }
+
+                        //Push the rectangle
+                        Rectangle rect = new Rectangle(p.X, p.Y, w, h);
+                        if (Definition.ExportMode == GridLayerDefinition.ExportModes.Rectangles)
+                            rect = GridToLevel(rect);
+                        rects.Add(rect);
+
+                        p = getFirstCell(copy);
+                    }
+
+                    //Export them as an array
+                    JArray jRects = new JArray();
+                    foreach (Rectangle r in rects)
+                    {
+                        JObject jRect = new JObject();
+
+                        jRect.Add("x", r.X.ToString());
+                        jRect.Add("y", r.Y.ToString());
+                        jRect.Add("w", r.Width.ToString());
+                        jRect.Add("h", r.Height.ToString());
+
+                        jRects.Add(jRect);
+                    }
+
+                    json.Add("rects", jRects);
+
+                    break;
+            }
+
+            return json;
         }
 
-        public override bool SetJSON(JArray json)
+        public override bool SetJSON(JToken json)
         {
-            throw new NotImplementedException();
+            Grid.Initialize();
+
+            bool cleanJSON = true;
+            JObject jsonobj = (JObject)json;
+
+            //Get the export mode
+            GridLayerDefinition.ExportModes exportMode;
+            if (jsonobj.Property("exportMode") != null)
+                exportMode = (GridLayerDefinition.ExportModes)Enum.Parse(typeof(GridLayerDefinition.ExportModes), jsonobj.Value<string>("exportMode"));
+            else
+                exportMode = Definition.ExportMode;
+
+            //Import the JSON!
+            switch (exportMode)
+            {
+                case GridLayerDefinition.ExportModes.Bitstring:
+                case GridLayerDefinition.ExportModes.TrimmedBitstring:
+                    //Bitstring import
+                    string s = jsonobj.Value<string>("data");
+                    int x = 0;
+                    int y = 0;
+                    for (int i = 0; i < s.Length; i++)
+                    {
+                        //If the grid is bigger than it should be, something has gone wrong with the JSON
+                        if (x >= Grid.GetLength(0) && s[i] != '\n')
+                        {
+                            cleanJSON = false;
+                            while (i < s.Length && s[i] != '\n')
+                                i++;
+                            x = 0;
+                            y++;
+                            continue;
+                        }
+                        else if (y >= Grid.GetLength(1))
+                        {
+                            cleanJSON = false;
+                            break;
+                        }
+
+                        if (s[i] == '1')
+                            Grid[x, y] = true;
+
+                        if (s[i] == '\n')
+                        {
+                            x = 0;
+                            y++;
+                        }
+                        else
+                            x++;
+                    }
+                    break;
+
+                case GridLayerDefinition.ExportModes.Rectangles:
+                case GridLayerDefinition.ExportModes.GridRectangles:
+                    //Rectangles import
+                    foreach (JObject r in jsonobj.Value<JArray>("rects"))
+                    {
+                        Rectangle rect = new Rectangle(
+                            Convert.ToInt32(r.Value<string>("x")),
+                            Convert.ToInt32(r.Value<string>("y")),
+                            Convert.ToInt32(r.Value<string>("w")),
+                            Convert.ToInt32(r.Value<string>("h"))
+                        );
+
+                        if (exportMode == GridLayerDefinition.ExportModes.Rectangles)
+                            rect = LevelToGrid(rect);
+
+                        for (int i = 0; i < rect.Width; i++)
+                        {
+                            for (int j = 0; j < rect.Height; j++)
+                            {
+                                if (rect.X + i >= Grid.GetLength(0) || rect.Y + j >= Grid.GetLength(1))
+                                {
+                                    cleanJSON = false;
+                                    continue;
+                                }
+
+                                Grid[rect.X + i, rect.Y + j] = true;
+                            }
+                        }
+                    }
+                    break;
+            }
+
+            return cleanJSON;
         }
 
         /*

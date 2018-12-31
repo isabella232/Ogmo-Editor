@@ -56,9 +56,10 @@ namespace OgmoEditor.LevelData.Layers
             return json;
         }
 
-        public override bool SetJSON(JArray json)
+        public override bool SetJSON(JToken json)
         {
-            foreach (JObject e in json.Children())
+            JArray jArray = json.Value<JArray>("data");
+            foreach (JObject e in jArray.Children())
             {
                 string eName = (string)e.GetValue("name");
                 if (Ogmo.Project.EntityDefinitions.Find(d => d.Name == eName) != null)
