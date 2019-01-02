@@ -257,6 +257,32 @@ namespace OgmoEditor.LevelData.Layers
 
                 json.Add("data", string.Join("\n", rows));
             }
+            else if (Definition.ExportMode == TileLayerDefinition.TileExportMode.Array2D)
+            {
+                JArray outerArray = new JArray();
+                for (int i = 0; i < TileCellsY; i++)
+                {
+                    JArray innerArray = new JArray();
+                    for (int j = 0; j < TileCellsX; j++)
+                    {
+                        innerArray.Add(Tiles[j, i]);
+                    }
+                    outerArray.Add(innerArray);
+                }
+                json.Add("data", outerArray);
+            }
+            else if (Definition.ExportMode == TileLayerDefinition.TileExportMode.Array1D)
+            {
+                JArray arr = new JArray();
+                for (int i = 0; i < TileCellsY; i++)
+                {
+                    for (int j = 0; j < TileCellsX; j++)
+                    {
+                        arr.Add(Tiles[j, i]);
+                    }
+                }
+                json.Add("data", arr);
+            }
             else if (Definition.ExportMode == TileLayerDefinition.TileExportMode.JSON || Definition.ExportMode == TileLayerDefinition.TileExportMode.JSONCoords)
             {
                 //JSON Export
