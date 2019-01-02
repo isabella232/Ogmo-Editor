@@ -232,7 +232,38 @@ namespace OgmoEditor.LevelData.Layers
             jw.WritePropertyName("exportMode");
             jw.WriteValue(Definition.ExportMode.ToString());
 
-            if (Definition.ExportMode == TileLayerDefinition.TileExportMode.CSV || Definition.ExportMode == TileLayerDefinition.TileExportMode.TrimmedCSV)
+            if (Definition.ExportMode == TileLayerDefinition.TileExportMode.Array2D || Definition.ExportMode == TileLayerDefinition.TileExportMode.Array1D)
+            {
+                jw.WritePropertyName("data");
+                jw.WriteStartArray();
+                for (int i = 0; i < TileCellsY; i++)
+                {
+                    // start the inner array if needed
+                    if (Definition.ExportMode == TileLayerDefinition.TileExportMode.Array2D)
+                        jw.WriteStartArray();
+
+                    // flatten each row to one line
+                    jw.Formatting = Newtonsoft.Json.Formatting.None;
+
+                    // write the data
+                    for (int j = 0; j < TileCellsX; j++)
+                    {
+                        jw.WriteValue(Tiles[j, i]);
+                    }
+
+                    // close and indent each inner array
+                    if (Definition.ExportMode == TileLayerDefinition.TileExportMode.Array2D)
+                    {
+                        jw.WriteEndArray();
+                        jw.Formatting = Newtonsoft.Json.Formatting.Indented;
+                    }
+                }
+                jw.WriteEndArray();
+
+                // return to indenting as usual
+                jw.Formatting = Newtonsoft.Json.Formatting.Indented;
+            }
+            else if (Definition.ExportMode == TileLayerDefinition.TileExportMode.CSV || Definition.ExportMode == TileLayerDefinition.TileExportMode.TrimmedCSV)
             {
                 //Convert all tile values to CSV
                 string[] rows = new string[TileCellsY];
@@ -265,37 +296,6 @@ namespace OgmoEditor.LevelData.Layers
                 // Write it
                 jw.WritePropertyName("data");
                 jw.WriteValue(string.Join("\n", rows));
-            }
-            else if (Definition.ExportMode == TileLayerDefinition.TileExportMode.Array2D || Definition.ExportMode == TileLayerDefinition.TileExportMode.Array1D)
-            {
-                jw.WritePropertyName("data");
-                jw.WriteStartArray();
-                for (int i = 0; i < TileCellsY; i++)
-                {
-                    // start the inner array if needed
-                    if (Definition.ExportMode == TileLayerDefinition.TileExportMode.Array2D)
-                        jw.WriteStartArray();
-
-                    // flatten each row to one line
-                    jw.Formatting = Newtonsoft.Json.Formatting.None;
-
-                    // write the data
-                    for (int j = 0; j < TileCellsX; j++)
-                    {
-                        jw.WriteValue(Tiles[j, i]);
-                    }
-
-                    // close and indent each inner array
-                    if (Definition.ExportMode == TileLayerDefinition.TileExportMode.Array2D)
-                    {
-                        jw.WriteEndArray();
-                        jw.Formatting = Newtonsoft.Json.Formatting.Indented;
-                    }
-                }
-                jw.WriteEndArray();
-
-                // return to indenting as usual
-                jw.Formatting = Newtonsoft.Json.Formatting.Indented;
             }
             else if (Definition.ExportMode == TileLayerDefinition.TileExportMode.JSON || Definition.ExportMode == TileLayerDefinition.TileExportMode.JSONCoords)
             {
@@ -358,31 +358,7 @@ namespace OgmoEditor.LevelData.Layers
             else
                 exportMode = Definition.ExportMode;
 
-            if (exportMode == TileLayerDefinition.TileExportMode.CSV || exportMode == TileLayerDefinition.TileExportMode.TrimmedCSV)
-            {
-                // CSV Import
-                string s = jsonobj.Value<string>("data");
-
-                string[] rows = s.Split('\n');
-                if (rows.Length > tiles.GetLength(1))
-                {
-                    Array.Resize(ref rows, tiles.GetLength(1));
-                    cleanJSON = false;
-                }
-                for (int i = 0; i < rows.Length; i++)
-                {
-                    string[] tileStrs = rows[i].Split(',');
-                    if (tileStrs.Length > TileCellsX)
-                    {
-                        Array.Resize(ref tileStrs, TileCellsX);
-                        cleanJSON = false;
-                    }
-                    if (tileStrs[0] != "")
-                        for (int j = 0; j < tileStrs.Length; j++)
-                            tiles[j, i] = Convert.ToInt32(tileStrs[j]);
-                }
-            }
-            else if (exportMode == TileLayerDefinition.TileExportMode.Array2D)
+            if (exportMode == TileLayerDefinition.TileExportMode.Array2D)
             {
                 // 2D Array Import
                 JArray[] jArrays = jsonobj.Value<JArray>("data").Select(jv => (JArray)jv).ToArray();
@@ -406,6 +382,30 @@ namespace OgmoEditor.LevelData.Layers
                     {
                         tiles[i, j] = arr[j * TileCellsX + i];
                     }
+                }
+            }
+            else if (exportMode == TileLayerDefinition.TileExportMode.CSV || exportMode == TileLayerDefinition.TileExportMode.TrimmedCSV)
+            {
+                // CSV Import
+                string s = jsonobj.Value<string>("data");
+
+                string[] rows = s.Split('\n');
+                if (rows.Length > tiles.GetLength(1))
+                {
+                    Array.Resize(ref rows, tiles.GetLength(1));
+                    cleanJSON = false;
+                }
+                for (int i = 0; i < rows.Length; i++)
+                {
+                    string[] tileStrs = rows[i].Split(',');
+                    if (tileStrs.Length > TileCellsX)
+                    {
+                        Array.Resize(ref tileStrs, TileCellsX);
+                        cleanJSON = false;
+                    }
+                    if (tileStrs[0] != "")
+                        for (int j = 0; j < tileStrs.Length; j++)
+                            tiles[j, i] = Convert.ToInt32(tileStrs[j]);
                 }
             }
             else if (exportMode == TileLayerDefinition.TileExportMode.JSON || exportMode == TileLayerDefinition.TileExportMode.JSONCoords)
