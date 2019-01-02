@@ -72,10 +72,6 @@ namespace OgmoEditor.ProjectEditors.LayerDefinitionEditors
 
         private int GetIndexForExportMode(TileLayerDefinition.TileExportMode mode)
         {
-            // Special case when no export mode has been defined yet
-            if (mode == TileLayerDefinition.TileExportMode.Unknown)
-                return 0;
-
             int index = 0;
 
             if (Ogmo.Project.ProjectType == Ogmo.ProjectType.XML)

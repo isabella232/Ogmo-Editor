@@ -7,7 +7,7 @@ namespace OgmoEditor.Definitions.LayerDefinitions
 {
     public class TileLayerDefinition : LayerDefinition
     {
-        public enum TileExportMode { Unknown, CSV, TrimmedCSV, XML, XMLCoords, JSON, JSONCoords, Array2D, Array1D };
+        public enum TileExportMode { CSV, TrimmedCSV, XML, XMLCoords, JSON, JSONCoords, Array2D, Array1D };
         public TileExportMode ExportMode;
 
         public TileLayerDefinition()
@@ -15,7 +15,11 @@ namespace OgmoEditor.Definitions.LayerDefinitions
         {
             Image = "tile.png";
 
-            ExportMode = TileExportMode.Unknown;
+            ExportMode = TileExportMode.CSV;
+            if (Ogmo.Project != null && Ogmo.Project.ProjectType == Ogmo.ProjectType.JSON)
+            {
+                ExportMode = TileExportMode.Array2D;
+            }
         }
 
         public override UserControl GetEditor()
