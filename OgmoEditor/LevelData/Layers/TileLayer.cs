@@ -347,11 +347,11 @@ namespace OgmoEditor.LevelData.Layers
             bool cleanJSON = true;
             JObject jsonobj = (JObject)json;
 
-            //Load the tileset
+            // Load the tileset
             string tilesetName = jsonobj.Value<string>("tileset");
             Tileset = Ogmo.Project.Tilesets.Find(t => t.Name == tilesetName);
 
-            //Get the export mode
+            // Get the export mode
             TileLayerDefinition.TileExportMode exportMode;
             if (jsonobj.Property("exportMode") != null)
                 exportMode = (TileLayerDefinition.TileExportMode)Enum.Parse(typeof(TileLayerDefinition.TileExportMode), jsonobj.Value<string>("exportMode"));
@@ -360,7 +360,7 @@ namespace OgmoEditor.LevelData.Layers
 
             if (exportMode == TileLayerDefinition.TileExportMode.CSV || exportMode == TileLayerDefinition.TileExportMode.TrimmedCSV)
             {
-                //CSV Import
+                // CSV Import
                 string s = jsonobj.Value<string>("data");
 
                 string[] rows = s.Split('\n');
@@ -382,9 +382,35 @@ namespace OgmoEditor.LevelData.Layers
                             tiles[j, i] = Convert.ToInt32(tileStrs[j]);
                 }
             }
+            else if (exportMode == TileLayerDefinition.TileExportMode.Array2D)
+            {
+                // 2D Array Import
+                JArray[] jArrays = jsonobj.Value<JArray>("data").Select(jv => (JArray)jv).ToArray();
+
+                for (int j = 0; j < TileCellsY; j++)
+                {
+                    int[] arr = jArrays[j].Select(jv => (int)jv).ToArray();
+                    for (int i = 0; i < TileCellsX; i++)
+                    {
+                        tiles[i, j] = arr[i];
+                    }
+                }
+            }
+            else if (exportMode == TileLayerDefinition.TileExportMode.Array1D)
+            {
+                // 1D Array Import
+                int[] arr = jsonobj.Value<JArray>("data").Select(jv => (int)jv).ToArray();
+                for (int j = 0; j < TileCellsY; j++)
+                {
+                    for (int i = 0; i < TileCellsX; i++)
+                    {
+                        tiles[i, j] = arr[j * TileCellsX + i];
+                    }
+                }
+            }
             else if (exportMode == TileLayerDefinition.TileExportMode.JSON || exportMode == TileLayerDefinition.TileExportMode.JSONCoords)
             {
-                //JSON Import
+                // JSON Import
                 JArray jTiles = jsonobj.Value<JArray>("tiles");
                 foreach (JObject tile in jTiles)
                 {
