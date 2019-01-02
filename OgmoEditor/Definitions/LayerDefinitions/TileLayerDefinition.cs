@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OgmoEditor.ProjectEditors.LayerDefinitionEditors;
+﻿using OgmoEditor.ProjectEditors.LayerDefinitionEditors;
 using OgmoEditor.LevelData.Layers;
 using OgmoEditor.LevelData;
 using System.Windows.Forms;
@@ -11,14 +7,18 @@ namespace OgmoEditor.Definitions.LayerDefinitions
 {
     public class TileLayerDefinition : LayerDefinition
     {
-        public enum TileExportMode { CSV, TrimmedCSV, XML, XMLCoords, JSON, JSONCoords };
+        public enum TileExportMode { CSV, TrimmedCSV, XML, XMLCoords, JSON, JSONCoords, Array2D, Array1D };
         public TileExportMode ExportMode;
 
         public TileLayerDefinition()
             : base()
         {
             Image = "tile.png";
-            ExportMode = TileExportMode.CSV;
+
+            if (Ogmo.Project.ProjectType == Ogmo.ProjectType.XML)
+                ExportMode = TileExportMode.CSV;
+            else if (Ogmo.Project.ProjectType == Ogmo.ProjectType.JSON)
+                ExportMode = TileExportMode.Array2D;
         }
 
         public override UserControl GetEditor()

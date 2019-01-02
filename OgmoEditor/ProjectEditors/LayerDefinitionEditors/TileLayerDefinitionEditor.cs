@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using OgmoEditor.Definitions.LayerDefinitions;
-using System.Diagnostics;
 
 namespace OgmoEditor.ProjectEditors.LayerDefinitionEditors
 {
     public partial class TileLayerDefinitionEditor : UserControl
     {
         private TileLayerDefinition def;
+        private List<TileLayerDefinition.TileExportMode> xmlExportModes;
+        private List<TileLayerDefinition.TileExportMode> jsonExportModes;
+        private Dictionary<TileLayerDefinition.TileExportMode, string> exportModeDescriptions;
 
         public TileLayerDefinitionEditor(TileLayerDefinition def)
         {
@@ -21,45 +19,87 @@ namespace OgmoEditor.ProjectEditors.LayerDefinitionEditors
             InitializeComponent();
             Location = new Point(206, 128);
 
-            // Add the options for the dropdown
-            exportModeComboBox.Items.Add("CSV");
-            exportModeComboBox.Items.Add("Trimmed CSV");
+            // Compile a list of all the export modes for each project type
+            xmlExportModes = new List<TileLayerDefinition.TileExportMode>();
+            xmlExportModes.Add(TileLayerDefinition.TileExportMode.CSV);
+            xmlExportModes.Add(TileLayerDefinition.TileExportMode.TrimmedCSV);
+            xmlExportModes.Add(TileLayerDefinition.TileExportMode.XML);
+            xmlExportModes.Add(TileLayerDefinition.TileExportMode.XMLCoords);
 
+            jsonExportModes = new List<TileLayerDefinition.TileExportMode>();
+            jsonExportModes.Add(TileLayerDefinition.TileExportMode.Array2D);
+            jsonExportModes.Add(TileLayerDefinition.TileExportMode.Array1D);
+            jsonExportModes.Add(TileLayerDefinition.TileExportMode.CSV);
+            jsonExportModes.Add(TileLayerDefinition.TileExportMode.TrimmedCSV);
+            jsonExportModes.Add(TileLayerDefinition.TileExportMode.JSON);
+            jsonExportModes.Add(TileLayerDefinition.TileExportMode.JSONCoords);
+
+            // Initialize a dictionary containing the descriptions for each export mode
+            exportModeDescriptions = new Dictionary<TileLayerDefinition.TileExportMode, string>();
+            exportModeDescriptions.Add(TileLayerDefinition.TileExportMode.CSV, "CSV");
+            exportModeDescriptions.Add(TileLayerDefinition.TileExportMode.TrimmedCSV, "Trimmed CSV");
+            exportModeDescriptions.Add(TileLayerDefinition.TileExportMode.XML, "XML (IDs)");
+            exportModeDescriptions.Add(TileLayerDefinition.TileExportMode.XMLCoords, "XML (Co-ords)");
+            exportModeDescriptions.Add(TileLayerDefinition.TileExportMode.JSON, "JSON (IDs)");
+            exportModeDescriptions.Add(TileLayerDefinition.TileExportMode.JSONCoords, "JSON (Co-ords)");
+            exportModeDescriptions.Add(TileLayerDefinition.TileExportMode.Array2D, "2D Array");
+            exportModeDescriptions.Add(TileLayerDefinition.TileExportMode.Array1D, "1D Array");
+
+            // Add the Export Mode dropdown options
             if (Ogmo.Project.ProjectType == Ogmo.ProjectType.XML)
             {
-                exportModeComboBox.Items.Add("XML (IDs)");
-                exportModeComboBox.Items.Add("XML (Co-ords)");
+                foreach (var mode in xmlExportModes)
+                {
+                    exportModeComboBox.Items.Add(exportModeDescriptions[mode]);
+                }
             }
             else if (Ogmo.Project.ProjectType == Ogmo.ProjectType.JSON)
             {
-                exportModeComboBox.Items.Add("JSON (IDs)");
-                exportModeComboBox.Items.Add("JSON (Co-ords)");
+                foreach (var mode in jsonExportModes)
+                {
+                    exportModeComboBox.Items.Add(exportModeDescriptions[mode]);
+                }
             }
 
-            int index = (int)def.ExportMode;
-
-            // Offset for JSON-specific options
-            if (Ogmo.Project.ProjectType == Ogmo.ProjectType.JSON)
-            {
-                if (index == 4) index = 2;
-                if (index == 5) index = 3;
-            }
-
-            exportModeComboBox.SelectedIndex = index;
+            // Automatically select the current export mode from the dropdown
+            exportModeComboBox.SelectedIndex = GetIndexForExportMode(def.ExportMode);
         }
 
         private void exportModeComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            int index = exportModeComboBox.SelectedIndex;
+            def.ExportMode = GetExportModeForIndex(exportModeComboBox.SelectedIndex);
+        }
 
-            // Offset for JSON-specific options
-            if (Ogmo.Project.ProjectType == Ogmo.ProjectType.JSON)
+        private int GetIndexForExportMode(TileLayerDefinition.TileExportMode mode)
+        {
+            int index = 0;
+
+            if (Ogmo.Project.ProjectType == Ogmo.ProjectType.XML)
             {
-                if (index == 2) index = 4;
-                if (index == 3) index = 5;
+                index = xmlExportModes.IndexOf(mode);
+            }
+            else if (Ogmo.Project.ProjectType == Ogmo.ProjectType.JSON)
+            {
+                index = jsonExportModes.IndexOf(mode);
             }
 
-            def.ExportMode = (TileLayerDefinition.TileExportMode)index;
+            return index;
+        }
+
+        private TileLayerDefinition.TileExportMode GetExportModeForIndex(int index)
+        {
+            TileLayerDefinition.TileExportMode mode = TileLayerDefinition.TileExportMode.CSV;
+
+            if (Ogmo.Project.ProjectType == Ogmo.ProjectType.XML)
+            {
+                mode = xmlExportModes[index];
+            }
+            else if (Ogmo.Project.ProjectType == Ogmo.ProjectType.JSON)
+            {
+                mode = jsonExportModes[index];
+            }
+
+            return mode;
         }
     }
 }
