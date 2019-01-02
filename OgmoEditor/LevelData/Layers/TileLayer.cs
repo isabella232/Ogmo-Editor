@@ -11,6 +11,7 @@ using OgmoEditor.Definitions;
 using System.Diagnostics;
 using System.Drawing.Drawing2D;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace OgmoEditor.LevelData.Layers
 {
@@ -218,12 +219,18 @@ namespace OgmoEditor.LevelData.Layers
             return cleanXML;
         }
 
-        public override JObject GetJSON()
+        public override void WriteJSON(JsonTextWriter jw)
         {
-            JObject json = new JObject();
-            json.Add("name", Definition.Name);
-            json.Add("tileset", Tileset.Name);
-            json.Add("exportMode", Definition.ExportMode.ToString());
+            jw.WriteStartObject();
+
+            jw.WritePropertyName("name");
+            jw.WriteValue(Definition.Name);
+
+            jw.WritePropertyName("tileset");
+            jw.WriteValue(Tileset.Name);
+
+            jw.WritePropertyName("exportMode");
+            jw.WriteValue(Definition.ExportMode.ToString());
 
             if (Definition.ExportMode == TileLayerDefinition.TileExportMode.CSV || Definition.ExportMode == TileLayerDefinition.TileExportMode.TrimmedCSV)
             {
@@ -255,38 +262,45 @@ namespace OgmoEditor.LevelData.Layers
                     }
                 }
 
-                json.Add("data", string.Join("\n", rows));
+                // Write it
+                jw.WritePropertyName("data");
+                jw.WriteValue(string.Join("\n", rows));
             }
-            else if (Definition.ExportMode == TileLayerDefinition.TileExportMode.Array2D)
+            else if (Definition.ExportMode == TileLayerDefinition.TileExportMode.Array2D || Definition.ExportMode == TileLayerDefinition.TileExportMode.Array1D)
             {
-                JArray outerArray = new JArray();
+                jw.WritePropertyName("data");
+                jw.WriteStartArray();
                 for (int i = 0; i < TileCellsY; i++)
                 {
-                    JArray innerArray = new JArray();
+                    // start the inner array if needed
+                    if (Definition.ExportMode == TileLayerDefinition.TileExportMode.Array2D)
+                        jw.WriteStartArray();
+
+                    // flatten each row to one line
+                    jw.Formatting = Newtonsoft.Json.Formatting.None;
+
+                    // write the data
                     for (int j = 0; j < TileCellsX; j++)
                     {
-                        innerArray.Add(Tiles[j, i]);
+                        jw.WriteValue(Tiles[j, i]);
                     }
-                    outerArray.Add(innerArray);
-                }
-                json.Add("data", outerArray);
-            }
-            else if (Definition.ExportMode == TileLayerDefinition.TileExportMode.Array1D)
-            {
-                JArray arr = new JArray();
-                for (int i = 0; i < TileCellsY; i++)
-                {
-                    for (int j = 0; j < TileCellsX; j++)
+
+                    // close and indent each inner array
+                    if (Definition.ExportMode == TileLayerDefinition.TileExportMode.Array2D)
                     {
-                        arr.Add(Tiles[j, i]);
+                        jw.WriteEndArray();
+                        jw.Formatting = Newtonsoft.Json.Formatting.Indented;
                     }
                 }
-                json.Add("data", arr);
+                jw.WriteEndArray();
+
+                // return to indenting as usual
+                jw.Formatting = Newtonsoft.Json.Formatting.Indented;
             }
             else if (Definition.ExportMode == TileLayerDefinition.TileExportMode.JSON || Definition.ExportMode == TileLayerDefinition.TileExportMode.JSONCoords)
             {
-                //JSON Export
-                JArray jTiles = new JArray();
+                jw.WritePropertyName("tiles");
+                jw.WriteStartArray();
 
                 for (int i = 0; i < tiles.GetLength(0); i++)
                 {
@@ -294,30 +308,36 @@ namespace OgmoEditor.LevelData.Layers
                     {
                         if (tiles[i, j] != -1)
                         {
-                            JObject tile = new JObject();
-                            tile.Add("x", i.ToString());
-                            tile.Add("y", j.ToString());
+                            jw.WriteStartObject();
+
+                            jw.WritePropertyName("x");
+                            jw.WriteValue(i);
+                            jw.WritePropertyName("y");
+                            jw.WriteValue(j);
 
                             if (Definition.ExportMode == TileLayerDefinition.TileExportMode.JSON)
                             {
-                                tile.Add("id", tiles[i, j].ToString());
+                                jw.WritePropertyName("id");
+                                jw.WriteValue(tiles[i, j]);
                             }
                             else
                             {
                                 Point p = Tileset.GetCellFromID(tiles[i, j]);
-                                tile.Add("tx", p.X.ToString());
-                                tile.Add("ty", p.Y.ToString());
+                                jw.WritePropertyName("tx");
+                                jw.WriteValue(p.X);
+                                jw.WritePropertyName("ty");
+                                jw.WriteValue(p.Y);
                             }
 
-                            jTiles.Add(tile);
+                            jw.WriteEndObject();
                         }
                     }
                 }
 
-                json.Add("tiles", jTiles);
+                jw.WriteEndArray();
             }
 
-            return json;
+            jw.WriteEndObject();
         }
 
         public override bool SetJSON(JToken json)

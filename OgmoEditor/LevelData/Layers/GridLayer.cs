@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using OgmoEditor.Definitions.LayerDefinitions;
 using System.Xml;
 using OgmoEditor.LevelEditors.LayerEditors;
 using System.Drawing;
-using System.Diagnostics;
-using OgmoEditor.LevelEditors.Resizers;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace OgmoEditor.LevelData.Layers
@@ -227,15 +224,17 @@ namespace OgmoEditor.LevelData.Layers
             return cleanXML;
         }
 
-        public override JObject GetJSON()
+        public override void WriteJSON(JsonTextWriter jw)
         {
-            JObject json = new JObject();
             string data = "";
 
-            json.Add("name", Definition.Name);
+            jw.WriteStartObject();
 
-            //Write the export mode
-            json.Add("exportMode", Definition.ExportMode.ToString());
+            jw.WritePropertyName("name");
+            jw.WriteValue(Definition.Name);
+
+            jw.WritePropertyName("exportMode");
+            jw.WriteValue(Definition.ExportMode.ToString());
 
             switch (Definition.ExportMode)
             {
@@ -263,7 +262,8 @@ namespace OgmoEditor.LevelData.Layers
                     else
                         data = string.Join("\n", rows, 0, rows.Length);
 
-                    json.Add("data", data);
+                    jw.WritePropertyName("data");
+                    jw.WriteValue(data);
 
                     break;
 
@@ -317,26 +317,33 @@ namespace OgmoEditor.LevelData.Layers
                         p = getFirstCell(copy);
                     }
 
-                    //Export them as an array
-                    JArray jRects = new JArray();
+                    //Export the rects as an array
+                    jw.WritePropertyName("rects");
+                    jw.WriteStartArray();
                     foreach (Rectangle r in rects)
                     {
-                        JObject jRect = new JObject();
+                        jw.WriteStartObject();
 
-                        jRect.Add("x", r.X.ToString());
-                        jRect.Add("y", r.Y.ToString());
-                        jRect.Add("w", r.Width.ToString());
-                        jRect.Add("h", r.Height.ToString());
+                        jw.WritePropertyName("x");
+                        jw.WriteValue(r.X);
 
-                        jRects.Add(jRect);
+                        jw.WritePropertyName("y");
+                        jw.WriteValue(r.Y);
+
+                        jw.WritePropertyName("w");
+                        jw.WriteValue(r.Width);
+
+                        jw.WritePropertyName("h");
+                        jw.WriteValue(r.Height);
+
+                        jw.WriteEndObject();
                     }
-
-                    json.Add("rects", jRects);
+                    jw.WriteEndArray();
 
                     break;
             }
 
-            return json;
+            jw.WriteEndObject();
         }
 
         public override bool SetJSON(JToken json)

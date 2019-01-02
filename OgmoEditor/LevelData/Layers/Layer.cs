@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using OgmoEditor.Definitions.LayerDefinitions;
 using System.Xml;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OgmoEditor.LevelEditors.LayerEditors;
 using OgmoEditor.LevelEditors;
@@ -25,8 +26,10 @@ namespace OgmoEditor.LevelData.Layers
 
         public abstract XmlElement GetXML(XmlDocument doc);
         public abstract bool SetXML(XmlElement xml);
-        public abstract JObject GetJSON();
+
+        public abstract void WriteJSON(JsonTextWriter jw);
         public abstract bool SetJSON(JToken json);
+
         public abstract LayerEditor GetEditor(LevelEditor editor);
     }
 }

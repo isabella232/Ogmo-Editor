@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using OgmoEditor.Definitions.LayerDefinitions;
 using System.Xml;
 using OgmoEditor.LevelEditors.LayerEditors;
-using OgmoEditor.LevelEditors.Resizers;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace OgmoEditor.LevelData.Layers
@@ -43,17 +41,22 @@ namespace OgmoEditor.LevelData.Layers
             return true;
         }
 
-        public override JObject GetJSON()
+        public override void WriteJSON(JsonTextWriter jw)
         {
-            JArray entityArray = new JArray();
+            jw.WriteStartObject();
 
+            jw.WritePropertyName("name");
+            jw.WriteValue(Definition.Name);
+
+            jw.WritePropertyName("entities");
+            jw.WriteStartArray();
             foreach (Entity e in Entities)
-                entityArray.Add(e.GetJSON());
+            {
+                e.WriteJSON(jw);
+            }
+            jw.WriteEndArray();
 
-            JObject json = new JObject();
-            json.Add("name", Definition.Name);
-            json.Add("entities", entityArray);
-            return json;
+            jw.WriteEndObject();
         }
 
         public override bool SetJSON(JToken json)

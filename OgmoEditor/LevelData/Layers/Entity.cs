@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Xml;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OgmoEditor.Definitions;
 using OgmoEditor.Definitions.ValueDefinitions;
@@ -232,69 +233,86 @@ namespace OgmoEditor.LevelData.Layers
             return xml;
         }
 
-        public JObject GetJSON()
+        public void WriteJSON(JsonTextWriter jw)
         {
-            JObject json = new JObject();
+            jw.WriteStartObject();
 
-            json.Add("name", Definition.Name);
-            json.Add("id", ID);
-            json.Add("x", Position.X);
-            json.Add("y", Position.Y);
+            jw.WritePropertyName("name");
+            jw.WriteValue(Definition.Name);
+
+            jw.WritePropertyName("id");
+            jw.WriteValue(ID);
+
+            jw.WritePropertyName("x");
+            jw.WriteValue(Position.X);
+            jw.WritePropertyName("y");
+            jw.WriteValue(Position.Y);
 
             if (Definition.ResizableX)
             {
-                json.Add("width", Size.Width);
+                jw.WritePropertyName("width");
+                jw.WriteValue(Size.Width);
             }
             if (Definition.ResizableY)
             {
-                json.Add("height", Size.Height);
+                jw.WritePropertyName("height");
+                jw.WriteValue(Size.Height);
             }
 
             if (Definition.Rotatable)
             {
-                json.Add("angle", Ogmo.Project.ExportAngle(Angle));
+                jw.WritePropertyName("angle");
+                jw.WriteValue(Ogmo.Project.ExportAngle(Angle));
             }
 
             if (Nodes != null)
             {
-                JArray nodeArray = new JArray();
+                jw.WritePropertyName("nodes");
+                jw.WriteStartArray();
                 foreach (var p in Nodes)
                 {
-                    JObject node = new JObject();
-                    node.Add("x", p.X);
-                    node.Add("y", p.Y);
-                    nodeArray.Add(node);
+                    jw.WriteStartObject();
+
+                    jw.WritePropertyName("x");
+                    jw.WriteValue(p.X);
+
+                    jw.WritePropertyName("y");
+                    jw.WriteValue(p.Y);
+
+                    jw.WriteEndObject();
                 }
-                json.Add("nodes", nodeArray);
+                jw.WriteEndArray();
             }
 
             if (Values != null)
             {
                 foreach (var v in Values)
                 {
-                    // Save the value with the correct type
+                    jw.WritePropertyName(v.Definition.Name);
+
+                    // Make sure to save it as the right type
                     Type defType = v.Definition.GetType();
                     if (defType == typeof(IntValueDefinition))
                     {
-                        json.Add(v.Definition.Name, Convert.ToInt32(v.Content));
+                        jw.WriteValue(Convert.ToInt32(v.Content));
                     }
                     else if (defType == typeof(BoolValueDefinition))
                     {
-                        json.Add(v.Definition.Name, Convert.ToBoolean(v.Content));
+                        jw.WriteValue(Convert.ToBoolean(v.Content));
                     }
                     else if (defType == typeof(FloatValueDefinition))
                     {
-                        json.Add(v.Definition.Name, Convert.ToSingle(v.Content));
+                        jw.WriteValue(Convert.ToSingle(v.Content));
                     }
                     else
                     {
                         // Treat it as a string
-                        json.Add(v.Definition.Name, v.Content);
+                        jw.WriteValue(v.Content);
                     }
                 }
             }
 
-            return json;
+            jw.WriteEndObject();
         }
 
         public void Draw(Graphics graphics, bool current, bool fullAlpha)

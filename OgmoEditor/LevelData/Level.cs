@@ -222,57 +222,78 @@ namespace OgmoEditor.LevelData
             return doc;
         }
 
-        public JObject GenerateJSON()
+        public string GenerateJSON()
         {
-            JObject json = new JObject();
-
-            // Export the size
-            json.Add("width", Size.Width);
-            json.Add("height", Size.Height);
-
-            // Export camera position
-            if (Ogmo.Project.ExportCameraPosition)
+            StringWriter sw = new StringWriter();
+            using (JsonTextWriter jw = new JsonTextWriter(sw))
             {
-                JObject cam = new JObject();
-                cam.Add("x", CameraPosition.X);
-                cam.Add("y", CameraPosition.Y);
-                json.Add("camera", cam);
-            }
+                // Set up formatting
+                jw.Formatting = Newtonsoft.Json.Formatting.Indented;
 
-            // Export the level values
-            if (Values != null)
-            {
-                foreach (var v in Values)
+                // Start the root object
+                jw.WriteStartObject();
+
+                // Export the size
+                jw.WritePropertyName("width");
+                jw.WriteValue(Size.Width);
+                jw.WritePropertyName("height");
+                jw.WriteValue(Size.Height);
+
+                // Export camera position
+                if (Ogmo.Project.ExportCameraPosition)
                 {
-                    // Save the value with the correct type
-                    Type defType = v.Definition.GetType();
-                    if (defType == typeof(IntValueDefinition))
+                    jw.WriteStartObject();
+
+                    jw.WritePropertyName("x");
+                    jw.WriteValue(CameraPosition.X);
+
+                    jw.WritePropertyName("y");
+                    jw.WriteValue(CameraPosition.Y);
+
+                    jw.WriteEndObject();
+                }
+
+                // Export the level values
+                if (Values != null)
+                {
+                    foreach (var v in Values)
                     {
-                        json.Add(v.Definition.Name, Convert.ToInt32(v.Content));
-                    }
-                    else if (defType == typeof(BoolValueDefinition))
-                    {
-                        json.Add(v.Definition.Name, Convert.ToBoolean(v.Content));
-                    }
-                    else if (defType == typeof(FloatValueDefinition))
-                    {
-                        json.Add(v.Definition.Name, Convert.ToSingle(v.Content));
-                    }
-                    else
-                    {
-                        // Treat it as a string
-                        json.Add(v.Definition.Name, v.Content);
+                        jw.WritePropertyName(v.Definition.Name);
+
+                        // Make sure to save it as the right type
+                        Type defType = v.Definition.GetType();
+                        if (defType == typeof(IntValueDefinition))
+                        {
+                            jw.WriteValue(Convert.ToInt32(v.Content));
+                        }
+                        else if (defType == typeof(BoolValueDefinition))
+                        {
+                            jw.WriteValue(Convert.ToBoolean(v.Content));
+                        }
+                        else if (defType == typeof(FloatValueDefinition))
+                        {
+                            jw.WriteValue(Convert.ToSingle(v.Content));
+                        }
+                        else
+                        {
+                            // Treat it as a string
+                            jw.WriteValue(v.Content);
+                        }
                     }
                 }
+
+                // Export the layer array
+                jw.WritePropertyName("layers");
+                jw.WriteStartArray();
+                foreach (Layer layer in Layers)
+                    layer.WriteJSON(jw);
+                jw.WriteEndArray();
+
+                // The End.
+                jw.WriteEndObject();
             }
 
-            // Export the layers
-            JArray layers = new JArray();
-            for (int i = 0; i < Layers.Count; i++)
-                layers.Add(Layers[i].GetJSON());
-            json.Add("layers", layers);
-
-            return json;
+            return sw.ToString();
         }
 
         private void LoadFromXML(XmlDocument xml)
@@ -466,12 +487,10 @@ namespace OgmoEditor.LevelData
             }
             else if (Project.ProjectType == Ogmo.ProjectType.JSON)
             {
-                JObject json = GenerateJSON();
+                string json = GenerateJSON();
 
                 using (StreamWriter stream = new StreamWriter(filename))
-                using (JsonWriter jw = new JsonTextWriter(stream))
                 {
-                    jw.Formatting = Newtonsoft.Json.Formatting.Indented;
                     stream.Write(json);
                 }
             }
