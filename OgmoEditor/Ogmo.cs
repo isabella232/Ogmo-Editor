@@ -17,11 +17,10 @@ namespace OgmoEditor
 {
     static public class Ogmo
     {
-        public const string PROJECT_EXT_XML = ".oep";
+        public const string PROJECT_EXT = ".oep";
         public const string LEVEL_EXT_XML = ".oel";
-        public const string PROJECT_EXT_JSON = ".jogmo";
         public const string LEVEL_EXT_JSON = ".json";
-        public const string PROJECT_FILTER = "Ogmo Editor Project File|*";
+        public const string PROJECT_FILTER = "Ogmo Editor Project File|*" + PROJECT_EXT;
         public const string LEVEL_FILTER = "Ogmo Editor Level File|*";
         public const string NEW_PROJECT_NAME = "New Project";
         public const string NEW_LEVEL_NAME = "Unsaved Level";
@@ -133,20 +132,6 @@ namespace OgmoEditor
             file.Close();
         }
 
-        static public string GetProjectExtension()
-        {
-            string fileExtension = "";
-            if (Project.ProjectType == ProjectType.XML)
-            {
-                fileExtension = PROJECT_EXT_XML;
-            }
-            else if (Project.ProjectType == ProjectType.JSON)
-            {
-                fileExtension = PROJECT_EXT_JSON;
-            }
-            return fileExtension;
-        }
-
         static public string GetLevelExtension()
         {
             string fileExtension = "";
@@ -159,11 +144,6 @@ namespace OgmoEditor
                 fileExtension = LEVEL_EXT_JSON;
             }
             return fileExtension;
-        }
-
-        static public string GetProjectFilter()
-        {
-            return PROJECT_FILTER + GetProjectExtension();
         }
 
         static public string GetLevelFilter()
@@ -189,7 +169,7 @@ namespace OgmoEditor
         {
             //Get the file to load from the user
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = PROJECT_FILTER + PROJECT_EXT_XML + ";*" + PROJECT_EXT_JSON;
+            dialog.Filter = PROJECT_FILTER;
             if (dialog.ShowDialog() == DialogResult.Cancel)
                 return;
 
@@ -209,23 +189,10 @@ namespace OgmoEditor
                 CloseProject();
 
             //Load it
-            if (Path.GetExtension(filename) == PROJECT_EXT_XML)
-            {
-                XmlSerializer xs = new XmlSerializer(typeof(Project));
-                Stream s = new FileStream(filename, FileMode.Open);
-                Project = (Project)xs.Deserialize(s);
-                s.Close();
-            }
-            else if (Path.GetExtension(filename) == PROJECT_EXT_JSON)
-            {
-                JsonSerializer js = new JsonSerializer();
-                using (StreamReader stream = new StreamReader(filename))
-                using (JsonTextReader jreader = new JsonTextReader(stream))
-                {
-                    js.TypeNameHandling = TypeNameHandling.Auto;
-                    Project = js.Deserialize<Project>(jreader);
-                }
-            }
+            XmlSerializer xs = new XmlSerializer(typeof(Project));
+            Stream s = new FileStream(filename, FileMode.Open);
+            Project = (Project)xs.Deserialize(s);
+            s.Close();
 
             Project.Filename = filename;
 
