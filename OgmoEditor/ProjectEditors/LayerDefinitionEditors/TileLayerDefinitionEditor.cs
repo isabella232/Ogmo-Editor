@@ -42,8 +42,8 @@ namespace OgmoEditor.ProjectEditors.LayerDefinitionEditors
             exportModeDescriptions.Add(TileLayerDefinition.TileExportMode.XMLCoords, "XML (Co-ords)");
             exportModeDescriptions.Add(TileLayerDefinition.TileExportMode.JSON, "JSON (IDs)");
             exportModeDescriptions.Add(TileLayerDefinition.TileExportMode.JSONCoords, "JSON (Co-ords)");
-            exportModeDescriptions.Add(TileLayerDefinition.TileExportMode.Array2D, "2D Array");
-            exportModeDescriptions.Add(TileLayerDefinition.TileExportMode.Array1D, "1D Array");
+            exportModeDescriptions.Add(TileLayerDefinition.TileExportMode.Array2D, "JSON (2D Array)");
+            exportModeDescriptions.Add(TileLayerDefinition.TileExportMode.Array1D, "JSON (1D Array)");
 
             // Add the Export Mode dropdown options
             if (Ogmo.Project.ProjectType == Ogmo.ProjectType.XML)
