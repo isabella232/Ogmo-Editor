@@ -350,7 +350,7 @@ namespace OgmoEditor
             if (Ogmo.Project == null)
                 return;
 
-            Ogmo.OpenLevel();
+            Ogmo.OpenLevelFromDialog();
         }
 
         private void saveLevelToolStripMenuItem_Click(object sender, EventArgs e)

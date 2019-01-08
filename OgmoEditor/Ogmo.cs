@@ -62,7 +62,7 @@ namespace OgmoEditor
         static void Main(string[] args)
         {
             Application.EnableVisualStyles();
-            initialize();
+            Initialize();
 
             if (args.Length > 0 && File.Exists(args[0]) && Path.GetExtension(args[0]) == ".oep")
                 toLoad = args[0];
@@ -72,7 +72,7 @@ namespace OgmoEditor
             Application.Run(MainWindow);
         }
 
-        static private void initialize()
+        static private void Initialize()
         {
             //Figure out the program directory
             ProgramDirectory = Application.ExecutablePath.Remove(Application.ExecutablePath.IndexOf(Path.GetFileName(Application.ExecutablePath)));
@@ -251,7 +251,7 @@ namespace OgmoEditor
             //Warn!
             if (Ogmo.Levels.Count > 0 && Ogmo.Levels.Find(e => e.Changed) != null)
             {
-                if (MessageBox.Show(MainWindow, "Warning: All levels must be closed if any changes to the project are made. You have unsaved changes in some open levels which will be lost. Still edit the project?", "Warning!", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) != DialogResult.OK)
+                if (MessageBox.Show(MainWindow, "Warning: All levels will be closed and reloaded if any edits are made to the project. You have unsaved changes in some open levels which will be lost.\n\nStill edit the project?", "Warning!", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) != DialogResult.OK)
                     return;
             }
 
@@ -272,6 +272,12 @@ namespace OgmoEditor
                 CloseProject();
             else if (action == FinishProjectEditAction.SaveProject)
             {
+                // Get a list of the filepaths to each open level
+                List<string> levelPaths = new List<string>();
+                foreach (Level level in Levels)
+                    levelPaths.Add(level.SavePath);
+                int tempIndex = CurrentLevelIndex;
+
                 //Close all the levels
                 CloseAllLevels();
 
@@ -283,11 +289,11 @@ namespace OgmoEditor
                 if (OnProjectEdited != null)
                     OnProjectEdited(Project);
 
-                //Start a blank level
-                NewLevel();
-
                 //Set the layer
                 Ogmo.LayersWindow.SetLayer(0);
+
+                // Open all the levels back up
+                OpenLevelsFromList(levelPaths, false, tempIndex);
 
                 //Set the status message
                 Ogmo.MainWindow.StatusText = "Edited project " + Ogmo.Project.Name + ", all levels closed";
@@ -350,27 +356,20 @@ namespace OgmoEditor
             SetLevel(Levels.Count - 1);
         }
 
-        static public void OpenLevel()
+        static public void OpenLevelsFromList(List<string> filenames, bool alphabetize, int levelIndexToOpen = -1)
         {
-            //Get the file to load from the user
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Multiselect = true;
-            dialog.Filter = GetLevelFilter();
-            dialog.InitialDirectory = Ogmo.Project.SavedDirectory;
-            if (dialog.ShowDialog() == DialogResult.Cancel)
-                return;
-
             //If the only open level is an empty one, close it
             if (Ogmo.Levels.Count == 1 && Ogmo.Levels[0].IsEmpty)
                 Ogmo.CloseLevel(Ogmo.Levels[0], false);
 
-            //Get all the selected files, and alphabetize the list
-            List<string> filenames = new List<string>(dialog.FileNames);
-        
-            if (filenames.All((s) => { int i; return int.TryParse(Path.GetFileNameWithoutExtension(s), out i); }))
-                filenames.Sort((a, b) => { return Convert.ToInt32(Path.GetFileNameWithoutExtension(a)) - Convert.ToInt32(Path.GetFileNameWithoutExtension(b)); });
-            else
-                filenames.Sort();
+            // Alphabetize the list
+            if (alphabetize)
+            {
+                if (filenames.All((s) => { int i; return int.TryParse(Path.GetFileNameWithoutExtension(s), out i); }))
+                    filenames.Sort((a, b) => { return Convert.ToInt32(Path.GetFileNameWithoutExtension(a)) - Convert.ToInt32(Path.GetFileNameWithoutExtension(b)); });
+                else
+                    filenames.Sort();
+            }
 
             //Load all the levels in the selected list, as long as they aren't already open
             foreach (string f in filenames)
@@ -403,7 +402,7 @@ namespace OgmoEditor
 
                             case DialogResult.Cancel:
                                 continue;
-                        }                        
+                        }
                     }
 
                     //Init the level editor
@@ -414,11 +413,28 @@ namespace OgmoEditor
                     SetLevel(levelID);
             }
 
+            // Open the right level
+            if (levelIndexToOpen != -1 && levelIndexToOpen < Levels.Count)
+                SetLevel(levelIndexToOpen);
+
             //Set the status message
-            string[] files = new string[dialog.FileNames.Length];
-            for (int i = 0; i < dialog.FileNames.Length; i++)
-                files[i] = Path.GetFileName(dialog.FileNames[i]);
+            string[] files = new string[filenames.Count];
+            for (int i = 0; i < filenames.Count; i++)
+                files[i] = Path.GetFileName(filenames[i]);
             Ogmo.MainWindow.StatusText = "Opened level(s) " + String.Join(", ", files);
+        }
+
+        static public void OpenLevelFromDialog()
+        {
+            //Get the file to load from the user
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Multiselect = true;
+            dialog.Filter = GetLevelFilter();
+            dialog.InitialDirectory = Ogmo.Project.SavedDirectory;
+            if (dialog.ShowDialog() == DialogResult.Cancel)
+                return;
+
+            OpenLevelsFromList(dialog.FileNames.ToList(), true);
         }
 
         static public bool AddLevel(Level level)
