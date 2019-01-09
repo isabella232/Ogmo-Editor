@@ -292,8 +292,11 @@ namespace OgmoEditor
                 //Set the layer
                 Ogmo.LayersWindow.SetLayer(0);
 
-                // Open all the levels back up
-                OpenLevelsFromList(levelPaths, false, tempIndex);
+                // Open the default level (or previously-opened levels)
+                if (levelPaths.Count == 0)
+                    NewLevel();
+                else
+                    OpenLevelsFromList(levelPaths, false, tempIndex);
 
                 //Set the status message
                 Ogmo.MainWindow.StatusText = "Edited project " + Ogmo.Project.Name + ", all levels closed";
