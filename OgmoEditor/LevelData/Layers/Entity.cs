@@ -272,13 +272,7 @@ namespace OgmoEditor.LevelData.Layers
                 foreach (var p in Nodes)
                 {
                     jw.WriteStartObject();
-
-                    jw.WritePropertyName("x");
-                    jw.WriteValue(p.X);
-
-                    jw.WritePropertyName("y");
-                    jw.WriteValue(p.Y);
-
+                    jw.WriteRaw($@"""x"": {p.X}, ""y"": {p.Y}");
                     jw.WriteEndObject();
                 }
                 jw.WriteEndArray();

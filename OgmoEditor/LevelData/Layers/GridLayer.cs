@@ -226,8 +226,6 @@ namespace OgmoEditor.LevelData.Layers
 
         public override void WriteJSON(JsonTextWriter jw)
         {
-            string data = "";
-
             jw.WriteStartObject();
 
             jw.WritePropertyName("name");
@@ -241,6 +239,7 @@ namespace OgmoEditor.LevelData.Layers
                 case GridLayerDefinition.ExportModes.Bitstring:
                 case GridLayerDefinition.ExportModes.TrimmedBitstring:
                     //Bitstring export
+                    string data = "";
                     string[] rows = new string[Grid.GetLength(1)];
                     for (int i = 0; i < Grid.GetLength(1); i++)
                     {
@@ -323,19 +322,7 @@ namespace OgmoEditor.LevelData.Layers
                     foreach (Rectangle r in rects)
                     {
                         jw.WriteStartObject();
-
-                        jw.WritePropertyName("x");
-                        jw.WriteValue(r.X);
-
-                        jw.WritePropertyName("y");
-                        jw.WriteValue(r.Y);
-
-                        jw.WritePropertyName("w");
-                        jw.WriteValue(r.Width);
-
-                        jw.WritePropertyName("h");
-                        jw.WriteValue(r.Height);
-
+                        jw.WriteRaw($@"""x"": {r.X}, ""y"": {r.Y}, ""w"": {r.Width}, ""h"": {r.Height}");
                         jw.WriteEndObject();
                     }
                     jw.WriteEndArray();

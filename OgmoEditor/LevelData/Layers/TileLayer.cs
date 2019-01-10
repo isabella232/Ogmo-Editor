@@ -310,25 +310,20 @@ namespace OgmoEditor.LevelData.Layers
                         {
                             jw.WriteStartObject();
 
-                            jw.WritePropertyName("x");
-                            jw.WriteValue(i);
-                            jw.WritePropertyName("y");
-                            jw.WriteValue(j);
-
+                            string rawJson = $@"""x"": {i}, ""y"": {j}, ";
                             if (Definition.ExportMode == TileLayerDefinition.TileExportMode.JSON)
                             {
-                                jw.WritePropertyName("id");
-                                jw.WriteValue(tiles[i, j]);
+                                // IDs
+                                rawJson += $@"""id"": {tiles[i, j]}";
                             }
                             else
                             {
+                                // Co-ords
                                 Point p = Tileset.GetCellFromID(tiles[i, j]);
-                                jw.WritePropertyName("tx");
-                                jw.WriteValue(p.X);
-                                jw.WritePropertyName("ty");
-                                jw.WriteValue(p.Y);
+                                rawJson += $@"""tx"": {p.X}, ""ty"": {p.Y}";
                             }
 
+                            jw.WriteRaw(rawJson);
                             jw.WriteEndObject();
                         }
                     }
