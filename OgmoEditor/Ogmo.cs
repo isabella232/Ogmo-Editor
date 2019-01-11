@@ -299,7 +299,7 @@ namespace OgmoEditor
                     OpenLevelsFromList(levelPaths, false, tempIndex);
 
                 //Set the status message
-                Ogmo.MainWindow.StatusText = "Edited project " + Ogmo.Project.Name + ", all levels closed";
+                Ogmo.MainWindow.StatusText = "Edited project " + Ogmo.Project.Name + ", all levels re-opened";
                 UpdateRecentProjects(Project);
                 GC.Collect();
             }
