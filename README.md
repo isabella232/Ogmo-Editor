@@ -1,4 +1,4 @@
-# ![](https://github.com/TheSpydog/Ogmo-Editor/blob/master/OgmoEditor/Content/icons/icon32.png) Ogmo Editor: Community Version
+# ![](https://github.com/TheSpydog/Ogmo-Editor/blob/master/OgmoEditor/Content/icons/icon32.png) Ogmo Editor: Community Edition
 
 [Ogmo Editor](http://www.ogmoeditor.com/) is a fantastic level editor for 2D games, originally written by Matt Thorson. This fork of the project aims to improve the level editing experience by fixing longstanding bugs, adding awesome new features, and bringing the editor to new platforms like Mac and Linux!
 
