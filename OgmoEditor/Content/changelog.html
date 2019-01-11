@@ -49,13 +49,18 @@
 
 	<div class="version">
             <h2>2.4.0.0</h2>
-            <p class="date">Jan 8, 2018</p>
+            <p class="date">Jan 11, 2018</p>
             <h3>Changes</h3>
             <ul>
 		<li>Removed .jogmo project file format; both XML and JSON projects are now stored as .oep files.</li>
-		<li>Added "JSON (2D Array)" and "JSON (1D Array)" as Tilemap export options for JSON projects.</li>
-		<li>JSON level files now use the correct data types for storing values instead of serializing everything as a string.</li>
 		<li>Levels will now automatically reopen themselves after editing a project.</li>
+		<li>Added "JSON (2D Array)" and "JSON (1D Array)" as Tilemap export options for JSON projects.</li>
+		<li>JSON serialization improvements:
+		    <ul>
+			<li>Level files now use the correct data types for storing values instead of serializing everything as a string.</li>
+			<li>Improved readability for small objects (grid layer rectangles, entity nodes, etc).</li>
+		    </ul>
+		</li>
             </ul>
         </div>
 
