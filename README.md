@@ -25,9 +25,9 @@ Note that you can only load assets from within Wine's virtual filesystem (i.e. `
 
 ### JSON Export
 
-When creating projects, you can now choose between XML (.oel, .oep) and JSON (.json, .jogmo) file exports for your project and levels. Choose whichever best fits your needs!  
+When creating projects, you can now choose between XML (.oel) and JSON (.json) file exports for your levels. Choose whichever best fits your needs!
 
-NOTE: You cannot change the project export type after creation. This is subject to change in the future.
+NOTE: You cannot change the project export type after creation.
 
 ### Tilemap Zooming
 You can now zoom in on your tile palette windows. This helps you get a better view of your assets and save precious screen real estate. Use the mouse wheel to zoom and right/middle mouse button to pan.
