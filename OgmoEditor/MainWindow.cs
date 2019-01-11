@@ -270,11 +270,6 @@ namespace OgmoEditor
             pref.Show(this);
         }
 
-        private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(this, "You cannot check for updates!", "Nope!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-        }
-
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AboutWindow about = new AboutWindow();
