@@ -15,7 +15,7 @@ namespace OgmoEditor.Windows
         {
             InitializeComponent();
 
-            versionLabel.Text = "Community Version";
+            versionLabel.Text = "Community Edition";
         }
 
         private void button1_Click(object sender, EventArgs e)
