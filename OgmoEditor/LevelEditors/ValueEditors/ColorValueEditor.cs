@@ -12,29 +12,29 @@ using OgmoEditor.LevelEditors.Actions.EntityActions;
 
 namespace OgmoEditor.LevelEditors.ValueEditors
 {
-    public partial class ColorValueEditor : ValueEditor
-    {
-        public ColorValueDefinition Definition { get; private set; }
+	public partial class ColorValueEditor : ValueEditor
+	{
+		public ColorValueDefinition Definition { get; private set; }
 
-        public ColorValueEditor(Value value, int x, int y)
-            : base(value, x, y)
-        {
-            Definition = (ColorValueDefinition)value.Definition;
-            InitializeComponent();
+		public ColorValueEditor(Value value, int x, int y)
+			: base(value, x, y)
+		{
+			Definition = (ColorValueDefinition)value.Definition;
+			InitializeComponent();
 
-            nameLabel.Text = Definition.Name;
-            colorChooser.Color = Value.Content;
-        }
+			nameLabel.Text = Definition.Name;
+			colorChooser.Color = Value.Content;
+		}
 
-        /*
-         *  Events
-         */
-        private void colorChooser_ColorChanged(OgmoColor color)
-        {
-            if (colorChooser.Color.ToString() != Value.Content)
-                Ogmo.MainWindow.LevelEditors[Ogmo.CurrentLevelIndex].Perform(
-                        new EntitySetValueAction(null, Value, colorChooser.Color.ToString())
-                    );
-        }
-    }
+		/*
+		 *  Events
+		 */
+		private void colorChooser_ColorChanged(OgmoColor color)
+		{
+			if (colorChooser.Color.ToString() != Value.Content)
+				Ogmo.MainWindow.LevelEditors[Ogmo.CurrentLevelIndex].Perform(
+						new EntitySetValueAction(null, Value, colorChooser.Color.ToString())
+					);
+		}
+	}
 }

@@ -8,28 +8,28 @@ using Newtonsoft.Json.Linq;
 
 namespace OgmoEditor.LevelData.Layers
 {
-    public class Value
-    {
-        public ValueDefinition Definition { get; private set; }
-        public string Content;
+	public class Value
+	{
+		public ValueDefinition Definition { get; private set; }
+		public string Content;
 
-        public Value(ValueDefinition definition)
-        {
-            Definition = definition;
-            Content = definition.GetDefault();
-        }
+		public Value(ValueDefinition definition)
+		{
+			Definition = definition;
+			Content = definition.GetDefault();
+		}
 
-        public Value(Value value)
-        {
-            Definition = value.Definition;
-            Content = value.Content;
-        }
+		public Value(Value value)
+		{
+			Definition = value.Definition;
+			Content = value.Content;
+		}
 
-        public XmlAttribute GetXML(XmlDocument doc)
-        {
-            XmlAttribute xml = doc.CreateAttribute(Definition.Name);
-            xml.InnerText = Content;
-            return xml;
-        }
-    }
+		public XmlAttribute GetXML(XmlDocument doc)
+		{
+			XmlAttribute xml = doc.CreateAttribute(Definition.Name);
+			xml.InnerText = Content;
+			return xml;
+		}
+	}
 }

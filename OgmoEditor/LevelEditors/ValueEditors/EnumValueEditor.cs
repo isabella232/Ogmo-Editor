@@ -12,36 +12,36 @@ using OgmoEditor.LevelEditors.Actions.EntityActions;
 
 namespace OgmoEditor.LevelEditors.ValueEditors
 {
-    public partial class EnumValueEditor : ValueEditor
-    {
-        public EnumValueDefinition Definition { get; private set; }
+	public partial class EnumValueEditor : ValueEditor
+	{
+		public EnumValueDefinition Definition { get; private set; }
 
-        public EnumValueEditor(Value value, int x, int y)
-            : base(value, x, y)
-        {
-            Definition = (EnumValueDefinition)value.Definition;
-            InitializeComponent();
+		public EnumValueEditor(Value value, int x, int y)
+			: base(value, x, y)
+		{
+			Definition = (EnumValueDefinition)value.Definition;
+			InitializeComponent();
 
-            nameLabel.Text = Definition.Name;
-            
-            //Init the combo box
-            for (int i = 0; i < Definition.Elements.Length; i++)
-            {
-                valueComboBox.Items.Add(Definition.Elements[i]);
-                if (Value.Content == Definition.Elements[i])
-                    valueComboBox.SelectedIndex = i;
-            }
-        }
+			nameLabel.Text = Definition.Name;
+			
+			//Init the combo box
+			for (int i = 0; i < Definition.Elements.Length; i++)
+			{
+				valueComboBox.Items.Add(Definition.Elements[i]);
+				if (Value.Content == Definition.Elements[i])
+					valueComboBox.SelectedIndex = i;
+			}
+		}
 
-        /*
-         *  Events
-         */
-        private void valueComboBox_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            if (Definition.Elements[valueComboBox.SelectedIndex] != Value.Content)
-                Ogmo.MainWindow.LevelEditors[Ogmo.CurrentLevelIndex].Perform(
-                        new EntitySetValueAction(null, Value, Definition.Elements[valueComboBox.SelectedIndex])
-                    );
-        }
-    }
+		/*
+		 *  Events
+		 */
+		private void valueComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+		{
+			if (Definition.Elements[valueComboBox.SelectedIndex] != Value.Content)
+				Ogmo.MainWindow.LevelEditors[Ogmo.CurrentLevelIndex].Perform(
+						new EntitySetValueAction(null, Value, Definition.Elements[valueComboBox.SelectedIndex])
+					);
+		}
+	}
 }

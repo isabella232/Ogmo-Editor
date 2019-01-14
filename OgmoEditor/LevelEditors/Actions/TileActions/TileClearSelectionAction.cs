@@ -6,29 +6,29 @@ using OgmoEditor.LevelData.Layers;
 
 namespace OgmoEditor.LevelEditors.Actions.TileActions
 {
-    public class TileClearSelectionAction : TileAction
-    {
-        private TileSelection oldSelection;
+	public class TileClearSelectionAction : TileAction
+	{
+		private TileSelection oldSelection;
 
-        public TileClearSelectionAction(TileLayer tileLayer)
-            : base(tileLayer)
-        {
+		public TileClearSelectionAction(TileLayer tileLayer)
+			: base(tileLayer)
+		{
 
-        }
+		}
 
-        public override void Do()
-        {
-            base.Do();
+		public override void Do()
+		{
+			base.Do();
 
-            oldSelection = TileLayer.Selection;
-            TileLayer.Selection = null;
-        }
+			oldSelection = TileLayer.Selection;
+			TileLayer.Selection = null;
+		}
 
-        public override void Undo()
-        {
-            base.Undo();
+		public override void Undo()
+		{
+			base.Undo();
 
-            TileLayer.Selection = oldSelection;
-        }
-    }
+			TileLayer.Selection = oldSelection;
+		}
+	}
 }

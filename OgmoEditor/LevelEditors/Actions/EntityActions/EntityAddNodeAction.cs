@@ -7,30 +7,30 @@ using System.Drawing;
 
 namespace OgmoEditor.LevelEditors.Actions.EntityActions
 {
-    public class EntityAddNodeAction : EntityAction
-    {
-        private Entity entity;
-        private Point node;
+	public class EntityAddNodeAction : EntityAction
+	{
+		private Entity entity;
+		private Point node;
 
-        public EntityAddNodeAction(EntityLayer entityLayer, Entity entity, Point node)
-            : base(entityLayer)
-        {
-            this.entity = entity;
-            this.node = node;
-        }
+		public EntityAddNodeAction(EntityLayer entityLayer, Entity entity, Point node)
+			: base(entityLayer)
+		{
+			this.entity = entity;
+			this.node = node;
+		}
 
-        public override void Do()
-        {
-            base.Do();
+		public override void Do()
+		{
+			base.Do();
 
-            entity.Nodes.Add(node);
-        }
+			entity.Nodes.Add(node);
+		}
 
-        public override void Undo()
-        {
-            base.Undo();
+		public override void Undo()
+		{
+			base.Undo();
 
-            entity.Nodes.RemoveAt(entity.Nodes.Count - 1);
-        }
-    }
+			entity.Nodes.RemoveAt(entity.Nodes.Count - 1);
+		}
+	}
 }

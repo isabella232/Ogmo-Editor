@@ -13,23 +13,23 @@ using OgmoEditor.LevelEditors.Resizers;
 
 namespace OgmoEditor.LevelData.Layers
 {
-    public abstract class Layer
-    {
-        public LayerDefinition Definition { get; private set; }
-        public Level Level { get; private set; }
+	public abstract class Layer
+	{
+		public LayerDefinition Definition { get; private set; }
+		public Level Level { get; private set; }
 
-        public Layer(Level level, LayerDefinition definition)
-        {
-            Level = level;
-            Definition = definition;
-        }
+		public Layer(Level level, LayerDefinition definition)
+		{
+			Level = level;
+			Definition = definition;
+		}
 
-        public abstract XmlElement GetXML(XmlDocument doc);
-        public abstract bool SetXML(XmlElement xml);
+		public abstract XmlElement GetXML(XmlDocument doc);
+		public abstract bool SetXML(XmlElement xml);
 
-        public abstract void WriteJSON(JsonTextWriter jw);
-        public abstract bool SetJSON(JToken json);
+		public abstract void WriteJSON(JsonTextWriter jw);
+		public abstract bool SetJSON(JToken json);
 
-        public abstract LayerEditor GetEditor(LevelEditor editor);
-    }
+		public abstract LayerEditor GetEditor(LevelEditor editor);
+	}
 }

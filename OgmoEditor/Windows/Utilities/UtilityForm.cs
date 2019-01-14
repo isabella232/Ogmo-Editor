@@ -6,22 +6,22 @@ using System.Windows.Forms;
 
 namespace OgmoEditor.Windows.Utilities
 {
-    public class UtilityForm : Form
-    {
-        public UtilityForm()
-        {
-            FormClosed += OnFormClosed;
-            Ogmo.OnProjectClose += OnProjectClose;
-        }
+	public class UtilityForm : Form
+	{
+		public UtilityForm()
+		{
+			FormClosed += OnFormClosed;
+			Ogmo.OnProjectClose += OnProjectClose;
+		}
 
-        private void OnProjectClose(Project project)
-        {
-            Close();
-        }
+		private void OnProjectClose(Project project)
+		{
+			Close();
+		}
 
-        private void OnFormClosed(object sender, FormClosedEventArgs e)
-        {
-            Ogmo.OnProjectClose -= OnProjectClose;
-        }
-    }
+		private void OnFormClosed(object sender, FormClosedEventArgs e)
+		{
+			Ogmo.OnProjectClose -= OnProjectClose;
+		}
+	}
 }

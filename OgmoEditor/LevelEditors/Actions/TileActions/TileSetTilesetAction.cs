@@ -7,40 +7,40 @@ using OgmoEditor.Definitions;
 
 namespace OgmoEditor.LevelEditors.Actions.TileActions
 {
-    public class TileSetTilesetAction : TileAction
-    {
-        private Tileset setTo;
-        private Tileset was;
+	public class TileSetTilesetAction : TileAction
+	{
+		private Tileset setTo;
+		private Tileset was;
 
-        private int[,] oldIDs;
+		private int[,] oldIDs;
 
-        public TileSetTilesetAction(TileLayer tileLayer, Tileset setTo)
-            : base(tileLayer)
-        {
-            this.setTo = setTo;
-        }
+		public TileSetTilesetAction(TileLayer tileLayer, Tileset setTo)
+			: base(tileLayer)
+		{
+			this.setTo = setTo;
+		}
 
-        public override void Do()
-        {
-            base.Do();
+		public override void Do()
+		{
+			base.Do();
 
-            was = TileLayer.Tileset;
-            TileLayer.Tileset = setTo;
+			was = TileLayer.Tileset;
+			TileLayer.Tileset = setTo;
 
-            oldIDs = TileLayer.Tiles;
-            TileLayer.Tiles = setTo.TransformMap(was, TileLayer.Tiles);
+			oldIDs = TileLayer.Tiles;
+			TileLayer.Tiles = setTo.TransformMap(was, TileLayer.Tiles);
 
-            Ogmo.TilePaletteWindow.SetTileset(setTo);
-        }
+			Ogmo.TilePaletteWindow.SetTileset(setTo);
+		}
 
-        public override void Undo()
-        {
-            base.Undo();
+		public override void Undo()
+		{
+			base.Undo();
 
-            TileLayer.Tileset = was;
-            TileLayer.Tiles = oldIDs;
+			TileLayer.Tileset = was;
+			TileLayer.Tiles = oldIDs;
 
-            Ogmo.TilePaletteWindow.SetTileset(was);
-        }
-    }
+			Ogmo.TilePaletteWindow.SetTileset(was);
+		}
+	}
 }

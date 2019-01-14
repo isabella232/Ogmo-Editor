@@ -7,32 +7,32 @@ using System.Drawing;
 
 namespace OgmoEditor.LevelEditors.Actions.EntityActions
 {
-    public class EntityRemoveNodeAction : EntityAction
-    {
-        private Entity entity;
-        private int index;
-        private Point was;
+	public class EntityRemoveNodeAction : EntityAction
+	{
+		private Entity entity;
+		private int index;
+		private Point was;
 
-        public EntityRemoveNodeAction(EntityLayer entityLayer, Entity entity, int index)
-            : base(entityLayer)
-        {
-            this.entity = entity;
-            this.index = index;
-        }
+		public EntityRemoveNodeAction(EntityLayer entityLayer, Entity entity, int index)
+			: base(entityLayer)
+		{
+			this.entity = entity;
+			this.index = index;
+		}
 
-        public override void Do()
-        {
-            base.Do();
+		public override void Do()
+		{
+			base.Do();
 
-            was = entity.Nodes[index];
-            entity.Nodes.RemoveAt(index);
-        }
+			was = entity.Nodes[index];
+			entity.Nodes.RemoveAt(index);
+		}
 
-        public override void Undo()
-        {
-            base.Undo();
+		public override void Undo()
+		{
+			base.Undo();
 
-            entity.Nodes.Insert(index, was);
-        }
-    }
+			entity.Nodes.Insert(index, was);
+		}
+	}
 }

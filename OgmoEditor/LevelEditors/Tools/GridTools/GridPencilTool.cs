@@ -7,72 +7,72 @@ using System.Diagnostics;
 
 namespace OgmoEditor.LevelEditors.Tools.GridTools
 {
-    public class GridPencilTool : GridTool
-    {
-        private bool drawing;
-        private bool drawMode;
-        private GridDrawAction drawAction;
+	public class GridPencilTool : GridTool
+	{
+		private bool drawing;
+		private bool drawMode;
+		private GridDrawAction drawAction;
 
-        public GridPencilTool()
-            : base("Pencil", "pencil.png")
-        {
-            drawing = false;
-        }
+		public GridPencilTool()
+			: base("Pencil", "pencil.png")
+		{
+			drawing = false;
+		}
 
-        public override void OnMouseLeftDown(System.Drawing.Point location)
-        {
-            if (!drawing)
-            {
-                drawing = true;
-                drawMode = true;
-                setCell(location, true);
-            }
-        }
+		public override void OnMouseLeftDown(System.Drawing.Point location)
+		{
+			if (!drawing)
+			{
+				drawing = true;
+				drawMode = true;
+				setCell(location, true);
+			}
+		}
 
-        public override void OnMouseRightDown(System.Drawing.Point location)
-        {
-            if (!drawing)
-            {
-                drawing = true;
-                drawMode = false;
-                setCell(location, false);
-            }
-        }
+		public override void OnMouseRightDown(System.Drawing.Point location)
+		{
+			if (!drawing)
+			{
+				drawing = true;
+				drawMode = false;
+				setCell(location, false);
+			}
+		}
 
-        public override void OnMouseLeftUp(System.Drawing.Point location)
-        {
-            if (drawing && drawMode)
-            {
-                drawing = false;
-                drawAction = null;
-            }
-        }
+		public override void OnMouseLeftUp(System.Drawing.Point location)
+		{
+			if (drawing && drawMode)
+			{
+				drawing = false;
+				drawAction = null;
+			}
+		}
 
-        public override void OnMouseRightUp(System.Drawing.Point location)
-        {
-            if (drawing && !drawMode)
-            {
-                drawing = false;
-                drawAction = null;
-            }
-        }
+		public override void OnMouseRightUp(System.Drawing.Point location)
+		{
+			if (drawing && !drawMode)
+			{
+				drawing = false;
+				drawAction = null;
+			}
+		}
 
-        public override void OnMouseMove(System.Drawing.Point location)
-        {
-            if (drawing)
-                setCell(location, drawMode);
-        }
+		public override void OnMouseMove(System.Drawing.Point location)
+		{
+			if (drawing)
+				setCell(location, drawMode);
+		}
 
-        private void setCell(System.Drawing.Point location, bool setTo)
-        {
-            location = LayerEditor.Layer.Definition.ConvertToGrid(location);
-            if (!IsValidGridCell(location) || LayerEditor.Layer.Grid[location.X, location.Y] == setTo)
-                return;
+		private void setCell(System.Drawing.Point location, bool setTo)
+		{
+			location = LayerEditor.Layer.Definition.ConvertToGrid(location);
+			if (!IsValidGridCell(location) || LayerEditor.Layer.Grid[location.X, location.Y] == setTo)
+				return;
 
-            if (drawAction == null)
-                LevelEditor.Perform(drawAction = new GridDrawAction(LayerEditor.Layer, location, setTo));
-            else
-                drawAction.DoAgain(location);
-        }
-    }
+			if (drawAction == null)
+				LevelEditor.Perform(drawAction = new GridDrawAction(LayerEditor.Layer, location, setTo));
+			else
+				drawAction.DoAgain(location);
+		}
+	}
 }

@@ -13,44 +13,44 @@ using OgmoEditor.LevelEditors.Actions.EntityActions;
 
 namespace OgmoEditor.LevelEditors.ValueEditors
 {
-    public partial class FloatValueEditor : ValueEditor
-    {
-        public FloatValueDefinition Definition { get; private set; }
+	public partial class FloatValueEditor : ValueEditor
+	{
+		public FloatValueDefinition Definition { get; private set; }
 
-        public FloatValueEditor(Value value, int x, int y)
-            : base(value, x, y)
-        {
-            Definition = (FloatValueDefinition)value.Definition;
-            InitializeComponent();
+		public FloatValueEditor(Value value, int x, int y)
+			: base(value, x, y)
+		{
+			Definition = (FloatValueDefinition)value.Definition;
+			InitializeComponent();
 
-            nameLabel.Text = Definition.Name;
-            valueTextBox.Text = Value.Content;
+			nameLabel.Text = Definition.Name;
+			valueTextBox.Text = Value.Content;
 
-            valueTextBox.LostFocus += valueTextBox_Leave;
-        }
+			valueTextBox.LostFocus += valueTextBox_Leave;
+		}
 
-        private void handleTextBox()
-        {
-            string temp = Value.Content;
-            OgmoParse.ParseFloatToString(ref temp, Definition.Min, Definition.Max, Definition.Round, valueTextBox);
-            if (temp != Value.Content)
-                Ogmo.MainWindow.LevelEditors[Ogmo.CurrentLevelIndex].Perform(
-                        new EntitySetValueAction(null, Value, temp)
-                    );
-        }
+		private void handleTextBox()
+		{
+			string temp = Value.Content;
+			OgmoParse.ParseFloatToString(ref temp, Definition.Min, Definition.Max, Definition.Round, valueTextBox);
+			if (temp != Value.Content)
+				Ogmo.MainWindow.LevelEditors[Ogmo.CurrentLevelIndex].Perform(
+						new EntitySetValueAction(null, Value, temp)
+					);
+		}
 
-        /*
-         *  Events
-         */
-        private void valueTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-                handleTextBox();
-        }
+		/*
+		 *  Events
+		 */
+		private void valueTextBox_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+				handleTextBox();
+		}
 
-        private void valueTextBox_Leave(object sender, EventArgs e)
-        {
-            handleTextBox();
-        }
-    }
+		private void valueTextBox_Leave(object sender, EventArgs e)
+		{
+			handleTextBox();
+		}
+	}
 }

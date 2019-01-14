@@ -6,29 +6,29 @@ using OgmoEditor.LevelData.Layers;
 
 namespace OgmoEditor.LevelEditors.Actions.GridActions
 {
-    public class GridClearSelectionAction : GridAction
-    {
-        private GridSelection oldSelection;
+	public class GridClearSelectionAction : GridAction
+	{
+		private GridSelection oldSelection;
 
-        public GridClearSelectionAction(GridLayer gridLayer)
-            : base(gridLayer)
-        {
+		public GridClearSelectionAction(GridLayer gridLayer)
+			: base(gridLayer)
+		{
 
-        }
+		}
 
-        public override void Do()
-        {
-            base.Do();
+		public override void Do()
+		{
+			base.Do();
 
-            oldSelection = GridLayer.Selection;
-            GridLayer.Selection = null;
-        }
+			oldSelection = GridLayer.Selection;
+			GridLayer.Selection = null;
+		}
 
-        public override void Undo()
-        {
-            base.Undo();
+		public override void Undo()
+		{
+			base.Undo();
 
-            GridLayer.Selection = oldSelection;
-        }
-    }
+			GridLayer.Selection = oldSelection;
+		}
+	}
 }

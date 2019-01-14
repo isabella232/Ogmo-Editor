@@ -7,39 +7,39 @@ using System.Drawing;
 
 namespace OgmoEditor.LevelEditors.Actions.GridActions
 {
-    public class GridDrawAction : GridAction
-    {
-        private bool setTo;
-        private List<Point> draw;
+	public class GridDrawAction : GridAction
+	{
+		private bool setTo;
+		private List<Point> draw;
 
-        public GridDrawAction(GridLayer gridLayer, Point at, bool setTo)
-            : base(gridLayer)
-        {
-            draw = new List<Point>();
-            draw.Add(at);
-            this.setTo = setTo;
-        }
+		public GridDrawAction(GridLayer gridLayer, Point at, bool setTo)
+			: base(gridLayer)
+		{
+			draw = new List<Point>();
+			draw.Add(at);
+			this.setTo = setTo;
+		}
 
-        public override void Do()
-        {
-            base.Do();
+		public override void Do()
+		{
+			base.Do();
 
-            foreach (Point p in draw)
-                GridLayer.Grid[p.X, p.Y] = setTo;
-        }
+			foreach (Point p in draw)
+				GridLayer.Grid[p.X, p.Y] = setTo;
+		}
 
-        public override void Undo()
-        {
-            base.Undo();
+		public override void Undo()
+		{
+			base.Undo();
 
-            foreach (Point p in draw)
-                GridLayer.Grid[p.X, p.Y] = !setTo;
-        }
+			foreach (Point p in draw)
+				GridLayer.Grid[p.X, p.Y] = !setTo;
+		}
 
-        public void DoAgain(Point add)
-        {
-            GridLayer.Grid[add.X, add.Y] = setTo;
-            draw.Add(add);
-        }
-    }
+		public void DoAgain(Point add)
+		{
+			GridLayer.Grid[add.X, add.Y] = setTo;
+			draw.Add(add);
+		}
+	}
 }

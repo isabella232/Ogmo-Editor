@@ -7,40 +7,40 @@ using System.Drawing;
 
 namespace OgmoEditor.LevelEditors.Actions.EntityActions
 {
-    class EntityMoveNodeAction : EntityAction
-    {
-        private Entity entity;
-        private int nodeIndex;
-        private Point moveTo;
-        private Point oldPos;
+	class EntityMoveNodeAction : EntityAction
+	{
+		private Entity entity;
+		private int nodeIndex;
+		private Point moveTo;
+		private Point oldPos;
 
-        public EntityMoveNodeAction(EntityLayer entityLayer, Entity entity, int nodeIndex, Point moveTo)
-            : base(entityLayer)
-        {
-            this.entity = entity;
-            this.nodeIndex = nodeIndex;
-            this.moveTo = moveTo;
-        }
+		public EntityMoveNodeAction(EntityLayer entityLayer, Entity entity, int nodeIndex, Point moveTo)
+			: base(entityLayer)
+		{
+			this.entity = entity;
+			this.nodeIndex = nodeIndex;
+			this.moveTo = moveTo;
+		}
 
-        public override void Do()
-        {
-            base.Do();
+		public override void Do()
+		{
+			base.Do();
 
-            oldPos = entity.Nodes[nodeIndex];
-            entity.Nodes[nodeIndex] = moveTo;
-        }
+			oldPos = entity.Nodes[nodeIndex];
+			entity.Nodes[nodeIndex] = moveTo;
+		}
 
-        public override void Undo()
-        {
-            base.Undo();
+		public override void Undo()
+		{
+			base.Undo();
 
-            entity.Nodes[nodeIndex] = oldPos;
-        }
+			entity.Nodes[nodeIndex] = oldPos;
+		}
 
-        public void DoAgain(Point moveTo)
-        {
-            this.moveTo = moveTo;
-            entity.Nodes[nodeIndex] = moveTo;
-        }
-    }
+		public void DoAgain(Point moveTo)
+		{
+			this.moveTo = moveTo;
+			entity.Nodes[nodeIndex] = moveTo;
+		}
+	}
 }

@@ -7,30 +7,30 @@ using System.Drawing;
 
 namespace OgmoEditor.LevelEditors.Actions.GridActions
 {
-    public class GridSelectAction : GridAction
-    {
-        private GridSelection oldSelection;
-        private Rectangle selectArea;
+	public class GridSelectAction : GridAction
+	{
+		private GridSelection oldSelection;
+		private Rectangle selectArea;
 
-        public GridSelectAction(GridLayer gridLayer, Rectangle selectArea)
-            : base(gridLayer)
-        {
-            this.selectArea = selectArea;
-        }
+		public GridSelectAction(GridLayer gridLayer, Rectangle selectArea)
+			: base(gridLayer)
+		{
+			this.selectArea = selectArea;
+		}
 
-        public override void Do()
-        {
-            base.Do();
+		public override void Do()
+		{
+			base.Do();
 
-            oldSelection = GridLayer.Selection;
-            GridLayer.Selection = new GridSelection(GridLayer, selectArea);
-        }
+			oldSelection = GridLayer.Selection;
+			GridLayer.Selection = new GridSelection(GridLayer, selectArea);
+		}
 
-        public override void Undo()
-        {
-            base.Undo();
+		public override void Undo()
+		{
+			base.Undo();
 
-            GridLayer.Selection = oldSelection;
-        }
-    }
+			GridLayer.Selection = oldSelection;
+		}
+	}
 }
