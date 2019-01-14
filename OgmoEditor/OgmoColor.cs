@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
-using System.Diagnostics;
 
 namespace OgmoEditor
 {
@@ -152,6 +148,6 @@ namespace OgmoEditor
 		static public bool operator !=(OgmoColor a, OgmoColor b)
 		{
 			return a.A != b.A || a.R != b.R || a.G != b.G || a.B != b.B;
-		}   
+		}
 	}
 }

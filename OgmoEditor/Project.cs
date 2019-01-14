@@ -1,23 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using System.Xml;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization.Formatters;
 using OgmoEditor.Definitions.LayerDefinitions;
-using System.Runtime.Serialization;
 using System.Drawing;
 using System.Xml.Serialization;
-using Newtonsoft.Json;
-using System.Diagnostics;
-using System.Collections;
 using OgmoEditor.Definitions.ValueDefinitions;
 using OgmoEditor.Definitions;
-using OgmoEditor.ProjectEditors;
-using OgmoEditor.LevelEditors;
 
 namespace OgmoEditor
 {
@@ -99,10 +88,10 @@ namespace OgmoEditor
 			foreach (var d in copy.LevelValueDefinitions)
 				LevelValueDefinitions.Add(d.Clone());
 
-			LayerDefinitions = new List<LayerDefinition>();   
+			LayerDefinitions = new List<LayerDefinition>();
 			foreach (var d in copy.LayerDefinitions)
 				LayerDefinitions.Add(d.Clone());
-  
+
 			Tilesets = new List<Tileset>();
 			foreach (var d in copy.Tilesets)
 				Tilesets.Add(d.Clone());

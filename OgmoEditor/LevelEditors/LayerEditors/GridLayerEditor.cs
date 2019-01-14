@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OgmoEditor.LevelData.Layers;
-using OgmoEditor.LevelEditors.Tools.GridTools;
+﻿using OgmoEditor.LevelData.Layers;
 using System.Drawing;
 using OgmoEditor.LevelEditors.Actions.GridActions;
-using System.Diagnostics;
 using OgmoEditor.Clipboard;
 using OgmoEditor.LevelEditors.Resizers;
 
@@ -37,7 +31,7 @@ namespace OgmoEditor.LevelEditors.LayerEditors
 
 			//Draw the selection box
 			if (current && Layer.Selection != null)
-				graphics.DrawSelectionRectangle( 
+				graphics.DrawSelectionRectangle(
 					new Rectangle(Layer.Selection.Area.X * Layer.Definition.Grid.Width,
 						Layer.Selection.Area.Y * Layer.Definition.Grid.Height,
 						Layer.Selection.Area.Width * Layer.Definition.Grid.Width,

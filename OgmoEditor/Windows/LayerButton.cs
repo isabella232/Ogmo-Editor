@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using OgmoEditor.Definitions.LayerDefinitions;
 using System.IO;
-using System.Diagnostics;
 
 namespace OgmoEditor.Windows
 {
@@ -35,7 +29,7 @@ namespace OgmoEditor.Windows
 			visibleCheckBox.Checked = LayerDefinition.Visible;
 
 			//Add events
-			Ogmo.LayersWindow.OnLayerChanged += onLayerChanged;		  
+			Ogmo.LayersWindow.OnLayerChanged += onLayerChanged;
 		}
 
 		public void OnRemove()

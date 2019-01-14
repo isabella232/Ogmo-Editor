@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using OgmoEditor.LevelData.Layers;
-using OgmoEditor.ProjectEditors;
 using OgmoEditor.Definitions.ValueDefinitions;
-using System.Diagnostics;
 using OgmoEditor.LevelEditors.Actions.EntityActions;
 
 namespace OgmoEditor.LevelEditors.ValueEditors
@@ -34,7 +27,7 @@ namespace OgmoEditor.LevelEditors.ValueEditors
 			{
 				valueTrackBar.Minimum = Definition.Min;
 				valueTrackBar.Maximum = Definition.Max;
-				valueTrackBar.Value = Convert.ToInt32(Value.Content); 
+				valueTrackBar.Value = Convert.ToInt32(Value.Content);
 				valueTrackBar.TickFrequency = (Definition.Max - Definition.Min) / 10;
 			}
 			else

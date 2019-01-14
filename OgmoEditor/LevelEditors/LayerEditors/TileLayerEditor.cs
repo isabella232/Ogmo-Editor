@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OgmoEditor.LevelData.Layers;
+﻿using OgmoEditor.LevelData.Layers;
 using OgmoEditor.LevelEditors.Resizers;
 using OgmoEditor.LevelEditors.Actions.TileActions;
 using System.Drawing;
 using OgmoEditor.Clipboard;
-using System.Drawing.Imaging;
-using System.Diagnostics;
 
 namespace OgmoEditor.LevelEditors.LayerEditors
 {
@@ -49,7 +43,7 @@ namespace OgmoEditor.LevelEditors.LayerEditors
 				}
 			}
 
-			
+
 			//Draw the selection box
 			if (current && Layer.Selection != null)
 				graphics.DrawSelectionRectangle(new Rectangle(

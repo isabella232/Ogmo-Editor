@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.IO;
-using System.Diagnostics;
 using System.Drawing;
-using OgmoEditor.LevelEditors;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
@@ -17,7 +13,7 @@ namespace OgmoEditor
 		static public readonly ImageAttributes FullAlphaAttributes = CreateAlphaAttributes(1);
 		static public readonly ImageAttributes HalfAlphaAttributes = CreateAlphaAttributes(.5f);
 		static public readonly ImageAttributes QuarterAlphaAttributes = CreateAlphaAttributes(.25f);
-		
+
 		public const float UP = (float)(Math.PI * 1.5);
 		public const float DOWN = (float)(Math.PI * .5);
 		public const float RIGHT = 0;
@@ -45,9 +41,9 @@ namespace OgmoEditor
 			// Find common root
 			for (index = 0; index < len; index++)
 			{
-				if (absDirs[index] == relDirs[index]) 
+				if (absDirs[index] == relDirs[index])
 					lastCommonRoot = index;
-				else 
+				else
 					break;
 			}
 
@@ -63,7 +59,7 @@ namespace OgmoEditor
 			// Add on the ..
 			for (index = lastCommonRoot + 1; index < absDirs.Length; index++)
 			{
-				if (absDirs[index].Length > 0) 
+				if (absDirs[index].Length > 0)
 					relativePath.Append(".." + Path.DirectorySeparatorChar);
 			}
 

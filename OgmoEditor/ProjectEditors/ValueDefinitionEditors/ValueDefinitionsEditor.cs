@@ -1,14 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using OgmoEditor.Definitions.ValueDefinitions;
-using System.Diagnostics;
-using OgmoEditor.ProjectEditors.ValueDefinitionEditors;
 
 namespace OgmoEditor.ProjectEditors.ValueDefinitionEditors
 {
@@ -52,10 +45,10 @@ namespace OgmoEditor.ProjectEditors.ValueDefinitionEditors
 		{
 			removeButton.Enabled = true;
 
-			//Set the name			  
+			//Set the name
 			nameTextBox.CausesValidation = true;
 			nameTextBox.Enabled = true;
-			nameTextBox.Text = v.Name; 
+			nameTextBox.Text = v.Name;
 
 			//Set the type
 			typeComboBox.CausesValidation = true;
@@ -80,7 +73,7 @@ namespace OgmoEditor.ProjectEditors.ValueDefinitionEditors
 			removeButton.Enabled = false;
 
 			nameTextBox.CausesValidation = false;
-			nameTextBox.Enabled = false;		
+			nameTextBox.Enabled = false;
 			nameTextBox.Text = "";
 
 			typeComboBox.CausesValidation = false;

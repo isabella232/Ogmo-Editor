@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
-using OgmoEditor.LevelData;
 
 namespace OgmoEditor.LevelEditors
 {
@@ -149,7 +145,7 @@ namespace OgmoEditor.LevelEditors
 
 			//Start the tween
 			stopwatch.Restart();
-			lastTime = 0;		  
+			lastTime = 0;
 		}
 
 		public void ZoomOut(PointF? zoomAt = null)

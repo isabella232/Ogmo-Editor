@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using OgmoEditor.Definitions.LayerDefinitions;
 using System.Drawing;
 using OgmoEditor.LevelData.Layers;
 using System.Windows.Forms;
-using System.Diagnostics;
 using OgmoEditor.LevelEditors.ValueEditors;
 using OgmoEditor.LevelEditors.Actions.EntityActions;
 
@@ -229,7 +227,7 @@ namespace OgmoEditor.Windows
 					Controls.Add(label);
 				}
 
-				//Entity size	
+				//Entity size
 				int yy = 114;
 				if (selection[0].Definition.ResizableX || selection[0].Definition.ResizableY)
 				{
@@ -253,7 +251,7 @@ namespace OgmoEditor.Windows
 
 					TextBox angleTextBox = new TextBox();
 					angleTextBox.Bounds = new Rectangle(CONTENT_X, yy - 2, CONTENT_WIDTH - 20, 16);
-					angleTextBox.Text = selection[0].Angle.ToString();	
+					angleTextBox.Text = selection[0].Angle.ToString();
 					angleTextBox.LostFocus += delegate(object sender, EventArgs e) { if (selection.Count > 0) HandleAngleChange(angleTextBox); };
 					angleTextBox.KeyDown += delegate(object sender, KeyEventArgs e) { if (e.KeyCode == Keys.Enter) { HandleAngleChange(angleTextBox); Ogmo.MainWindow.LevelEditors[Ogmo.CurrentLevelIndex].Focus(); } };
 					Controls.Add(angleTextBox);

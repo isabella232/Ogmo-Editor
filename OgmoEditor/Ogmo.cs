@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using Newtonsoft.Json;
 using OgmoEditor.Clipboard;
 using OgmoEditor.Definitions;
 using OgmoEditor.Definitions.LayerDefinitions;
@@ -56,7 +55,7 @@ namespace OgmoEditor
 		static public event ProjectCallback OnProjectEdited;
 		static public event LevelCallback OnLevelAdded;
 		static public event LevelCallback OnLevelClosed;
-		static public event LevelCallback OnLevelChanged;		
+		static public event LevelCallback OnLevelChanged;
 
 		[STAThread]
 		static void Main(string[] args)
@@ -307,7 +306,7 @@ namespace OgmoEditor
 			{
 				//Start the project and save it
 				StartProject(Project);
-				Project.Save(); 
+				Project.Save();
 
 				//Start a blank level and start at the first layer
 				LayersWindow.SetLayer(0);
@@ -347,7 +346,7 @@ namespace OgmoEditor
 			if (OnLevelChanged != null)
 				OnLevelChanged(index);
 		}
-		
+
 		static public Level GetLevelByPath(string path)
 		{
 			return Levels.Find(e => e.SavePath == path);

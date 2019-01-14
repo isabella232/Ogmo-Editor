@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Diagnostics;
 using System.IO;
 
 namespace OgmoEditor.Windows.Utilities
@@ -31,7 +24,7 @@ namespace OgmoEditor.Windows.Utilities
 				dialog.InitialDirectory = Path.GetDirectoryName(Path.Combine(Ogmo.Project.SavedDirectory, levelBTextbox.Text));
 			else
 				dialog.InitialDirectory = Ogmo.Project.SavedDirectory;
-		
+
 			DialogResult result = dialog.ShowDialog(this);
 
 			if (result == System.Windows.Forms.DialogResult.OK)
@@ -51,7 +44,7 @@ namespace OgmoEditor.Windows.Utilities
 				dialog.InitialDirectory = Path.GetDirectoryName(Path.Combine(Ogmo.Project.SavedDirectory, levelATextbox.Text));
 			else
 				dialog.InitialDirectory = Ogmo.Project.SavedDirectory;
-		   
+
 			DialogResult result = dialog.ShowDialog(this);
 
 			if (result == System.Windows.Forms.DialogResult.OK)

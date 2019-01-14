@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OgmoEditor.LevelEditors.Actions.TileActions;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace OgmoEditor.LevelEditors.Tools.TileTools
 {
@@ -48,7 +43,7 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
 		}
 
 		public override void OnMouseLeftUp(Point location)
-		{ 
+		{
 			if (moving)
 			{
 				moving = false;

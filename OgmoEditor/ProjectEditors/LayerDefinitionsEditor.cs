@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using OgmoEditor.Definitions.LayerDefinitions;
-using System.Diagnostics;
 
 namespace OgmoEditor.ProjectEditors
 {
-    public partial class LayerDefinitionsEditor : UserControl, IProjectChanger
+	public partial class LayerDefinitionsEditor : UserControl, IProjectChanger
     {
         private const string NEW_LAYER_NAME = "NewLayer";
 

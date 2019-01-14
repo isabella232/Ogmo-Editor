@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OgmoEditor.LevelEditors.Actions.EntityActions;
+﻿using OgmoEditor.LevelEditors.Actions.EntityActions;
 using System.Drawing;
-using System.Diagnostics;
 using OgmoEditor.LevelData.Layers;
 
 namespace OgmoEditor.LevelEditors.Tools.EntityTools

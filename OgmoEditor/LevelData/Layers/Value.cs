@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OgmoEditor.Definitions.ValueDefinitions;
+﻿using OgmoEditor.Definitions.ValueDefinitions;
 using System.Xml;
-using Newtonsoft.Json.Linq;
 
 namespace OgmoEditor.LevelData.Layers
 {

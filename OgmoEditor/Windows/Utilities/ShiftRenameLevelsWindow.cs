@@ -1,14 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Diagnostics;
 using System.IO;
-using OgmoEditor.LevelData;
 
 namespace OgmoEditor.Windows.Utilities
 {
@@ -91,7 +84,7 @@ namespace OgmoEditor.Windows.Utilities
 				//Close the levels if they're open
 				Ogmo.CloseLevelByFilepath(source);
 				Ogmo.CloseLevelByFilepath(dest);
-				
+
 				//Rename it
 				File.Copy(source, dest, overwrite);
 				File.Delete(source);
@@ -105,7 +98,7 @@ namespace OgmoEditor.Windows.Utilities
 
 		private void rangeMaxUpDown_ValueChanged(object sender, EventArgs e)
 		{
-			rangeMinUpDown.Value = Math.Min(rangeMinUpDown.Value, rangeMaxUpDown.Value);		   
+			rangeMinUpDown.Value = Math.Min(rangeMinUpDown.Value, rangeMaxUpDown.Value);
 		}
 	}
 }

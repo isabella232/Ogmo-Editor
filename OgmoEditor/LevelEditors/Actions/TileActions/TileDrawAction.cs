@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using OgmoEditor.LevelData.Layers;
 using System.Drawing;
 
@@ -35,7 +32,7 @@ namespace OgmoEditor.LevelEditors.Actions.TileActions
 				}
 				else
 					was.Add(-1);
-				
+
 			}
 		}
 

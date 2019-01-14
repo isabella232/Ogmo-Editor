@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using Newtonsoft.Json.Linq;
@@ -107,7 +106,7 @@ namespace OgmoEditor.LevelData
 
 		private void initialize()
 		{
-			
+
 		}
 
 		public bool Changed
@@ -183,7 +182,7 @@ namespace OgmoEditor.LevelData
 			XmlElement level = doc.CreateElement("level");
 			doc.AppendChild(level);
 
-			//Export the size  
+			//Export the size
 			{
 				a = doc.CreateAttribute("width");
 				a.InnerText = Size.Width.ToString();
@@ -304,7 +303,7 @@ namespace OgmoEditor.LevelData
 			{
 				Size size = new Size();
 
-				//Import the size			   
+				//Import the size
 				if (level.Attributes["width"] != null)
 					size.Width = Convert.ToInt32(level.Attributes["width"].InnerText);
 				else

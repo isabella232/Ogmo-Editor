@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
-using OgmoEditor.ProjectEditors.LayerDefinitionEditors;
+﻿using OgmoEditor.ProjectEditors.LayerDefinitionEditors;
 using OgmoEditor.LevelData.Layers;
 using OgmoEditor.LevelData;
 using System.Windows.Forms;

@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using OgmoEditor.Definitions.ValueDefinitions;
 using OgmoEditor.LevelData.Layers;
 using OgmoEditor.LevelEditors.Actions.EntityActions;
@@ -23,7 +16,7 @@ namespace OgmoEditor.LevelEditors.ValueEditors
 			InitializeComponent();
 
 			nameLabel.Text = Definition.Name;
-			
+
 			//Init the combo box
 			for (int i = 0; i < Definition.Elements.Length; i++)
 			{

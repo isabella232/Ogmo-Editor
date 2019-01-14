@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
 using OgmoEditor.Definitions.LayerDefinitions;
 using OgmoEditor.LevelData.Layers;
 using System.Windows.Forms;
 using OgmoEditor.Definitions;
-using System.Diagnostics;
 using OgmoEditor.LevelEditors.Actions.TileActions;
 
 namespace OgmoEditor.Windows

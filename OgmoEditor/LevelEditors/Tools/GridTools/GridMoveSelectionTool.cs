@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
-using OgmoEditor.LevelEditors.Actions.GridActions;
+﻿using System.Drawing;
 
 namespace OgmoEditor.LevelEditors.Tools.GridTools
 {
@@ -48,7 +43,7 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
 		}
 
 		public override void OnMouseLeftUp(Point location)
-		{ 
+		{
 			if (moving)
 			{
 				moving = false;

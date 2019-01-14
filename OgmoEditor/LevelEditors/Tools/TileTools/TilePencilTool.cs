@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OgmoEditor.LevelEditors.Actions.TileActions;
+﻿using OgmoEditor.LevelEditors.Actions.TileActions;
 using System.Drawing;
 
 namespace OgmoEditor.LevelEditors.Tools.TileTools
@@ -26,7 +22,7 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
 			{
 				drawing = true;
 				drawMode = true;
- 
+
 				SetTiles(location, Ogmo.TilePaletteWindow.Tiles, true);
 			}
 		}

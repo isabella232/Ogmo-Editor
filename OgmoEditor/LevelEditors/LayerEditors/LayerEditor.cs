@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using OgmoEditor.LevelData.Layers;
 using System.Windows.Forms;
-using System.Diagnostics;
-using OgmoEditor.LevelEditors.Actions;
-using OgmoEditor.LevelEditors.Tools;
 using OgmoEditor.LevelEditors.Resizers;
-using System.Drawing; 
+using System.Drawing;
 
 namespace OgmoEditor.LevelEditors.LayerEditors
 {

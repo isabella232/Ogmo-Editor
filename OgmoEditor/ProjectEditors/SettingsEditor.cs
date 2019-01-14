@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.IO;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace OgmoEditor.ProjectEditors
 {
-    public partial class SettingsEditor : UserControl, IProjectChanger
+	public partial class SettingsEditor : UserControl, IProjectChanger
     {
         private Project project;
 

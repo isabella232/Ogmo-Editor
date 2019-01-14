@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using OgmoEditor.LevelData;
 using System.IO;
@@ -31,7 +26,7 @@ namespace OgmoEditor.Windows.Utilities
 			}
 			else if (directoryRadioButton.Checked)
 			{
-				descLabel.Text = "Select a folder. Resaves all the levels in the selected folder, and recursively through all subfolders."; 
+				descLabel.Text = "Select a folder. Resaves all the levels in the selected folder, and recursively through all subfolders.";
 			}
 		}
 

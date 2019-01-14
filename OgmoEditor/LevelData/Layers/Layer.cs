@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OgmoEditor.Definitions.LayerDefinitions;
+﻿using OgmoEditor.Definitions.LayerDefinitions;
 using System.Xml;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OgmoEditor.LevelEditors.LayerEditors;
 using OgmoEditor.LevelEditors;
-using System.Drawing;
-using OgmoEditor.LevelEditors.Resizers;
 
 namespace OgmoEditor.LevelData.Layers
 {

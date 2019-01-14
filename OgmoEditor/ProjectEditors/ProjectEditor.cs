@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using OgmoEditor.Definitions.LayerDefinitions;
-using System.Diagnostics;
-using OgmoEditor.Windows;
 
 namespace OgmoEditor.ProjectEditors
 {
-    public partial class ProjectEditor : Form
+	public partial class ProjectEditor : Form
     {
         private Project oldProject;
         private Project newProject;

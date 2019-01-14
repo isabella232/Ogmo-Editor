@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using OgmoEditor.LevelData;
-using OgmoEditor.LevelData.Layers;
 using OgmoEditor.LevelEditors.ValueEditors;
 using OgmoEditor.LevelEditors.Actions.LevelActions;
 
@@ -39,7 +34,7 @@ namespace OgmoEditor.LevelEditors
 					oldValues.Add(v.Content);
 
 				//Create the editors
-				ValueEditor ed;			  
+				ValueEditor ed;
 				foreach (var v in level.Values)
 				{
 					ed = v.Definition.GetInstanceLevelEditor(v, ClientSize.Width / 2 - 150, yy);

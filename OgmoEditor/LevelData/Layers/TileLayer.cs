@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using OgmoEditor.Definitions.LayerDefinitions;
 using System.Xml;
 using OgmoEditor.LevelEditors.LayerEditors;
-using OgmoEditor.LevelEditors.Resizers;
 using System.Drawing;
 using OgmoEditor.Definitions;
-using System.Diagnostics;
 using System.Drawing.Drawing2D;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
@@ -18,8 +14,8 @@ namespace OgmoEditor.LevelData.Layers
 	public class TileLayer : Layer
 	{
 		public const int CHUNK_SIZE = 512;
-		
-		public new TileLayerDefinition Definition { get; private set; }	   
+
+		public new TileLayerDefinition Definition { get; private set; }
 		public TileSelection Selection;
 
 		public Tileset Tileset;
@@ -28,7 +24,7 @@ namespace OgmoEditor.LevelData.Layers
 		private Bitmap[,] canvasChunksAlpha;
 		private Graphics[,] canvasGraphics;
 		private Graphics[,] canvasGraphicsAlpha;
-		
+
 		private Point DrawOffset = new Point(0,0);
 
 		public TileLayer(Level level, TileLayerDefinition definition)
@@ -140,7 +136,7 @@ namespace OgmoEditor.LevelData.Layers
 							xml.AppendChild(tile);
 						}
 					}
-				}			  
+				}
 			}
 
 			return xml;
@@ -663,7 +659,7 @@ namespace OgmoEditor.LevelData.Layers
 			canvasGraphicsAlpha[chunkX, chunkY].SmoothingMode = SmoothingMode.HighSpeed;
 			canvasGraphicsAlpha[chunkX, chunkY].InterpolationMode = InterpolationMode.NearestNeighbor;
 
-			
+
 			int left = Math.Max((chunkX * CHUNK_SIZE) / Definition.Grid.Width, 0);
 			int top = Math.Max((chunkY * CHUNK_SIZE) / Definition.Grid.Height, 0);
 			int right = Math.Min((chunkX * CHUNK_SIZE + CHUNK_SIZE) / Definition.Grid.Width, TileCellsX);
@@ -724,7 +720,7 @@ namespace OgmoEditor.LevelData.Layers
 				// TODO: Update adjacent chunks
 			}
 
-			
+
 		}
 
 		#endregion

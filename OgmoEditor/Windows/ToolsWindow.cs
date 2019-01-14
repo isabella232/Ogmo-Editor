@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
 using OgmoEditor.LevelEditors.Tools;
 using OgmoEditor.Definitions.LayerDefinitions;
@@ -107,7 +106,7 @@ namespace OgmoEditor.Windows
 					Controls.Add(new ToolButton(tools[i], (i % 2) * 24, (i / 2) * 24, i));
 
 				if (tools.Length > 0)
-					SetTool(tools[0]); 
+					SetTool(tools[0]);
 				else
 					ClearTool();
 			}

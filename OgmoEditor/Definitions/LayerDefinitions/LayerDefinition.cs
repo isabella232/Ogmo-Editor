@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
 using System.Xml.Serialization;
 using System.Windows.Forms;
@@ -32,7 +30,7 @@ namespace OgmoEditor.Definitions.LayerDefinitions
 		{
 			Image = "";
 			Name = "";
-			ScrollFactor = new PointF(1, 1); 
+			ScrollFactor = new PointF(1, 1);
 			Visible = true;
 		}
 

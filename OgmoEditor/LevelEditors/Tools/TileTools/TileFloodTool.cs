@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OgmoEditor.LevelEditors.Actions.TileActions;
+﻿using OgmoEditor.LevelEditors.Actions.TileActions;
 using System.Drawing;
-using System.Diagnostics;
 
 namespace OgmoEditor.LevelEditors.Tools.TileTools
 {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
+﻿using System.Drawing;
 using OgmoEditor.LevelEditors.Actions.GridActions;
 
 namespace OgmoEditor.LevelEditors.Tools.GridTools
@@ -70,7 +66,7 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
 			if (drawing)
 				drawTo = LayerEditor.MouseSnapPosition;
 		}
-		
+
 		/*
 		 *  Helpers
 		 */

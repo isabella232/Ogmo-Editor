@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OgmoEditor.LevelEditors;
-using System.Diagnostics;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -11,7 +7,6 @@ using System.IO;
 using OgmoEditor.LevelData;
 using OgmoEditor.LevelEditors.LayerEditors;
 using OgmoEditor.LevelEditors.Actions;
-using OgmoEditor.LevelEditors.Tools;
 using System.Drawing.Imaging;
 
 namespace OgmoEditor.LevelEditors
@@ -32,7 +27,7 @@ namespace OgmoEditor.LevelEditors
 		public Level Level { get; private set; }
 		public LevelView LevelView { get; private set; }
 		public List<LayerEditor> LayerEditors { get; private set; }
-		public new Point MousePosition { get; private set; }		
+		public new Point MousePosition { get; private set; }
 
 		public LinkedList<OgmoAction> UndoStack { get; private set; }
 		public LinkedList<OgmoAction> RedoStack { get; private set; }
@@ -95,7 +90,7 @@ namespace OgmoEditor.LevelEditors
 		private void Draw(object sender, PaintEventArgs e)
 		{
 			long start = DateTime.Now.Ticks/10000;
-			
+
 			e.Graphics.CompositingQuality = CompositingQuality.HighSpeed;
 			e.Graphics.SmoothingMode = SmoothingMode.HighSpeed;
 			e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
@@ -246,7 +241,7 @@ namespace OgmoEditor.LevelEditors
 			}
 
 			//Add the action to the undo stack and then do it!
-			UndoStack.AddLast(action);  
+			UndoStack.AddLast(action);
 			action.Do();
 
 			//Clear the redo stack

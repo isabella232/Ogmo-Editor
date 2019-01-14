@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using OgmoEditor.Definitions.ValueDefinitions;
@@ -360,7 +358,7 @@ namespace OgmoEditor
 					case "id":
 					case "width":
 					case "height":
-					case "angle": 
+					case "angle":
 						s += Error("Entity \"" + entity.Name + "\" contains a value with the invalid name \"" + v.Name + "\" (reserved word in entities)");
 						break;
 				}

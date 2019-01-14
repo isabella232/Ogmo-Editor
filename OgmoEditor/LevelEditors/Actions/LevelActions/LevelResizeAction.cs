@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using OgmoEditor.LevelData;
 using System.Drawing;
 using OgmoEditor.LevelEditors.Resizers;

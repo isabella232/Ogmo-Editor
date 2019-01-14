@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using OgmoEditor.LevelEditors.ValueEditors;
 using OgmoEditor.LevelData.Layers;
@@ -14,7 +8,7 @@ using OgmoEditor.LevelEditors.Actions.EntityActions;
 namespace OgmoEditor.LevelEditors.LevelValueEditors
 {
 	public partial class LevelIntValueEditor : ValueEditor
-	{   
+	{
 		public IntValueDefinition Definition { get; private set; }
 
 		public LevelIntValueEditor(Value value, int x, int y)

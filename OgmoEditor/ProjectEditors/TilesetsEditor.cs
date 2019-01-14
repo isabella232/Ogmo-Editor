@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using OgmoEditor.Definitions;
 using System.IO;
-using System.Diagnostics;
 
 namespace OgmoEditor.ProjectEditors
 {
@@ -107,10 +102,10 @@ namespace OgmoEditor.ProjectEditors
 				imageSizeLabel.Visible = true;
 				imageSizeLabel.Text = "Image Size: " + tilesets[listBox.SelectedIndex].Size.Width + " x " + tilesets[listBox.SelectedIndex].Size.Height;
 				totalTilesLabel.Visible = true;
-				updateTotalTiles();			   
+				updateTotalTiles();
 			}
 
-			imageFileWarningLabel.Visible = !imagePreviewer.BitmapValid; 
+			imageFileWarningLabel.Visible = !imagePreviewer.BitmapValid;
 		}
 
 		private void clearPreview()
@@ -223,7 +218,7 @@ namespace OgmoEditor.ProjectEditors
 			imageFileTextBox.Text = Util.RelativePath(directory, dialog.FileName);
 			tilesets[listBox.SelectedIndex].SetFilePath(imageFileTextBox.Text);
 
-			LoadPreview();	   
+			LoadPreview();
 		}
 	}
 }

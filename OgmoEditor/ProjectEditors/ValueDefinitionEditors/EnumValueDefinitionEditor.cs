@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using OgmoEditor.Definitions.ValueDefinitions;
 
@@ -27,7 +22,7 @@ namespace OgmoEditor.ProjectEditors.ValueDefinitionEditors
 		{
 			def.Elements = elementsTextBox.Text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
 			for (int i = 0; i < def.Elements.Length; i++)
-				def.Elements[i] = def.Elements[i].TrimEnd('\n');			  
+				def.Elements[i] = def.Elements[i].TrimEnd('\n');
 		}
 
 
