@@ -23,7 +23,6 @@ namespace OgmoEditor.Windows
 				link.Size = new Size(172, 16);
 				link.Text = Properties.Settings.Default.RecentProjectNames[i];
 				link.Name = Properties.Settings.Default.RecentProjects[i];
-				//link.TextAlign = ContentAlignment.MiddleCenter;
 				link.Click += delegate(object sender, EventArgs e) { Ogmo.LoadProject(link.Name); };
 				recentPanel.Controls.Add(link);
 			}
