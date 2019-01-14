@@ -1,5 +1,7 @@
-﻿using OgmoEditor.LevelEditors.Actions.TileActions;
+﻿using System;
+using OgmoEditor.LevelEditors.Actions.TileActions;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace OgmoEditor.LevelEditors.Tools.TileTools
 {
@@ -7,6 +9,8 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
 	{
 		private bool drawing;
 		private bool drawMode;
+		private bool randomizing;
+		private Random rand = new Random();
 		private Point drawStart;
 		private TileDrawAction drawAction;
 
@@ -62,6 +66,22 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
 				SetTiles(location, drawMode ? Ogmo.TilePaletteWindow.Tiles : null);
 		}
 
+		public override void OnKeyDown(Keys key)
+		{
+			if (key == Keys.ShiftKey)
+			{
+				randomizing = true;
+			}
+		}
+
+		public override void OnKeyUp(Keys key)
+		{
+			if (key == Keys.ShiftKey)
+			{
+				randomizing = false;
+			}
+		}
+
 		private void SetTiles(Point location, Rectangle? setTo, bool start = false)
 		{
 			location = LayerEditor.Layer.Definition.ConvertToGrid(location);
@@ -82,6 +102,20 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
 			{
 				int id = LayerEditor.Layer.Tileset.GetIDFromCell(setTo.Value.Location);
 				if (LayerEditor.Layer[location.X, location.Y] != id)
+				{
+					if (drawAction == null)
+						LevelEditor.Perform(drawAction = new TileDrawAction(LayerEditor.Layer, location, id));
+					else
+						drawAction.DoAgain(location, id);
+				}
+			}
+			else if (randomizing)
+			{
+				int x = rand.Next(setTo.Value.Width);
+				int y = rand.Next(setTo.Value.Height);
+				int id = LayerEditor.Layer.Tileset.GetIDFromSelectionRectPoint(setTo.Value, drawStart, new Point(x, y));
+
+				if (LayerEditor.Layer[location.X, location.Y] == -1)
 				{
 					if (drawAction == null)
 						LevelEditor.Perform(drawAction = new TileDrawAction(LayerEditor.Layer, location, id));
