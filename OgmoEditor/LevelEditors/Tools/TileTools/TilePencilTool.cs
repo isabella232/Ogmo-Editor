@@ -11,6 +11,7 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
 		private bool drawMode;
 		private bool randomizing;
 		private Random rand = new Random();
+		private Point prevLocation;
 		private Point drawStart;
 		private TileDrawAction drawAction;
 
@@ -26,6 +27,7 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
 			{
 				drawing = true;
 				drawMode = true;
+				prevLocation = new Point(-1, -1);
 
 				SetTiles(location, Ogmo.TilePaletteWindow.Tiles, true);
 			}
@@ -115,7 +117,7 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
 				int y = rand.Next(setTo.Value.Height);
 				int id = LayerEditor.Layer.Tileset.GetIDFromSelectionRectPoint(setTo.Value, drawStart, new Point(x, y));
 
-				if (LayerEditor.Layer[location.X, location.Y] == -1)
+				if (location != prevLocation)
 				{
 					if (drawAction == null)
 						LevelEditor.Perform(drawAction = new TileDrawAction(LayerEditor.Layer, location, id));
@@ -144,6 +146,11 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
 						}
 					}
 				}
+			}
+
+			if (prevLocation == null || prevLocation != location)
+			{
+				prevLocation = location;
 			}
 		}
 	}
