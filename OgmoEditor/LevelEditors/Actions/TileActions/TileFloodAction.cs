@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using OgmoEditor.LevelData.Layers;
 using System.Drawing;
 
@@ -8,15 +9,18 @@ namespace OgmoEditor.LevelEditors.Actions.TileActions
 	{
 		private Rectangle? setTo;
 		private int was;
+		private bool randomizing;
+		private Random rand = new Random();
 		private Point startCell;
 
 		private List<Point> changes;
 
-		public TileFloodAction(TileLayer tileLayer, Point cell, Rectangle? setTo)
+		public TileFloodAction(TileLayer tileLayer, Point cell, Rectangle? setTo, bool randomizing = false)
 			: base(tileLayer)
 		{
-			this.startCell = cell;
+			startCell = cell;
 			this.setTo = setTo;
+			this.randomizing = randomizing;
 		}
 
 		public override void Do()
@@ -61,9 +65,22 @@ namespace OgmoEditor.LevelEditors.Actions.TileActions
 
 			changes.Add(new Point(cell.X, cell.Y));
 			if (setTo.HasValue)
-				TileLayer[cell.X, cell.Y] = TileLayer.Tileset.GetIDFromSelectionRectPoint(setTo.Value, startCell, cell);
+			{
+				if (randomizing)
+				{
+					int x = rand.Next(setTo.Value.Width);
+					int y = rand.Next(setTo.Value.Height);
+					TileLayer[cell.X, cell.Y] = TileLayer.Tileset.GetIDFromSelectionRectPoint(setTo.Value, startCell, new Point(x, y));
+				}
+				else
+				{
+					TileLayer[cell.X, cell.Y] = TileLayer.Tileset.GetIDFromSelectionRectPoint(setTo.Value, startCell, cell);
+				}
+			}
 			else
+			{
 				TileLayer[cell.X, cell.Y] = -1;
+			}
 
 			return true;
 		}
