@@ -80,5 +80,29 @@ namespace OgmoEditor.Properties {
                 this["RecentProjectNames"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool LevelResizeFromRight {
+            get {
+                return ((bool)(this["LevelResizeFromRight"]));
+            }
+            set {
+                this["LevelResizeFromRight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool LevelResizeFromBottom {
+            get {
+                return ((bool)(this["LevelResizeFromBottom"]));
+            }
+            set {
+                this["LevelResizeFromBottom"] = value;
+            }
+        }
     }
 }

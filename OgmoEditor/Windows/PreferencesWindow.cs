@@ -15,6 +15,10 @@ namespace OgmoEditor.Windows
 			maximizeCheckBox.Checked = Properties.Settings.Default.StartMaximized;
 			undoLimitTextBox.Text = Properties.Settings.Default.UndoLimit.ToString();
 			levelLimitTextBox.Text = Properties.Settings.Default.LevelLimit.ToString();
+			rightRadioButton.Checked = Properties.Settings.Default.LevelResizeFromRight;
+			leftRadioButton.Checked = !Properties.Settings.Default.LevelResizeFromRight;
+			bottomRadioButton.Checked = Properties.Settings.Default.LevelResizeFromBottom;
+			topRadioButton.Checked = !Properties.Settings.Default.LevelResizeFromBottom;
 
 			clearHistoryButton.Enabled = Properties.Settings.Default.RecentProjects.Count > 0;
 		}
@@ -22,6 +26,8 @@ namespace OgmoEditor.Windows
 		private void PreferencesWindow_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			Properties.Settings.Default.StartMaximized = maximizeCheckBox.Checked;
+			Properties.Settings.Default.LevelResizeFromRight = rightRadioButton.Checked;
+			Properties.Settings.Default.LevelResizeFromBottom = bottomRadioButton.Checked;
 
 			try
 			{

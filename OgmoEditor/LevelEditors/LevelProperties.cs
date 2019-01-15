@@ -43,6 +43,12 @@ namespace OgmoEditor.LevelEditors
 				}
 			}
 
+			// Set resizing radio buttons
+			bottomRadioButton.Checked = Properties.Settings.Default.LevelResizeFromBottom;
+			rightRadioButton.Checked = Properties.Settings.Default.LevelResizeFromRight;
+			topRadioButton.Checked = !Properties.Settings.Default.LevelResizeFromBottom;
+			leftRadioButton.Checked = !Properties.Settings.Default.LevelResizeFromRight;
+
 			//Resize the form
 			ClientSize = new Size(ClientSize.Width, yy + 52);
 			applyButton.Location = new Point(applyButton.Location.X, ClientSize.Height - 40);
