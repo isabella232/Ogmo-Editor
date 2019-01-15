@@ -30,25 +30,17 @@ namespace OgmoEditor.LevelEditors.Resizers
 			{
 				for (int j = 0; j < layer.Grid.GetLength(1); j++)
 				{
-					// Handle standard BottomRight growth/shrinking
-					if (fromBottom && fromRight)
+					bool val = false;
+					if (fromBottom)
 					{
 						if (j < oldGrid.GetLength(1))
 						{
-							layer.Grid[i, j] = oldGrid[i, j];
+							val = oldGrid[i, j];
 						}
-						continue;
 					}
-
-					bool val = false;
-					if (!fromBottom)
+					else
 					{
-						if (j - dy < 0)
-						{
-							// When expanding, leave empty room at top
-							val = false;
-						}
-						else
+						if (j - dy >= 0)
 						{
 							val = oldGrid[i, j - dy];
 						}
