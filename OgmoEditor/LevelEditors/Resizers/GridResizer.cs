@@ -30,20 +30,31 @@ namespace OgmoEditor.LevelEditors.Resizers
 			{
 				for (int j = 0; j < layer.Grid.GetLength(1); j++)
 				{
-					bool val = false;
+					int x = i; //TODO: change to -1 later
+					int y = -1;
+
 					if (fromBottom)
 					{
+						// Get as much as we can from the old grid
 						if (j < oldGrid.GetLength(1))
 						{
-							val = oldGrid[i, j];
+							y = j;
 						}
 					}
 					else
 					{
+						// Offset vertically from old grid
 						if (j - dy >= 0)
 						{
-							val = oldGrid[i, j - dy];
+							y = j - dy;
 						}
+					}
+
+					bool val = false;
+
+					if (y != -1)
+					{
+						val = oldGrid[x, y];
 					}
 
 					layer.Grid[i, j] = val;
