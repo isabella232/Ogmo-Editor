@@ -78,9 +78,23 @@ namespace OgmoEditor.LevelEditors
 			Size s = level.Size;
 			OgmoParse.Parse(ref s, sizeXTextBox, sizeYTextBox);
 			if (s != level.Size)
-				Ogmo.MainWindow.LevelEditors[Ogmo.CurrentLevelIndex].Perform(new LevelResizeAction(level, s, rightRadioButton.Checked, bottomRadioButton.Checked));
-
-			Close();
+			{
+				Size minsize = level.Project.LevelMinimumSize;
+				Size maxsize = level.Project.LevelMaximumSize;
+				if (s.Width < minsize.Width || s.Width > maxsize.Width)
+				{
+					MessageBox.Show("Specified level width is outside the acceptable range of\n[" + minsize.Width + ", " + maxsize.Width + "].", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+				else if (s.Height < minsize.Height || s.Height > maxsize.Height)
+				{
+					MessageBox.Show("Specified level height is outside the acceptable range of\n[" + minsize.Height + ", " + maxsize.Height + "].", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+				else
+				{
+					Ogmo.MainWindow.LevelEditors[Ogmo.CurrentLevelIndex].Perform(new LevelResizeAction(level, s, rightRadioButton.Checked, bottomRadioButton.Checked));
+					Close();
+				}
+			}
 		}
 	}
 }
