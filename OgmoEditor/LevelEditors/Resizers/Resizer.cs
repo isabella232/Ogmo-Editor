@@ -1,4 +1,5 @@
-﻿using OgmoEditor.LevelEditors.LayerEditors;
+﻿using System.Drawing;
+using OgmoEditor.LevelEditors.LayerEditors;
 
 namespace OgmoEditor.LevelEditors.Resizers
 {
@@ -11,7 +12,7 @@ namespace OgmoEditor.LevelEditors.Resizers
 			Editor = editor;
 		}
 
-		public abstract void Resize(bool fromRight, bool fromBottom);
+		public abstract void Resize(Size oldSize, bool fromRight, bool fromBottom);
 		public abstract void Undo();
 	}
 }

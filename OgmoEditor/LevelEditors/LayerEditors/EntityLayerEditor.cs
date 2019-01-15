@@ -2,6 +2,7 @@
 using OgmoEditor.LevelEditors.Actions.EntityActions;
 using OgmoEditor.Clipboard;
 using System.Drawing;
+using OgmoEditor.LevelEditors.Resizers;
 
 namespace OgmoEditor.LevelEditors.LayerEditors
 {
@@ -55,6 +56,11 @@ namespace OgmoEditor.LevelEditors.LayerEditors
 		{
 			Copy();
 			LevelEditor.Perform(new EntityRemoveAction(Layer, Ogmo.EntitySelectionWindow.Selected));
+		}
+
+		public override Resizer GetResizer()
+		{
+			return new EntityResizer(this);
 		}
 
 		public override bool CanSelectAll

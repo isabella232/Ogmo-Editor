@@ -1,4 +1,5 @@
-﻿using OgmoEditor.LevelData.Layers;
+﻿using System.Drawing;
+using OgmoEditor.LevelData.Layers;
 using OgmoEditor.LevelEditors.LayerEditors;
 
 namespace OgmoEditor.LevelEditors.Resizers
@@ -15,7 +16,7 @@ namespace OgmoEditor.LevelEditors.Resizers
 			Editor = gridEditor;
 		}
 
-		public override void Resize(bool fromRight, bool fromBottom)
+		public override void Resize(Size oldSize, bool fromRight, bool fromBottom)
 		{
 			GridLayer layer = Editor.Layer;
 
