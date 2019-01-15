@@ -31,38 +31,50 @@ namespace OgmoEditor.LevelEditors.Resizers
 			{
 				for (int j = 0; j < layer.Grid.GetLength(1); j++)
 				{
+					// Figure out how to move existing tiles from old grid...
+
+					// Old grid coordinates to pull from
 					int x = -1;
 					int y = -1;
 
-					// Horizontal
+					// Horizontal bounds checks
 					if (fromRight)
 					{
 						if (i < oldGrid.GetLength(0))
+						{
 							x = i;
+						}
 					}
 					else
 					{
 						if (i - dx >= 0)
+						{
 							x = i - dx;
+						}
 					}
 
-					// Vertical
+					// Vertical bounds checks
 					if (fromBottom)
 					{
 						if (j < oldGrid.GetLength(1))
+						{
 							y = j;
+						}
 					}
 					else
 					{
 						if (j - dy >= 0)
+						{
 							y = j - dy;
+						}
 					}
 
+					// Calculate the final value for the grid cell
 					bool val = false;
-
-					if (y != -1 && x != -1)
+					if (x != -1 && y != -1)
+					{
 						val = oldGrid[x, y];
-
+					}
 					layer.Grid[i, j] = val;
 				}
 			}
