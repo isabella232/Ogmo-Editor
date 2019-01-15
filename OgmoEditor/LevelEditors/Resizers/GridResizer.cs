@@ -31,7 +31,7 @@ namespace OgmoEditor.LevelEditors.Resizers
 			{
 				for (int j = 0; j < layer.Grid.GetLength(1); j++)
 				{
-					// Figure out how to move existing tiles from old grid...
+					// Figure out how to move existing data from old grid...
 
 					// Old grid coordinates to pull from
 					int x = -1;

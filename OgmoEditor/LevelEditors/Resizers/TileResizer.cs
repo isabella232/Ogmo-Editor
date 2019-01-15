@@ -24,13 +24,65 @@ namespace OgmoEditor.LevelEditors.Resizers
 			int tileHeight = layer.Level.Size.Height / layer.Definition.Grid.Height + (layer.Level.Size.Height % layer.Definition.Grid.Height != 0 ? 1 : 0);
 			int[,] newTiles = new int[tileWidth, tileHeight];
 
+			int dx = tileWidth - oldTiles.GetLength(0);
+			int dy = tileHeight - oldTiles.GetLength(1);
+
+			// Clear all tiles
 			for (int i = 0; i < tileWidth; i++)
 				for (int j = 0; j < tileHeight; j++)
 					newTiles[i, j] = -1;
 
-			for (int i = 0; i < newTiles.GetLength(0) && i < oldTiles.GetLength(0); i++)
-				for (int j = 0; j < newTiles.GetLength(1) && j < oldTiles.GetLength(1); j++)
-					newTiles[i, j] = oldTiles[i, j];
+			for (int i = 0; i < newTiles.GetLength(0); i++)
+			{
+				for (int j = 0; j < newTiles.GetLength(1); j++)
+				{
+					// Figure out how to move existing data from old tiles...
+
+					// Old grid coordinates to pull from
+					int x = -1;
+					int y = -1;
+
+					// Horizontal bounds checks
+					if (fromRight)
+					{
+						if (i < oldTiles.GetLength(0))
+						{
+							x = i;
+						}
+					}
+					else
+					{
+						if (i - dx >= 0)
+						{
+							x = i - dx;
+						}
+					}
+
+					// Vertical bounds checks
+					if (fromBottom)
+					{
+						if (j < oldTiles.GetLength(1))
+						{
+							y = j;
+						}
+					}
+					else
+					{
+						if (j - dy >= 0)
+						{
+							y = j - dy;
+						}
+					}
+
+					// Calculate the final value for the tile cell
+					int val = -1;
+					if (x != -1 && y != -1)
+					{
+						val = oldTiles[x, y];
+					}
+					newTiles[i, j] = val;
+				}
+			}
 
 			layer.Tiles = newTiles;
 		}
