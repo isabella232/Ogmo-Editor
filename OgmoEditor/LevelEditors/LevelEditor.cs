@@ -96,11 +96,6 @@ namespace OgmoEditor.LevelEditors
 			e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
 			e.Graphics.Transform = LevelView.Identity;
 
-			//Draw the background logo
-			//e.Graphics.DrawImage(DrawUtil.ImgLogo, new Rectangle(Width / 2 - DrawUtil.ImgLogo.Width / 4, Height / 2 - DrawUtil.ImgLogo.Height / 4, DrawUtil.ImgLogo.Width / 2, DrawUtil.ImgLogo.Height / 2));
-			//if (!Focused)
-			//	e.Graphics.FillRectangle(NoFocusBrush, new Rectangle(0, 0, Width, Height));
-
 			//Draw the level bg
 			e.Graphics.Transform = LevelView.Matrix;
 			e.Graphics.FillRectangle(ShadowBrush, new Rectangle(10, 10, Level.Size.Width, Level.Size.Height));
