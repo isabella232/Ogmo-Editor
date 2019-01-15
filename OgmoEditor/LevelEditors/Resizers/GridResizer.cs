@@ -24,38 +24,44 @@ namespace OgmoEditor.LevelEditors.Resizers
 			int tileHeight = layer.Level.Size.Height / layer.Definition.Grid.Height + (layer.Level.Size.Height % layer.Definition.Grid.Height != 0 ? 1 : 0);
 			layer.Grid = new bool[tileWidth, tileHeight];
 
+			int dx = tileWidth - oldGrid.GetLength(0);
 			int dy = tileHeight - oldGrid.GetLength(1);
 
-			for (int i = 0; i < layer.Grid.GetLength(0) && i < oldGrid.GetLength(0); i++)
+			for (int i = 0; i < layer.Grid.GetLength(0); i++)
 			{
 				for (int j = 0; j < layer.Grid.GetLength(1); j++)
 				{
-					int x = i; //TODO: change to -1 later
+					int x = -1;
 					int y = -1;
 
-					if (fromBottom)
+					// Horizontal
+					if (fromRight)
 					{
-						// Get as much as we can from the old grid
-						if (j < oldGrid.GetLength(1))
-						{
-							y = j;
-						}
+						if (i < oldGrid.GetLength(0))
+							x = i;
 					}
 					else
 					{
-						// Offset vertically from old grid
+						if (i - dx >= 0)
+							x = i - dx;
+					}
+
+					// Vertical
+					if (fromBottom)
+					{
+						if (j < oldGrid.GetLength(1))
+							y = j;
+					}
+					else
+					{
 						if (j - dy >= 0)
-						{
 							y = j - dy;
-						}
 					}
 
 					bool val = false;
 
-					if (y != -1)
-					{
+					if (y != -1 && x != -1)
 						val = oldGrid[x, y];
-					}
 
 					layer.Grid[i, j] = val;
 				}
