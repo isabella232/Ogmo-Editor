@@ -27,14 +27,19 @@ namespace OgmoEditor.LevelEditors.Resizers
 
 			foreach (Entity e in Editor.Layer.Entities)
 			{
+				Point delta = Point.Empty;
 				if (!fromRight)
 				{
-					e.Position.X += layer.Level.Size.Width - oldSize.Width;
+					delta.X = layer.Level.Size.Width - oldSize.Width;
 				}
 				if (!fromBottom)
 				{
-					e.Position.Y += layer.Level.Size.Height - oldSize.Height;
+					delta.Y += layer.Level.Size.Height - oldSize.Height;
 				}
+
+				e.Position.X += delta.X;
+				e.Position.Y += delta.Y;
+				e.MoveNodes(delta);
 			}
 		}
 
