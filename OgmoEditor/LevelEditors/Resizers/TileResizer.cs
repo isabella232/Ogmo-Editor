@@ -21,12 +21,13 @@ namespace OgmoEditor.LevelEditors.Resizers
 			TileLayer layer = Editor.Layer;
 
 			oldTiles = layer.Tiles.Clone() as int[,];
+
 			int tileWidth = layer.Level.Size.Width / layer.Definition.Grid.Width + (layer.Level.Size.Width % layer.Definition.Grid.Width != 0 ? 1 : 0);
 			int tileHeight = layer.Level.Size.Height / layer.Definition.Grid.Height + (layer.Level.Size.Height % layer.Definition.Grid.Height != 0 ? 1 : 0);
-			int[,] newTiles = new int[tileWidth, tileHeight];
-
 			int dx = tileWidth - oldTiles.GetLength(0);
 			int dy = tileHeight - oldTiles.GetLength(1);
+
+			int[,] newTiles = new int[tileWidth, tileHeight];
 
 			// Clear all tiles
 			for (int i = 0; i < tileWidth; i++)
@@ -37,8 +38,6 @@ namespace OgmoEditor.LevelEditors.Resizers
 			{
 				for (int j = 0; j < newTiles.GetLength(1); j++)
 				{
-					// Figure out how to move existing data from old tiles...
-
 					// Old grid coordinates to pull from
 					int x = -1;
 					int y = -1;
@@ -75,7 +74,7 @@ namespace OgmoEditor.LevelEditors.Resizers
 						}
 					}
 
-					// Calculate the final value for the tile cell
+					// Calculate the final value for the tile
 					int val = -1;
 					if (x != -1 && y != -1)
 					{

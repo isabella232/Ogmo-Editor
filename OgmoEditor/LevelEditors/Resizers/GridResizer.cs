@@ -21,19 +21,18 @@ namespace OgmoEditor.LevelEditors.Resizers
 			GridLayer layer = Editor.Layer;
 
 			oldGrid = layer.Grid;
+
 			int tileWidth = layer.Level.Size.Width / layer.Definition.Grid.Width + (layer.Level.Size.Width % layer.Definition.Grid.Width != 0 ? 1 : 0);
 			int tileHeight = layer.Level.Size.Height / layer.Definition.Grid.Height + (layer.Level.Size.Height % layer.Definition.Grid.Height != 0 ? 1 : 0);
-			layer.Grid = new bool[tileWidth, tileHeight];
-
 			int dx = tileWidth - oldGrid.GetLength(0);
 			int dy = tileHeight - oldGrid.GetLength(1);
+
+			layer.Grid = new bool[tileWidth, tileHeight];
 
 			for (int i = 0; i < layer.Grid.GetLength(0); i++)
 			{
 				for (int j = 0; j < layer.Grid.GetLength(1); j++)
 				{
-					// Figure out how to move existing data from old grid...
-
 					// Old grid coordinates to pull from
 					int x = -1;
 					int y = -1;
