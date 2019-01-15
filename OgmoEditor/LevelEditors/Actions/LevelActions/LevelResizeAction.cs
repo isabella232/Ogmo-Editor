@@ -10,12 +10,17 @@ namespace OgmoEditor.LevelEditors.Actions.LevelActions
 		private List<Resizer> resizers;
 		private Size oldSize;
 		private Size newSize;
+		private bool fromRight;
+		private bool fromBottom;
 
-		public LevelResizeAction(Level level, Size newSize)
+		public LevelResizeAction(Level level, Size newSize, bool fromRight = true, bool fromBottom = true)
 			: base(level)
 		{
 			oldSize = level.Size;
 			this.newSize = newSize;
+
+			this.fromRight = fromRight;
+			this.fromBottom = fromBottom;
 
 			Resizer r;
 			resizers = new List<Resizer>(level.Layers.Count);
@@ -33,7 +38,7 @@ namespace OgmoEditor.LevelEditors.Actions.LevelActions
 
 			Level.Size = newSize;
 			foreach (var r in resizers)
-				r.Resize();
+				r.Resize(fromRight, fromBottom);
 		}
 
 		public override void Undo()

@@ -11,7 +11,7 @@ namespace OgmoEditor.LevelEditors.Resizers
 			Editor = editor;
 		}
 
-		public abstract void Resize();
+		public abstract void Resize(bool fromRight, bool fromBottom);
 		public abstract void Undo();
 	}
 }

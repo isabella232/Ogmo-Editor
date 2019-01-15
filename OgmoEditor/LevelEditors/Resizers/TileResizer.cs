@@ -15,7 +15,7 @@ namespace OgmoEditor.LevelEditors.Resizers
 			Editor = tileEditor;
 		}
 
-		public override void Resize()
+		public override void Resize(bool fromRight, bool fromBottom)
 		{
 			TileLayer layer = Editor.Layer;
 

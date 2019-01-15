@@ -72,7 +72,7 @@ namespace OgmoEditor.LevelEditors
 			Size s = level.Size;
 			OgmoParse.Parse(ref s, sizeXTextBox, sizeYTextBox);
 			if (s != level.Size)
-				Ogmo.MainWindow.LevelEditors[Ogmo.CurrentLevelIndex].Perform(new LevelResizeAction(level, s));
+				Ogmo.MainWindow.LevelEditors[Ogmo.CurrentLevelIndex].Perform(new LevelResizeAction(level, s, rightRadioButton.Checked, bottomRadioButton.Checked));
 
 			Close();
 		}
