@@ -24,6 +24,7 @@ namespace OgmoEditor
 		public Size LevelMinimumSize;
 		public Size LevelMaximumSize;
 		public string Filename;
+		public string RecentLevelDirectory;
 		public AngleExportMode AngleMode;
 		public Ogmo.ProjectType ProjectType;
 		public bool CameraEnabled;

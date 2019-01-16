@@ -432,9 +432,26 @@ namespace OgmoEditor
 			OpenFileDialog dialog = new OpenFileDialog();
 			dialog.Multiselect = true;
 			dialog.Filter = GetLevelFilter();
-			dialog.InitialDirectory = Ogmo.Project.SavedDirectory;
+
+			if (Ogmo.Project.RecentLevelDirectory == "" || !Directory.Exists(Ogmo.Project.RecentLevelDirectory))
+			{
+				dialog.InitialDirectory = Ogmo.Project.SavedDirectory;
+			}
+			else
+			{
+				dialog.InitialDirectory = Ogmo.Project.RecentLevelDirectory;
+			}
+
 			if (dialog.ShowDialog() == DialogResult.Cancel)
 				return;
+
+			// Update the recent directory
+			string fileDirectory = Path.GetDirectoryName(dialog.FileNames.Last());
+			if (Ogmo.Project.RecentLevelDirectory != fileDirectory)
+			{
+				Ogmo.Project.RecentLevelDirectory = fileDirectory;
+				Ogmo.Project.Save();
+			}
 
 			OpenLevelsFromList(dialog.FileNames.ToList(), true);
 		}
