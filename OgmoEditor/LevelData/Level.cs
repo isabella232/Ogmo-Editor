@@ -86,7 +86,6 @@ namespace OgmoEditor.LevelData
 		public Level(Project project, XmlDocument xml)
 		{
 			this.Project = project;
-			initialize();
 
 			LoadFromXML(xml);
 			SavePath = "";
@@ -102,11 +101,6 @@ namespace OgmoEditor.LevelData
 		public void CloneFrom(Level level)
 		{
 			LoadFromXML(level.GenerateXML());
-		}
-
-		private void initialize()
-		{
-
 		}
 
 		public bool Changed
