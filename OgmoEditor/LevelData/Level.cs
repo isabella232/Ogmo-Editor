@@ -471,6 +471,14 @@ namespace OgmoEditor.LevelData
 			SavePath = dialog.FileName;
 			WriteTo(dialog.FileName);
 
+			// Remember this directory
+			string fileDirectory = Path.GetDirectoryName(dialog.FileName);
+			if (Project.RecentLevelDirectory != fileDirectory)
+			{
+				Project.RecentLevelDirectory = fileDirectory;
+				Project.Save();
+			}
+
 			return true;
 		}
 
