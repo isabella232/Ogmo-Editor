@@ -122,7 +122,7 @@ namespace OgmoEditor
 
 		static public void LogException(Exception e)
 		{
-			string logPath = Path.Combine(Ogmo.ProgramDirectory, "errorLog.txt");
+			string logPath = Path.Combine(ProgramDirectory, "errorLog.txt");
 
 			FileStream file = new FileStream(logPath, FileMode.Append);
 			StreamWriter logStream = new StreamWriter(file);
@@ -208,7 +208,7 @@ namespace OgmoEditor
 
 		static public void StartProject(Project project)
 		{
-			Ogmo.MainWindow.RemoveStartPage();
+			MainWindow.RemoveStartPage();
 
 			Project = project;
 
@@ -226,7 +226,7 @@ namespace OgmoEditor
 			CloseAllLevels();
 
 			//Set the status message
-			Ogmo.MainWindow.StatusText = "Closed project " + Ogmo.Project.Name;
+			MainWindow.StatusText = "Closed project " + Project.Name;
 
 			//Call closed event
 			if (OnProjectClose != null)
@@ -241,14 +241,14 @@ namespace OgmoEditor
 			EntitySelectionWindow.ClearSelection();
 
 			//Force a garbage collection
-			Ogmo.MainWindow.AddStartPage();
-			System.GC.Collect();
+			MainWindow.AddStartPage();
+			GC.Collect();
 		}
 
 		static public void EditProject(ProjectEditMode editMode)
 		{
 			//Warn!
-			if (Ogmo.Levels.Count > 0 && Ogmo.Levels.Find(e => e.Changed) != null)
+			if (Levels.Count > 0 && Levels.Find(e => e.Changed) != null)
 			{
 				if (MessageBox.Show(MainWindow, "Warning: All levels will be closed and reloaded if any edits are made to the project. You have unsaved changes in some open levels which will be lost.\n\nStill edit the project?", "Warning!", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) != DialogResult.OK)
 					return;
@@ -289,7 +289,7 @@ namespace OgmoEditor
 					OnProjectEdited(Project);
 
 				//Set the layer
-				Ogmo.LayersWindow.SetLayer(0);
+				LayersWindow.SetLayer(0);
 
 				// Open the default level (or previously-opened levels)
 				if (levelPaths.Count == 0)
@@ -298,7 +298,7 @@ namespace OgmoEditor
 					OpenLevelsFromList(levelPaths, false, tempIndex);
 
 				//Set the status message
-				Ogmo.MainWindow.StatusText = "Edited project " + Ogmo.Project.Name + ", all levels re-opened";
+				MainWindow.StatusText = "Edited project " + Project.Name + ", all levels re-opened";
 				UpdateRecentProjects(Project);
 				GC.Collect();
 			}
@@ -312,7 +312,7 @@ namespace OgmoEditor
 				LayersWindow.SetLayer(0);
 				NewLevel();
 
-				Ogmo.MainWindow.StatusText = "Opened project " + Ogmo.Project.Name;
+				MainWindow.StatusText = "Opened project " + Project.Name;
 				UpdateRecentProjects(Project);
 				GC.Collect();
 			}
@@ -361,8 +361,8 @@ namespace OgmoEditor
 		static public void OpenLevelsFromList(List<string> filenames, bool alphabetize, int levelIndexToOpen = -1)
 		{
 			//If the only open level is an empty one, close it
-			if (Ogmo.Levels.Count == 1 && Ogmo.Levels[0].IsEmpty)
-				Ogmo.CloseLevel(Ogmo.Levels[0], false);
+			if (Levels.Count == 1 && Levels[0].IsEmpty)
+				CloseLevel(Levels[0], false);
 
 			// Alphabetize the list
 			if (alphabetize)
@@ -377,9 +377,9 @@ namespace OgmoEditor
 			foreach (string f in filenames)
 			{
 				int levelID = -1;
-				for (int i = 0; i < Ogmo.Levels.Count; i++)
+				for (int i = 0; i < Levels.Count; i++)
 				{
-					if (Ogmo.Levels[i].SavePath == f)
+					if (Levels[i].SavePath == f)
 					{
 						levelID = i;
 						break;
@@ -423,7 +423,7 @@ namespace OgmoEditor
 			string[] files = new string[filenames.Count];
 			for (int i = 0; i < filenames.Count; i++)
 				files[i] = Path.GetFileName(filenames[i]);
-			Ogmo.MainWindow.StatusText = "Opened level(s) " + String.Join(", ", files);
+			MainWindow.StatusText = "Opened level(s) " + String.Join(", ", files);
 		}
 
 		static public void OpenLevelFromDialog()
@@ -433,13 +433,13 @@ namespace OgmoEditor
 			dialog.Multiselect = true;
 			dialog.Filter = GetLevelFilter();
 
-			if (Ogmo.Project.RecentLevelDirectory == "" || !Directory.Exists(Ogmo.Project.RecentLevelDirectory))
+			if (Project.RecentLevelDirectory == "" || !Directory.Exists(Project.RecentLevelDirectory))
 			{
-				dialog.InitialDirectory = Ogmo.Project.SavedDirectory;
+				dialog.InitialDirectory = Project.SavedDirectory;
 			}
 			else
 			{
-				dialog.InitialDirectory = Ogmo.Project.RecentLevelDirectory;
+				dialog.InitialDirectory = Project.RecentLevelDirectory;
 			}
 
 			if (dialog.ShowDialog() == DialogResult.Cancel)
@@ -447,10 +447,10 @@ namespace OgmoEditor
 
 			// Update the recent directory
 			string fileDirectory = Path.GetDirectoryName(dialog.FileNames.Last());
-			if (Ogmo.Project.RecentLevelDirectory != fileDirectory)
+			if (Project.RecentLevelDirectory != fileDirectory)
 			{
-				Ogmo.Project.RecentLevelDirectory = fileDirectory;
-				Ogmo.Project.Save();
+				Project.RecentLevelDirectory = fileDirectory;
+				Project.Save();
 			}
 
 			OpenLevelsFromList(dialog.FileNames.ToList(), true);
@@ -459,9 +459,9 @@ namespace OgmoEditor
 		static public bool AddLevel(Level level)
 		{
 			//Can't if past level limit
-			if (Ogmo.Levels.Count >= Properties.Settings.Default.LevelLimit)
+			if (Levels.Count >= Properties.Settings.Default.LevelLimit)
 			{
-				MessageBox.Show(Ogmo.MainWindow, "Couldn't add level because the level limit was exceeded! You can change the level limit in the Preferences menu.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(MainWindow, "Couldn't add level because the level limit was exceeded! You can change the level limit in the Preferences menu.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return false;
 			}
 
@@ -502,10 +502,10 @@ namespace OgmoEditor
 				CurrentLevelIndex--;
 
 			//Force a garbage collection
-			System.GC.Collect();
+			GC.Collect();
 
 			//Set the status text
-			Ogmo.MainWindow.StatusText = "Closed level " + level.SaveName;
+			MainWindow.StatusText = "Closed level " + level.SaveName;
 
 			return true;
 		}
@@ -515,7 +515,7 @@ namespace OgmoEditor
 			while (Levels.Count > 0)
 				CloseLevel(Levels[0], false);
 
-			Ogmo.MainWindow.StatusText = "Closed all levels";
+			MainWindow.StatusText = "Closed all levels";
 		}
 
 		static public void CloseOtherLevels(Level level)
@@ -535,9 +535,9 @@ namespace OgmoEditor
 		{
 			foreach (var f in filepaths)
 			{
-				Level level = Ogmo.GetLevelByFilepath(f);
+				Level level = GetLevelByFilepath(f);
 				if (level != null)
-					if (!Ogmo.CloseLevel(level, true))
+					if (!CloseLevel(level, true))
 						return false;
 			}
 			return true;
@@ -547,7 +547,7 @@ namespace OgmoEditor
 		{
 			Level level = GetLevelByFilepath(filepath);
 			if (level != null)
-				return Ogmo.CloseLevel(level, true);
+				return CloseLevel(level, true);
 			return true;
 		}
 
