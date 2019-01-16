@@ -455,7 +455,10 @@ namespace OgmoEditor.LevelData
 		public bool SaveAs()
 		{
 			SaveFileDialog dialog = new SaveFileDialog();
-			dialog.InitialDirectory = Project.SavedDirectory;
+			if (Project.RecentLevelDirectory == "" || !Directory.Exists(Project.RecentLevelDirectory))
+				dialog.InitialDirectory = Project.SavedDirectory;
+			else
+				dialog.InitialDirectory = Project.RecentLevelDirectory;
 			dialog.RestoreDirectory = true;
 			dialog.FileName = SaveName;
 			dialog.OverwritePrompt = true;

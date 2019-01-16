@@ -434,13 +434,9 @@ namespace OgmoEditor
 			dialog.Filter = GetLevelFilter();
 
 			if (Project.RecentLevelDirectory == "" || !Directory.Exists(Project.RecentLevelDirectory))
-			{
 				dialog.InitialDirectory = Project.SavedDirectory;
-			}
 			else
-			{
 				dialog.InitialDirectory = Project.RecentLevelDirectory;
-			}
 
 			if (dialog.ShowDialog() == DialogResult.Cancel)
 				return;
