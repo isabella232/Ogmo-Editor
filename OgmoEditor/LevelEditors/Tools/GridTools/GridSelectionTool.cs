@@ -9,10 +9,14 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
 		private Point drawStart;
 		private Point drawTo;
 
+		private bool moving;
+		private Point mouseStart;
+		private Point moved;
+
 		public GridSelectionTool()
 			: base("Select", "selection.png")
 		{
-
+			moving = false;
 		}
 
 		public override void Draw(Graphics graphics)
@@ -25,10 +29,21 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
 			}
 		}
 
-		public override void OnMouseLeftDown(System.Drawing.Point location)
+		public override void OnMouseLeftDown(Point location)
 		{
-			drawTo = drawStart = LayerEditor.MouseSnapPosition;
-			drawing = true;
+			if (LayerEditor.Layer.Selection != null &&
+				LayerEditor.Layer.Selection.ScaledArea.Contains(location))
+			{
+				moving = true;
+				mouseStart = location;
+				moved = Point.Empty;
+				LevelEditor.StartBatch();
+			}
+			else
+			{
+				drawTo = drawStart = LayerEditor.MouseSnapPosition;
+				drawing = true;
+			}
 		}
 
 		public override void OnMouseLeftUp(Point location)
@@ -47,12 +62,34 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
 				if (rect.IntersectsWith(new Rectangle(0, 0, LayerEditor.Layer.GridCellsX, LayerEditor.Layer.GridCellsY)))
 					LevelEditor.Perform(new GridSelectAction(LayerEditor.Layer, rect));
 			}
+
+			if (moving)
+			{
+				moving = false;
+				LevelEditor.EndBatch();
+			}
 		}
 
 		public override void OnMouseMove(Point location)
 		{
 			if (drawing)
+			{
 				drawTo = LayerEditor.MouseSnapPosition;
+			}
+
+			if (moving)
+			{
+				Point move = new Point(location.X - mouseStart.X, location.Y - mouseStart.Y);
+				move = LayerEditor.Layer.Definition.ConvertToGrid(move);
+				move.X -= moved.X;
+				move.Y -= moved.Y;
+
+				if (move.X != 0 || move.Y != 0)
+				{
+					LevelEditor.BatchPerform(LayerEditor.Layer.Selection.GetMoveAction(move));
+					moved = new Point(move.X + moved.X, move.Y + moved.Y);
+				}
+			}
 		}
 
 		public override void OnMouseRightClick(Point location)
