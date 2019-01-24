@@ -39,8 +39,8 @@ namespace OgmoEditor.LevelEditors.Tools.TileTools
 			}
 			else
 			{
-				drawTo = mouseStart = LayerEditor.MouseSnapPosition;
 				drawing = true;
+				drawTo = mouseStart = LayerEditor.MouseSnapPosition;
 			}
 		}
 
