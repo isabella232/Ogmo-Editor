@@ -202,7 +202,6 @@
     <Compile Include="LevelEditors\Tools\TileTools\TileEyedropperTool.cs" />
     <Compile Include="LevelEditors\Tools\TileTools\TileFloodTool.cs" />
     <Compile Include="LevelEditors\Tools\TileTools\TileLineTool.cs" />
-    <Compile Include="LevelEditors\Tools\TileTools\TileMoveSelectionTool.cs" />
     <Compile Include="LevelEditors\Tools\TileTools\TilePencilTool.cs" />
     <Compile Include="LevelEditors\Tools\TileTools\TileRectangleTool.cs" />
     <Compile Include="LevelEditors\Tools\TileTools\TileSelectionTool.cs" />

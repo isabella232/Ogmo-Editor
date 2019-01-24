@@ -9,6 +9,19 @@ namespace OgmoEditor.LevelData.Layers
 		public Rectangle Area;
 		public int[,] Under;
 
+		public Rectangle ScaledArea
+		{
+			get
+			{
+				return new Rectangle(
+					Area.X * Layer.Definition.Grid.Width,
+					Area.Y * Layer.Definition.Grid.Height,
+					Area.Width * Layer.Definition.Grid.Width,
+					Area.Height * Layer.Definition.Grid.Height
+				);
+			}
+		}
+
 		public TileSelection(TileLayer layer, Rectangle area)
 		{
 			Layer = layer;
