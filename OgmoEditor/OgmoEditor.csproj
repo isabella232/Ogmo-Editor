@@ -190,7 +190,6 @@
     <Compile Include="LevelEditors\Tools\EntityTools\EntityAddNodeTool.cs" />
     <Compile Include="LevelEditors\Tools\EntityTools\EntityEraseTool.cs" />
     <Compile Include="LevelEditors\Tools\EntityTools\EntityInsertNodeTool.cs" />
-    <Compile Include="LevelEditors\Tools\EntityTools\EntityMoveTool.cs" />
     <Compile Include="LevelEditors\Tools\EntityTools\EntityResizeTool.cs" />
     <Compile Include="LevelEditors\Tools\EntityTools\EntitySelectionTool.cs" />
     <Compile Include="LevelEditors\Tools\GridTools\GridFloodTool.cs" />

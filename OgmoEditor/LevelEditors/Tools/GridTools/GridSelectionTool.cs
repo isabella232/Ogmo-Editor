@@ -6,10 +6,8 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
 	public class GridSelectionTool : GridTool
 	{
 		private bool drawing;
-		private Point drawStart;
-		private Point drawTo;
-
 		private bool moving;
+		private Point drawTo;
 		private Point mouseStart;
 		private Point moved;
 
@@ -23,7 +21,7 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
 		{
 			if (drawing)
 			{
-				Rectangle draw = LayerEditor.Layer.GetGridRectangle(drawStart, drawTo);
+				Rectangle draw = LayerEditor.Layer.GetGridRectangle(mouseStart, drawTo);
 				if (LevelEditor.Level.Bounds.IntersectsWith(draw))
 					graphics.DrawSelectionRectangle(draw);
 			}
@@ -41,7 +39,7 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
 			}
 			else
 			{
-				drawTo = drawStart = LayerEditor.MouseSnapPosition;
+				drawTo = mouseStart = LayerEditor.MouseSnapPosition;
 				drawing = true;
 			}
 		}
@@ -53,7 +51,7 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
 				drawing = false;
 				drawTo = LayerEditor.MouseSnapPosition;
 
-				Rectangle rect = LayerEditor.Layer.GetGridRectangle(drawStart, drawTo);
+				Rectangle rect = LayerEditor.Layer.GetGridRectangle(mouseStart, drawTo);
 				rect.X /= LayerEditor.Layer.Definition.Grid.Width;
 				rect.Width /= LayerEditor.Layer.Definition.Grid.Width;
 				rect.Y /= LayerEditor.Layer.Definition.Grid.Height;
