@@ -16,7 +16,7 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
 		public GridSelectionTool()
 			: base("Select / Move", "selection.png")
 		{
-			moving = false;
+
 		}
 
 		public override void Draw(Graphics graphics)
