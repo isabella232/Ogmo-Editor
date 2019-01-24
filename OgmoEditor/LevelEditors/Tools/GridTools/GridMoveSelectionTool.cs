@@ -16,7 +16,8 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
 
 		public override void OnMouseLeftDown(Point location)
 		{
-			if (LayerEditor.Layer.Selection != null)
+			if (LayerEditor.Layer.Selection != null &&
+				LayerEditor.Layer.Selection.ScaledArea.Contains(location))
 			{
 				moving = true;
 				mouseStart = location;
