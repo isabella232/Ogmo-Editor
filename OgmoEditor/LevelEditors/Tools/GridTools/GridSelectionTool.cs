@@ -14,7 +14,7 @@ namespace OgmoEditor.LevelEditors.Tools.GridTools
 		private Point moved;
 
 		public GridSelectionTool()
-			: base("Select", "selection.png")
+			: base("Select / Move", "selection.png")
 		{
 			moving = false;
 		}
