@@ -51,6 +51,8 @@ namespace OgmoEditor
 			Ogmo.OnLevelAdded += onLevelAdded;
 			Ogmo.OnLevelClosed += onLevelClosed;
 			Ogmo.OnLevelChanged += onLevelChanged;
+
+			MasterTabControl.OnTabSwap += MasterTabControl_TabSwap;
 		}
 
 		public void AddStartPage()
@@ -124,7 +126,7 @@ namespace OgmoEditor
 				{
 					int titleBar = Size.Height - ClientSize.Height;
 					return new Rectangle(Location.X + 8 + MasterTabControl.Location.X + EDIT_BOUNDS_PADDING,
-						Location.Y + titleBar + MasterTabControl.Location.Y + 10 + EDIT_BOUNDS_PADDING, 
+						Location.Y + titleBar + MasterTabControl.Location.Y + 10 + EDIT_BOUNDS_PADDING,
 						MasterTabControl.Width - (EDIT_BOUNDS_PADDING * 2),
 						MasterTabControl.Height - 20 - (EDIT_BOUNDS_PADDING * 2));
 				}
@@ -170,7 +172,7 @@ namespace OgmoEditor
 			newProjectToolStripMenuItem.Enabled = true;
 			openProjectToolStripMenuItem.Enabled = true;
 			closeProjectToolStripMenuItem.Enabled = false;
-			editProjectToolStripMenuItem.Enabled = false;		  
+			editProjectToolStripMenuItem.Enabled = false;
 
 			levelToolStripMenuItem.Enabled = false;
 			viewToolStripMenuItem.Enabled = false;
@@ -204,7 +206,7 @@ namespace OgmoEditor
 		private void onLevelChanged(int index)
 		{
 			SelectedLevelIndex = index;
-			
+
 			//Switch to the editor
 			if (index != -1)
 				LevelEditors[index].SwitchTo();
@@ -234,6 +236,8 @@ namespace OgmoEditor
 
 		private void MasterTabControl_Selecting(object sender, TabControlCancelEventArgs e)
 		{
+			if (Ogmo.Levels.Count > 0)
+				Console.WriteLine(Ogmo.Levels[e.TabPageIndex].SaveName);
 			Ogmo.SetLevel(e.TabPageIndex);
 		}
 
@@ -257,6 +261,17 @@ namespace OgmoEditor
 			}
 			else
 				FocusEditor();
+		}
+
+		private void MasterTabControl_TabSwap(int srci, int dsti)
+		{
+			Level tmpLevel = Ogmo.Levels[srci];
+			Ogmo.Levels[srci] = Ogmo.Levels[dsti];
+			Ogmo.Levels[dsti] = tmpLevel;
+
+			LevelEditor tmpEditor = LevelEditors[srci];
+			LevelEditors[srci] = LevelEditors[dsti];
+			LevelEditors[dsti] = tmpEditor;
 		}
 
 		#endregion

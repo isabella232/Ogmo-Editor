@@ -485,7 +485,7 @@ namespace OgmoEditor
 
 			//Remove it
 			int index = Levels.IndexOf(level);
-			Levels.Remove(level);
+			Levels.RemoveAt(index);
 
 			//Call the event
 			if (OnLevelClosed != null)

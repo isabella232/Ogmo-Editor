@@ -89,6 +89,9 @@
     <Compile Include="ColorChooser.Designer.cs">
       <DependentUpon>ColorChooser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DraggableTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Definitions\LayerDefinitions\GridLayerDefinition.cs" />
     <Compile Include="Definitions\LayerDefinitions\LayerDefinition.cs" />
     <Compile Include="Definitions\LayerDefinitions\EntityLayerDefinition.cs" />
