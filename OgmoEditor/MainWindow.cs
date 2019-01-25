@@ -194,7 +194,7 @@ namespace OgmoEditor
 
 		private void onLevelClosed(int index)
 		{
-			MasterTabControl.TabPages.RemoveAt(index);
+			MasterTabControl.TabPages.Remove(MasterTabControl.TabPages[index]);
 			LevelEditors[index].OnRemove();
 			LevelEditors.RemoveAt(index);
 
@@ -236,8 +236,6 @@ namespace OgmoEditor
 
 		private void MasterTabControl_Selecting(object sender, TabControlCancelEventArgs e)
 		{
-			if (Ogmo.Levels.Count > 0)
-				Console.WriteLine(Ogmo.Levels[e.TabPageIndex].SaveName);
 			Ogmo.SetLevel(e.TabPageIndex);
 		}
 
