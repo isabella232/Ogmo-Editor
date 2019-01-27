@@ -14,7 +14,7 @@ Select a rectangle of tiles from the tilemap palette, then hold Shift and click 
 You can now zoom in on your tile palette windows. This helps you get a better view of your assets and save precious screen real estate. Use the mouse wheel to zoom and right/middle mouse button to pan.
 
 ### Level Resizing
-When resizing levels, you now have the option of expanding or shrinking from any combination of sides -- Bottom/Right, Top/Left, or whatever fits your needs.
+When resizing levels, you now have the option of expanding or shrinking from any combination of sides. Bottom/Right, Top/Left... whatever fits your needs!
 
 ### UX Improvements
 Many "little things" that make your workflow smoother. Level tabs are now draggable, allowing you to re-order your levels in the editor at will. You can now edit your project without having to re-open all your levels. And the file browser now remembers the last directory you were in, resulting in fewer clicks to go where you want.
