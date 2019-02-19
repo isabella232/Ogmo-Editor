@@ -9,6 +9,7 @@ namespace OgmoEditor.Definitions
 		public string FilePath;
 		public Size TileSize;
 		public int TileSep;
+        public string GroupName;
 
 		private Bitmap bitmap;
 		private Rectangle[] tileRects;
@@ -18,13 +19,15 @@ namespace OgmoEditor.Definitions
 		{
 			TileSize = new Size(16, 16);
 			FilePath = "";
-			TileSep = 0;
+            GroupName = "default";
+            TileSep = 0;
 		}
 
 		public Tileset Clone()
 		{
 			Tileset set = new Tileset();
 			set.Name = Name;
+            set.GroupName = GroupName;
 			set.FilePath = FilePath;
 			set.TileSize = TileSize;
 			set.TileSep = TileSep;

@@ -92,6 +92,7 @@
     <Compile Include="Controls\DraggableTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Definitions\GroupDefinitions\CommonGroupDefinition.cs" />
     <Compile Include="Definitions\LayerDefinitions\GridLayerDefinition.cs" />
     <Compile Include="Definitions\LayerDefinitions\LayerDefinition.cs" />
     <Compile Include="Definitions\LayerDefinitions\EntityLayerDefinition.cs" />
@@ -248,6 +249,12 @@
     </Compile>
     <Compile Include="LevelEditors\ValueEditors\ValueEditor.Designer.cs">
       <DependentUpon>ValueEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectEditors\AddNewGroupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjectEditors\AddNewGroupForm.Designer.cs">
+      <DependentUpon>AddNewGroupForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Windows\AboutWindow.cs">
       <SubType>Form</SubType>
@@ -515,6 +522,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LevelEditors\ValueEditors\StringValueEditor.resx">
       <DependentUpon>StringValueEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectEditors\AddNewGroupForm.resx">
+      <DependentUpon>AddNewGroupForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\AboutWIndow.resx">
       <DependentUpon>AboutWindow.cs</DependentUpon>

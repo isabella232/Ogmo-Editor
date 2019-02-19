@@ -25,12 +25,14 @@ namespace OgmoEditor.Definitions.LayerDefinitions
 		public string Name;
 		public Size Grid;
 		public PointF ScrollFactor;
+        public string GroupName;
 
 		public LayerDefinition()
 		{
 			Image = "";
 			Name = "";
-			ScrollFactor = new PointF(1, 1);
+            GroupName = "default";
+            ScrollFactor = new PointF(1, 1);
 			Visible = true;
 		}
 
