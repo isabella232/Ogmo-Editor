@@ -612,7 +612,7 @@ namespace OgmoEditor.ProjectEditors
         /// <summary>
         /// This will return the position of the entity inside the entities list based on the current selection inside a group.
         /// </summary>
-        /// <returns>The correct entity inside the group</returns>
+        /// <returns>The correct id of entity inside the group</returns>
         private int GetEntityIDFromSelectedGroup()
         {
             int selectIndex = listBox.SelectedIndex;

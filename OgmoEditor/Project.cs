@@ -37,7 +37,7 @@ namespace OgmoEditor
 		public List<LayerDefinition> LayerDefinitions;
 		public List<Tileset> Tilesets;
 		public List<EntityDefinition> EntityDefinitions;
-        public CommonGroupDefinition GridGroups;
+        public CommonGroupDefinition LayerGroups;
         public CommonGroupDefinition TilesetGroups;
         public CommonGroupDefinition EntityGroups;
 
@@ -61,7 +61,7 @@ namespace OgmoEditor
 			LayerDefinitions = new List<LayerDefinition>();
 			Tilesets = new List<Tileset>();
 			EntityDefinitions = new List<EntityDefinition>();
-            GridGroups = new CommonGroupDefinition();
+            LayerGroups = new CommonGroupDefinition();
             TilesetGroups = new CommonGroupDefinition();
             EntityGroups = new CommonGroupDefinition();
 
@@ -109,10 +109,10 @@ namespace OgmoEditor
 			foreach (var d in copy.EntityDefinitions)
 				EntityDefinitions.Add(d.Clone());
 
-            GridGroups = new CommonGroupDefinition();
-            foreach (string g in copy.GridGroups.groupNames)
-                if (!GridGroups.groupNames.Contains(g))
-                    GridGroups.groupNames.Add(g);
+            LayerGroups = new CommonGroupDefinition();
+            foreach (string g in copy.LayerGroups.groupNames)
+                if (!LayerGroups.groupNames.Contains(g))
+                    LayerGroups.groupNames.Add(g);
 
             TilesetGroups = new CommonGroupDefinition();
             foreach (string g in copy.TilesetGroups.groupNames)
