@@ -37,6 +37,7 @@ namespace OgmoEditor.Definitions.LayerDefinitions
 			TileLayerDefinition def = new TileLayerDefinition();
 			def.Name = Name;
 			def.Grid = Grid;
+            def.GroupName = GroupName;
 			def.ScrollFactor = ScrollFactor;
 			def.ExportMode = ExportMode;
 			return def;

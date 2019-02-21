@@ -21,6 +21,8 @@ namespace OgmoEditor.Definitions
 		public bool Rotatable;
 		[XmlAttribute]
 		public float RotateIncrement;
+        [XmlAttribute]
+        public string GroupName;
 
 		public Size Size;
 		public Point Origin;
@@ -36,8 +38,9 @@ namespace OgmoEditor.Definitions
 			Limit = -1;
 			Size = new Size(16, 16);
 			RotateIncrement = 15;
+            GroupName = "default";
 
-			ValueDefinitions = new List<ValueDefinition>();
+            ValueDefinitions = new List<ValueDefinition>();
 
 			ImageDefinition.ImagePath = "";
 			ImageDefinition.RectColor = new OgmoColor(255, 0, 0);
@@ -54,6 +57,7 @@ namespace OgmoEditor.Definitions
 			def.ResizableY = ResizableY;
 			def.Rotatable = Rotatable;
 			def.RotateIncrement = RotateIncrement;
+            def.GroupName = GroupName;
 			def.Size = Size;
 			def.Origin = Origin;
 			def.ImageDefinition = ImageDefinition;
